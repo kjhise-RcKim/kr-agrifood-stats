@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>농식품 주요통계 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="./data.js"></script>
+<style>
+  :root{
+    --bg:#0f1720; --panel:#16212e; --panel2:#1c2a3a; --line:#24384d;
+    --text:#e8eef4; --muted:#8fa6bd; --accent:#3fa7ff; --accent2:#38d39f;
+    --up:#38d39f; --down:#ff6b6b; --chip:#22344a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0d141d,#0f1720);color:var(--text);
+    font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;}
+  header{padding:28px 32px 18px;border-bottom:1px solid var(--line);}
+  header h1{margin:0;font-size:22px;letter-spacing:-.3px;}
+  header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px;}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 20px;}
+  .tab{padding:8px 15px;border:1px solid var(--line);background:var(--panel);
+    color:var(--muted);border-radius:20px;cursor:pointer;font-size:13px;transition:.15s;}
+  .tab:hover{color:var(--text);border-color:var(--accent);}
+  .tab.active{background:var(--accent);color:#04121f;border-color:var(--accent);font-weight:600;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:16px 17px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .card.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
+  .card .nm{font-size:13px;color:var(--muted);}
+  .card .val{font-size:26px;font-weight:700;margin-top:8px;letter-spacing:-.5px;}
+  .card .val small{font-size:13px;color:var(--muted);font-weight:500;margin-left:3px;}
+  .card .delta{font-size:12px;margin-top:6px;display:inline-flex;gap:5px;align-items:center;}
+  .up{color:var(--up)} .down{color:var(--down)}
+  .card .yr{position:absolute;top:14px;right:15px;font-size:11px;color:var(--muted);
+    background:var(--chip);padding:2px 7px;border-radius:8px;}
+  .detail{margin-top:26px;background:var(--panel);border:1px solid var(--line);
+    border-radius:16px;padding:22px;}
+  .detail h2{margin:0 0 3px;font-size:18px;}
+  .detail .meta{color:var(--muted);font-size:12px;margin-bottom:16px;line-height:1.6;}
+  .chartbox{height:340px;position:relative;}
+  .src{margin-top:14px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);
+    padding-top:10px;line-height:1.6;}
+  .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
+  .badge{display:inline-block;font-size:10px;background:var(--chip);color:var(--accent2);
+    padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;}
+</style>
+</head>
+<body>
+<header>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v2 · 30개 지표</span></h1>
+  <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
+</header>
+<div class="wrap">
+  <div class="tabs" id="tabs"></div>
+  <div class="cards" id="cards"></div>
+  <div class="detail" id="detail" style="display:none">
+    <h2 id="d-name"></h2>
+    <div class="meta" id="d-desc"></div>
+    <div class="chartbox"><canvas id="chart"></canvas></div>
+    <div class="src" id="d-src"></div>
+  </div>
+  <div class="footer">
+    데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
+    본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.
+  </div>
+</div>
+<script>
+const D = window.INDICATORS;
+const INDS = D.indicators;
+const fmt = n => n===null||n===undefined ? '–' :
+  (Math.abs(n)>=1000 ? n.toLocaleString('ko-KR') : (Number.isInteger(n)?n:n.toFixed(1)));
+
+function lastTwo(ind){
+  const s = (ind.series || (ind.breakdown ? ind.breakdown[0].series : [])).filter(p=>p.value!==null);
+  return [s[s.length-2], s[s.length-1]];
+}
+function groups(){
+  const gs = [...new Set(INDS.map(i=>i.group))];
+  return ['전체', ...gs];
+}
+let curGroup='전체', curId=null, chart=null;
+
+function renderTabs(){
+  const t=document.getElementById('tabs'); t.innerHTML='';
+  groups().forEach(g=>{
+    const b=document.createElement('div'); b.className='tab'+(g===curGroup?' active':'');
+    b.textContent=g; b.onclick=()=>{curGroup=g;renderTabs();renderCards();}; t.appendChild(b);
+  });
+}
+function renderCards(){
+  const c=document.getElementById('cards'); c.innerHTML='';
+  const list = INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
+  list.forEach(ind=>{
+    const [prev,last]=lastTwo(ind);
+    const card=document.createElement('div');
+    card.className='card'+(ind.id===curId?' sel':'');
+    let delta='';
+    if(prev&&last&&prev.value){
+      const dp=((last.value-prev.value)/Math.abs(prev.value)*100);
+      const up=dp>=0;
+      delta=`<div class="delta ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(dp).toFixed(1)}% <span style="color:var(--muted)">전년比</span></div>`;
+    }
+    const val = last? fmt(last.value):'–';
+    card.innerHTML=`<div class="yr">${last?last.year:''}${last&&last.flag==='p'?' p':''}</div>
+      <div class="nm">${ind.name}</div>
+      <div class="val">${val}<small>${ind.unit}</small></div>${delta}`;
+    card.onclick=()=>{curId=ind.id;renderCards();renderDetail(ind);};
+    c.appendChild(card);
+  });
+  if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
+}
+const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1'];
+function renderDetail(ind){
+  document.getElementById('detail').style.display='block';
+  document.getElementById('d-name').textContent=ind.name;
+  document.getElementById('d-desc').textContent=ind.description||'';
+  const s=ind.source||{};
+  document.getElementById('d-src').innerHTML=
+    `출처: ${s.publication||''} · ${s.section||''} (p.${s.page||'?'})<br>제공: ${s.org||''} · ${s.license||''}`;
+  let datasets, labels;
+  if(ind.breakdown){
+    const yset=new Set();
+    ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
+    labels=[...yset].sort((a,b)=>a-b);
+    datasets=ind.breakdown.map((b,i)=>({
+      label:b.label, data:labels.map(y=>{const p=b.series.find(x=>x.year===y);return p?p.value:null;}),
+      borderColor:PALETTE[i%PALETTE.length], backgroundColor:PALETTE[i%PALETTE.length]+'22',
+      tension:.25, pointRadius:2, borderWidth:2, spanGaps:true}));
+  } else {
+    const s2=ind.series.filter(p=>p.value!==null);
+    labels=s2.map(p=>p.year);
+    datasets=[{label:ind.name,data:s2.map(p=>p.value),borderColor:PALETTE[0],
+      backgroundColor:'rgba(63,167,255,.12)',fill:true,tension:.25,pointRadius:2,borderWidth:2}];
+  }
+  if(chart)chart.destroy();
+  chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:!!ind.breakdown,labels:{color:'#c7d6e6',boxWidth:12}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.parsed.y)} ${ind.unit}`}}},
+      scales:{x:{ticks:{color:'#7f97ae',maxTicksLimit:12},grid:{color:'#1d2c3d'}},
+        y:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}}}}});
+}
+renderTabs();renderCards();
+</script>
+</body>
+</html>

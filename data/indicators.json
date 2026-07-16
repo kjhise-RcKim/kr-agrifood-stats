@@ -1,0 +1,3650 @@
+{
+  "meta": {
+    "title": "농림축산식품 주요통계",
+    "edition": 2025,
+    "base_year": 2020,
+    "license": "공공누리 제1유형(출처표시)",
+    "source_pdf": "2025 농림축산식품 주요통계.pdf",
+    "generated_at": "2026-07-16",
+    "status": "v2 (국내 26 + 남북한 4)",
+    "pending": [
+      "meat_consumption_pc(1인당 축산물소비)",
+      "timber_self_suff(목재자급률)",
+      "fishery_production·return_farming(본서 미수록)",
+      "외국비교 japan/taiwan/china/OECD(전치형)"
+    ]
+  },
+  "groups": [
+    {
+      "id": "overview",
+      "name": "농업 한눈에",
+      "order": 1
+    },
+    {
+      "id": "food",
+      "name": "식량·자급률",
+      "order": 2
+    },
+    {
+      "id": "price",
+      "name": "물가·가격",
+      "order": 3
+    },
+    {
+      "id": "livestock",
+      "name": "축산",
+      "order": 4
+    },
+    {
+      "id": "veg",
+      "name": "채소·과일",
+      "order": 5
+    },
+    {
+      "id": "trade",
+      "name": "무역",
+      "order": 6
+    },
+    {
+      "id": "forest",
+      "name": "임업",
+      "order": 7
+    },
+    {
+      "id": "fishery",
+      "name": "어업",
+      "order": 8
+    },
+    {
+      "id": "food_ind",
+      "name": "식품산업",
+      "order": 9
+    },
+    {
+      "id": "rural",
+      "name": "농촌·사람",
+      "order": 10
+    },
+    {
+      "id": "nk",
+      "name": "남북한비교",
+      "order": 12
+    }
+  ],
+  "indicators": [
+    {
+      "id": "agri_output_value",
+      "name": "농림업 생산액",
+      "group": "농업 한눈에",
+      "unit": "십억원",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "농림업 생산액(당해년가격)",
+      "keywords": [
+        "생산액",
+        "농림업생산액",
+        "산출"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅳ. 국민계정 및 농림업생산액 > 농림업 생산액",
+        "page": 84,
+        "org": "농림축산식품부 농림업생산지수",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2014,
+          "value": 51044.7
+        },
+        {
+          "year": 2015,
+          "value": 50843.0
+        },
+        {
+          "year": 2016,
+          "value": 49543.6
+        },
+        {
+          "year": 2017,
+          "value": 50680.9
+        },
+        {
+          "year": 2018,
+          "value": 52519.8
+        },
+        {
+          "year": 2019,
+          "value": 52316.1
+        },
+        {
+          "year": 2020,
+          "value": 52905.5
+        },
+        {
+          "year": 2021,
+          "value": 61894.1
+        },
+        {
+          "year": 2022,
+          "value": 60780.3
+        },
+        {
+          "year": 2023,
+          "value": 61870.5
+        },
+        {
+          "year": 2024,
+          "value": 63067.9,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "farm_income",
+        "cultivated_area"
+      ]
+    },
+    {
+      "id": "cultivated_area",
+      "name": "경지면적",
+      "group": "농업 한눈에",
+      "unit": "천ha",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "전국 경지면적(논+밭)",
+      "keywords": [
+        "경지",
+        "경지면적",
+        "논",
+        "밭"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅰ. 국토 및 경지 > 경지이용상황",
+        "page": 24,
+        "org": "국가데이터처 KOSIS",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 2298
+        },
+        {
+          "year": 1975,
+          "value": 2240
+        },
+        {
+          "year": 1980,
+          "value": 2196
+        },
+        {
+          "year": 1985,
+          "value": 2144
+        },
+        {
+          "year": 1990,
+          "value": 2109
+        },
+        {
+          "year": 1995,
+          "value": 1985
+        },
+        {
+          "year": 2000,
+          "value": 1889
+        },
+        {
+          "year": 2005,
+          "value": 1824
+        },
+        {
+          "year": 2010,
+          "value": 1715
+        },
+        {
+          "year": 2011,
+          "value": 1698
+        },
+        {
+          "year": 2012,
+          "value": 1730
+        },
+        {
+          "year": 2013,
+          "value": 1711
+        },
+        {
+          "year": 2014,
+          "value": 1691
+        },
+        {
+          "year": 2015,
+          "value": 1679
+        },
+        {
+          "year": 2016,
+          "value": 1644
+        },
+        {
+          "year": 2017,
+          "value": 1621
+        },
+        {
+          "year": 2018,
+          "value": 1596
+        },
+        {
+          "year": 2019,
+          "value": 1581
+        },
+        {
+          "year": 2020,
+          "value": 1565
+        },
+        {
+          "year": 2021,
+          "value": 1547
+        },
+        {
+          "year": 2022,
+          "value": 1528
+        },
+        {
+          "year": 2023,
+          "value": 1512
+        },
+        {
+          "year": 2024,
+          "value": 1505,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "rice_area",
+        "agri_output_value"
+      ]
+    },
+    {
+      "id": "farm_households",
+      "name": "농가 호수",
+      "group": "농업 한눈에",
+      "unit": "천호",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "총 농가 호수",
+      "keywords": [
+        "농가",
+        "농가호수",
+        "호수"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅲ. 인구 및 가구 > 경영주 연령별 농가",
+        "page": 52,
+        "org": "국가데이터처 농림어업조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 2483
+        },
+        {
+          "year": 1975,
+          "value": 2379
+        },
+        {
+          "year": 1980,
+          "value": 2155
+        },
+        {
+          "year": 1985,
+          "value": 1926
+        },
+        {
+          "year": 1990,
+          "value": 1767
+        },
+        {
+          "year": 1995,
+          "value": 1501
+        },
+        {
+          "year": 2000,
+          "value": 1383
+        },
+        {
+          "year": 2005,
+          "value": 1273
+        },
+        {
+          "year": 2010,
+          "value": 1177
+        },
+        {
+          "year": 2011,
+          "value": 1163
+        },
+        {
+          "year": 2012,
+          "value": 1151
+        },
+        {
+          "year": 2013,
+          "value": 1142
+        },
+        {
+          "year": 2014,
+          "value": 1121
+        },
+        {
+          "year": 2015,
+          "value": 1089
+        },
+        {
+          "year": 2016,
+          "value": 1068
+        },
+        {
+          "year": 2017,
+          "value": 1042
+        },
+        {
+          "year": 2018,
+          "value": 1021
+        },
+        {
+          "year": 2019,
+          "value": 1007
+        },
+        {
+          "year": 2020,
+          "value": 1035
+        },
+        {
+          "year": 2021,
+          "value": 1031
+        },
+        {
+          "year": 2022,
+          "value": 1023
+        },
+        {
+          "year": 2023,
+          "value": 999
+        },
+        {
+          "year": 2024,
+          "value": 974,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "farm_population",
+        "farmer_aging_rate"
+      ]
+    },
+    {
+      "id": "farm_population",
+      "name": "농가 인구",
+      "group": "농업 한눈에",
+      "unit": "천명",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "농가에 속한 총 인구",
+      "keywords": [
+        "농가인구",
+        "인구",
+        "농촌인구"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅲ. 인구 및 가구 > 연령별·성별 농가인구",
+        "page": 62,
+        "org": "국가데이터처 농림어업조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 14422
+        },
+        {
+          "year": 1975,
+          "value": 13244
+        },
+        {
+          "year": 1980,
+          "value": 10827
+        },
+        {
+          "year": 1985,
+          "value": 8521
+        },
+        {
+          "year": 1990,
+          "value": 6661
+        },
+        {
+          "year": 1995,
+          "value": 4851
+        },
+        {
+          "year": 2000,
+          "value": 4031
+        },
+        {
+          "year": 2005,
+          "value": 3434
+        },
+        {
+          "year": 2010,
+          "value": 3063
+        },
+        {
+          "year": 2011,
+          "value": 2962
+        },
+        {
+          "year": 2012,
+          "value": 2912
+        },
+        {
+          "year": 2013,
+          "value": 2847
+        },
+        {
+          "year": 2014,
+          "value": 2752
+        },
+        {
+          "year": 2015,
+          "value": 2569
+        },
+        {
+          "year": 2016,
+          "value": 2496
+        },
+        {
+          "year": 2017,
+          "value": 2422
+        },
+        {
+          "year": 2018,
+          "value": 2315
+        },
+        {
+          "year": 2019,
+          "value": 2245
+        },
+        {
+          "year": 2020,
+          "value": 2314
+        },
+        {
+          "year": 2021,
+          "value": 2215
+        },
+        {
+          "year": 2022,
+          "value": 2166
+        },
+        {
+          "year": 2023,
+          "value": 2089
+        },
+        {
+          "year": 2024,
+          "value": 2004,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "farm_households",
+        "farmer_aging_rate"
+      ]
+    },
+    {
+      "id": "agri_gdp_share",
+      "name": "농림어업 GDP 비중",
+      "group": "농업 한눈에",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "국내총생산 대비 농림어업 비중(명목)",
+      "keywords": [
+        "GDP",
+        "비중",
+        "부가가치",
+        "농림어업"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅳ. 국민계정 > 생산구조",
+        "page": 76,
+        "org": "한국은행",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 28.8
+        },
+        {
+          "year": 1975,
+          "value": 26.5
+        },
+        {
+          "year": 1980,
+          "value": 15.7
+        },
+        {
+          "year": 1985,
+          "value": 12.7
+        },
+        {
+          "year": 1990,
+          "value": 8.1
+        },
+        {
+          "year": 1995,
+          "value": 5.6
+        },
+        {
+          "year": 2000,
+          "value": 4.1
+        },
+        {
+          "year": 2005,
+          "value": 2.8
+        },
+        {
+          "year": 2010,
+          "value": 2.2
+        },
+        {
+          "year": 2011,
+          "value": 2.3
+        },
+        {
+          "year": 2012,
+          "value": 2.3
+        },
+        {
+          "year": 2013,
+          "value": 2.2
+        },
+        {
+          "year": 2014,
+          "value": 2.1
+        },
+        {
+          "year": 2015,
+          "value": 2.1
+        },
+        {
+          "year": 2016,
+          "value": 1.9
+        },
+        {
+          "year": 2017,
+          "value": 1.9
+        },
+        {
+          "year": 2018,
+          "value": 1.7
+        },
+        {
+          "year": 2019,
+          "value": 1.6
+        },
+        {
+          "year": 2020,
+          "value": 1.7
+        },
+        {
+          "year": 2021,
+          "value": 1.8
+        },
+        {
+          "year": 2022,
+          "value": 1.6
+        },
+        {
+          "year": 2023,
+          "value": 1.6
+        }
+      ],
+      "related_ids": [
+        "agri_output_value"
+      ]
+    },
+    {
+      "id": "farm_income",
+      "name": "농가소득(호당)",
+      "group": "농업 한눈에",
+      "unit": "천원",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "농가 1호당 연간 소득(농업+농외+이전+비경상)",
+      "keywords": [
+        "농가소득",
+        "소득",
+        "농가경제"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅶ. 농가경제 > 원천별 농가소득",
+        "page": 152,
+        "org": "국가데이터처 농가경제조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 256
+        },
+        {
+          "year": 1975,
+          "value": 873
+        },
+        {
+          "year": 1980,
+          "value": 2693
+        },
+        {
+          "year": 1985,
+          "value": 5736
+        },
+        {
+          "year": 1990,
+          "value": 11026
+        },
+        {
+          "year": 1995,
+          "value": 21803
+        },
+        {
+          "year": 2000,
+          "value": 23072
+        },
+        {
+          "year": 2005,
+          "value": 30503
+        },
+        {
+          "year": 2010,
+          "value": 32121
+        },
+        {
+          "year": 2011,
+          "value": 30148
+        },
+        {
+          "year": 2012,
+          "value": 31031
+        },
+        {
+          "year": 2013,
+          "value": 34524
+        },
+        {
+          "year": 2014,
+          "value": 34950
+        },
+        {
+          "year": 2015,
+          "value": 37215
+        },
+        {
+          "year": 2016,
+          "value": 37197
+        },
+        {
+          "year": 2017,
+          "value": 38239
+        },
+        {
+          "year": 2018,
+          "value": 42066
+        },
+        {
+          "year": 2019,
+          "value": 41182
+        },
+        {
+          "year": 2020,
+          "value": 45029
+        },
+        {
+          "year": 2021,
+          "value": 47759
+        },
+        {
+          "year": 2022,
+          "value": 46153
+        },
+        {
+          "year": 2023,
+          "value": 50828
+        },
+        {
+          "year": 2024,
+          "value": 50597,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "agri_output_value",
+        "farm_population"
+      ]
+    },
+    {
+      "id": "food_self_suff",
+      "name": "식량자급률",
+      "group": "식량·자급률",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "식량자급률(사료용 제외, 계)",
+      "keywords": [
+        "식량자급률",
+        "자급률",
+        "식량안보"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅳ. 식량작물 > 양곡의 자급률(식량)",
+        "page": 331,
+        "org": "식량정책관 식량정책과",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 86.2
+        },
+        {
+          "year": 1975,
+          "value": 79.1
+        },
+        {
+          "year": 1980,
+          "value": 69.6
+        },
+        {
+          "year": 1985,
+          "value": 71.6
+        },
+        {
+          "year": 1990,
+          "value": 70.3
+        },
+        {
+          "year": 1995,
+          "value": 55.7
+        },
+        {
+          "year": 2000,
+          "value": 55.6
+        },
+        {
+          "year": 2005,
+          "value": 53.4
+        },
+        {
+          "year": 2010,
+          "value": 54.1
+        },
+        {
+          "year": 2011,
+          "value": 48.8
+        },
+        {
+          "year": 2012,
+          "value": 49.1
+        },
+        {
+          "year": 2013,
+          "value": 51.9
+        },
+        {
+          "year": 2014,
+          "value": 53.2
+        },
+        {
+          "year": 2015,
+          "value": 53.5
+        },
+        {
+          "year": 2016,
+          "value": 54.1
+        },
+        {
+          "year": 2017,
+          "value": 51.9
+        },
+        {
+          "year": 2018,
+          "value": 50.3
+        },
+        {
+          "year": 2019,
+          "value": 49.3
+        },
+        {
+          "year": 2020,
+          "value": 49.3
+        },
+        {
+          "year": 2021,
+          "value": 44.1
+        },
+        {
+          "year": 2022,
+          "value": 49.4
+        },
+        {
+          "year": 2023,
+          "value": 49.3
+        },
+        {
+          "year": 2024,
+          "value": 47.9,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "grain_self_suff",
+        "rice_production"
+      ]
+    },
+    {
+      "id": "grain_self_suff",
+      "name": "곡물자급률",
+      "group": "식량·자급률",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "곡물자급률(사료용 포함, 계)",
+      "keywords": [
+        "곡물자급률",
+        "자급률",
+        "사료"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅳ. 식량작물 > 양곡의 자급률(곡물)",
+        "page": 330,
+        "org": "식량정책관 식량정책과",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 80.5
+        },
+        {
+          "year": 1975,
+          "value": 73.0
+        },
+        {
+          "year": 1980,
+          "value": 56.0
+        },
+        {
+          "year": 1985,
+          "value": 48.4
+        },
+        {
+          "year": 1990,
+          "value": 43.1
+        },
+        {
+          "year": 1995,
+          "value": 29.1
+        },
+        {
+          "year": 2000,
+          "value": 29.7
+        },
+        {
+          "year": 2005,
+          "value": 29.3
+        },
+        {
+          "year": 2010,
+          "value": 27.6
+        },
+        {
+          "year": 2011,
+          "value": 26.9
+        },
+        {
+          "year": 2012,
+          "value": 26.1
+        },
+        {
+          "year": 2013,
+          "value": 26.4
+        },
+        {
+          "year": 2014,
+          "value": 26.5
+        },
+        {
+          "year": 2015,
+          "value": 26.3
+        },
+        {
+          "year": 2016,
+          "value": 26.0
+        },
+        {
+          "year": 2017,
+          "value": 25.6
+        },
+        {
+          "year": 2018,
+          "value": 24.1
+        },
+        {
+          "year": 2019,
+          "value": 23.3
+        },
+        {
+          "year": 2020,
+          "value": 22.4
+        },
+        {
+          "year": 2021,
+          "value": 20.8
+        },
+        {
+          "year": 2022,
+          "value": 22.3
+        },
+        {
+          "year": 2023,
+          "value": 22.2
+        },
+        {
+          "year": 2024,
+          "value": 21.6,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "food_self_suff"
+      ]
+    },
+    {
+      "id": "rice_production",
+      "name": "쌀(미곡) 생산량",
+      "group": "식량·자급률",
+      "unit": "천t",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "미곡(쌀) 생산량(계)",
+      "keywords": [
+        "쌀",
+        "미곡",
+        "생산량",
+        "벼"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅳ. 식량작물 > 미곡 재배면적 및 생산량",
+        "page": 302,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 3939
+        },
+        {
+          "year": 1975,
+          "value": 4669
+        },
+        {
+          "year": 1980,
+          "value": 3550
+        },
+        {
+          "year": 1985,
+          "value": 5626
+        },
+        {
+          "year": 1990,
+          "value": 5606
+        },
+        {
+          "year": 1995,
+          "value": 4695
+        },
+        {
+          "year": 2000,
+          "value": 5291
+        },
+        {
+          "year": 2005,
+          "value": 4768
+        },
+        {
+          "year": 2010,
+          "value": 4295
+        },
+        {
+          "year": 2011,
+          "value": 4224
+        },
+        {
+          "year": 2012,
+          "value": 4006
+        },
+        {
+          "year": 2013,
+          "value": 4230
+        },
+        {
+          "year": 2014,
+          "value": 4241
+        },
+        {
+          "year": 2015,
+          "value": 4327
+        },
+        {
+          "year": 2016,
+          "value": 4197
+        },
+        {
+          "year": 2017,
+          "value": 3972
+        },
+        {
+          "year": 2018,
+          "value": 3868
+        },
+        {
+          "year": 2019,
+          "value": 3744
+        },
+        {
+          "year": 2020,
+          "value": 3507
+        },
+        {
+          "year": 2021,
+          "value": 3882
+        },
+        {
+          "year": 2022,
+          "value": 3764
+        },
+        {
+          "year": 2023,
+          "value": 3702
+        },
+        {
+          "year": 2024,
+          "value": 3585,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "rice_area",
+        "food_self_suff"
+      ]
+    },
+    {
+      "id": "rice_area",
+      "name": "쌀 재배면적",
+      "group": "식량·자급률",
+      "unit": "천ha",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "미곡(쌀) 재배면적(계)",
+      "keywords": [
+        "쌀",
+        "재배면적",
+        "논"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅳ. 식량작물 > 미곡 재배면적 및 생산량",
+        "page": 302,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 1213
+        },
+        {
+          "year": 1975,
+          "value": 1218
+        },
+        {
+          "year": 1980,
+          "value": 1233
+        },
+        {
+          "year": 1985,
+          "value": 1237
+        },
+        {
+          "year": 1990,
+          "value": 1244
+        },
+        {
+          "year": 1995,
+          "value": 1056
+        },
+        {
+          "year": 2000,
+          "value": 1072
+        },
+        {
+          "year": 2005,
+          "value": 980
+        },
+        {
+          "year": 2010,
+          "value": 892
+        },
+        {
+          "year": 2011,
+          "value": 854
+        },
+        {
+          "year": 2012,
+          "value": 849
+        },
+        {
+          "year": 2013,
+          "value": 833
+        },
+        {
+          "year": 2014,
+          "value": 816
+        },
+        {
+          "year": 2015,
+          "value": 799
+        },
+        {
+          "year": 2016,
+          "value": 779
+        },
+        {
+          "year": 2017,
+          "value": 755
+        },
+        {
+          "year": 2018,
+          "value": 738
+        },
+        {
+          "year": 2019,
+          "value": 730
+        },
+        {
+          "year": 2020,
+          "value": 726
+        },
+        {
+          "year": 2021,
+          "value": 732
+        },
+        {
+          "year": 2022,
+          "value": 727
+        },
+        {
+          "year": 2023,
+          "value": 708
+        },
+        {
+          "year": 2024,
+          "value": 698,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "rice_production",
+        "cultivated_area"
+      ]
+    },
+    {
+      "id": "rice_consumption_pc",
+      "name": "1인당 쌀 소비량",
+      "group": "식량·자급률",
+      "unit": "kg",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "1인당 연간 쌀 소비량",
+      "keywords": [
+        "쌀소비",
+        "1인당",
+        "소비량"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅳ. 식량작물 > 양곡 1인당 연간소비량",
+        "page": 332,
+        "org": "국가데이터처 양곡소비량조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 136.4
+        },
+        {
+          "year": 1975,
+          "value": 123.6
+        },
+        {
+          "year": 1980,
+          "value": 132.4
+        },
+        {
+          "year": 1985,
+          "value": 128.1
+        },
+        {
+          "year": 1990,
+          "value": 119.6
+        },
+        {
+          "year": 1995,
+          "value": 106.5
+        },
+        {
+          "year": 2000,
+          "value": 93.6
+        },
+        {
+          "year": 2005,
+          "value": 80.7
+        },
+        {
+          "year": 2010,
+          "value": 72.8
+        },
+        {
+          "year": 2011,
+          "value": 71.2
+        },
+        {
+          "year": 2012,
+          "value": 69.8
+        },
+        {
+          "year": 2013,
+          "value": 67.2
+        },
+        {
+          "year": 2014,
+          "value": 65.1
+        },
+        {
+          "year": 2015,
+          "value": 62.9
+        },
+        {
+          "year": 2016,
+          "value": 61.9
+        },
+        {
+          "year": 2017,
+          "value": 61.8
+        },
+        {
+          "year": 2018,
+          "value": 61.0
+        },
+        {
+          "year": 2019,
+          "value": 59.2
+        },
+        {
+          "year": 2020,
+          "value": 57.7
+        },
+        {
+          "year": 2021,
+          "value": 56.9
+        },
+        {
+          "year": 2022,
+          "value": 56.7
+        },
+        {
+          "year": 2023,
+          "value": 56.4
+        },
+        {
+          "year": 2024,
+          "value": 55.8,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "rice_production"
+      ]
+    },
+    {
+      "id": "ppi_agri",
+      "name": "농림수산품 생산자물가지수",
+      "group": "물가·가격",
+      "unit": "지수(2020=100)",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "농림수산품 생산자물가지수(연평균)",
+      "keywords": [
+        "생산자물가",
+        "PPI",
+        "물가"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅴ. 물가 > 물가지수 총괄",
+        "page": 112,
+        "org": "한국은행",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 2.33
+        },
+        {
+          "year": 1975,
+          "value": 6.49
+        },
+        {
+          "year": 1980,
+          "value": 17.79
+        },
+        {
+          "year": 1985,
+          "value": 24.62
+        },
+        {
+          "year": 1990,
+          "value": 33.18
+        },
+        {
+          "year": 1995,
+          "value": 45.44
+        },
+        {
+          "year": 2000,
+          "value": 52.38
+        },
+        {
+          "year": 2005,
+          "value": 63.59
+        },
+        {
+          "year": 2010,
+          "value": 76.3
+        },
+        {
+          "year": 2011,
+          "value": 81.98
+        },
+        {
+          "year": 2012,
+          "value": 82.66
+        },
+        {
+          "year": 2013,
+          "value": 77.72
+        },
+        {
+          "year": 2014,
+          "value": 78.23
+        },
+        {
+          "year": 2015,
+          "value": 80.04
+        },
+        {
+          "year": 2016,
+          "value": 84.71
+        },
+        {
+          "year": 2017,
+          "value": 90.15
+        },
+        {
+          "year": 2018,
+          "value": 93.37
+        },
+        {
+          "year": 2019,
+          "value": 91.26
+        },
+        {
+          "year": 2020,
+          "value": 100.0
+        },
+        {
+          "year": 2021,
+          "value": 108.14
+        },
+        {
+          "year": 2022,
+          "value": 109.25
+        },
+        {
+          "year": 2023,
+          "value": 112.55
+        },
+        {
+          "year": 2024,
+          "value": 117.61,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "cpi_food",
+        "farm_terms_trade"
+      ]
+    },
+    {
+      "id": "cpi_food",
+      "name": "식료품 소비자물가지수",
+      "group": "물가·가격",
+      "unit": "지수(2020=100)",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "식료품 소비자물가지수(연평균)",
+      "keywords": [
+        "소비자물가",
+        "CPI",
+        "식료품"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅴ. 물가 > 물가지수 총괄",
+        "page": 112,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": null
+        },
+        {
+          "year": 1975,
+          "value": null
+        },
+        {
+          "year": 1980,
+          "value": null
+        },
+        {
+          "year": 1985,
+          "value": 20.294
+        },
+        {
+          "year": 1990,
+          "value": 27.788
+        },
+        {
+          "year": 1995,
+          "value": 37.975
+        },
+        {
+          "year": 2000,
+          "value": 47.497
+        },
+        {
+          "year": 2005,
+          "value": 61.426
+        },
+        {
+          "year": 2010,
+          "value": 75.737
+        },
+        {
+          "year": 2011,
+          "value": 81.979
+        },
+        {
+          "year": 2012,
+          "value": 85.211
+        },
+        {
+          "year": 2013,
+          "value": 85.843
+        },
+        {
+          "year": 2014,
+          "value": 86.041
+        },
+        {
+          "year": 2015,
+          "value": 87.449
+        },
+        {
+          "year": 2016,
+          "value": 89.608
+        },
+        {
+          "year": 2017,
+          "value": 92.885
+        },
+        {
+          "year": 2018,
+          "value": 95.578
+        },
+        {
+          "year": 2019,
+          "value": 95.532
+        },
+        {
+          "year": 2020,
+          "value": 100.0
+        },
+        {
+          "year": 2021,
+          "value": 106.18
+        },
+        {
+          "year": 2022,
+          "value": 112.41
+        },
+        {
+          "year": 2023,
+          "value": 118.27
+        },
+        {
+          "year": 2024,
+          "value": 123.06,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "ppi_agri"
+      ]
+    },
+    {
+      "id": "farm_terms_trade",
+      "name": "농가 교역조건지수",
+      "group": "물가·가격",
+      "unit": "지수(2020=100)",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "농가교역조건지수(판매/구입×100)",
+      "keywords": [
+        "교역조건",
+        "농가판매",
+        "농가구입"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅴ. 물가 > 물가지수 총괄",
+        "page": 112,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": null
+        },
+        {
+          "year": 1975,
+          "value": null
+        },
+        {
+          "year": 1980,
+          "value": null
+        },
+        {
+          "year": 1985,
+          "value": null
+        },
+        {
+          "year": 1990,
+          "value": null
+        },
+        {
+          "year": 1995,
+          "value": null
+        },
+        {
+          "year": 2000,
+          "value": null
+        },
+        {
+          "year": 2005,
+          "value": 98.3
+        },
+        {
+          "year": 2010,
+          "value": 86.9
+        },
+        {
+          "year": 2011,
+          "value": 90.4
+        },
+        {
+          "year": 2012,
+          "value": 96.3
+        },
+        {
+          "year": 2013,
+          "value": 91.8
+        },
+        {
+          "year": 2014,
+          "value": 89.2
+        },
+        {
+          "year": 2015,
+          "value": 90.7
+        },
+        {
+          "year": 2016,
+          "value": 93.9
+        },
+        {
+          "year": 2017,
+          "value": 96.7
+        },
+        {
+          "year": 2018,
+          "value": 96.0
+        },
+        {
+          "year": 2019,
+          "value": 95.0
+        },
+        {
+          "year": 2020,
+          "value": 100.0
+        },
+        {
+          "year": 2021,
+          "value": 106.3
+        },
+        {
+          "year": 2022,
+          "value": 90.5
+        },
+        {
+          "year": 2023,
+          "value": 90.8
+        },
+        {
+          "year": 2024,
+          "value": 96.8,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "ppi_agri",
+        "cpi_food"
+      ]
+    },
+    {
+      "id": "livestock_heads",
+      "name": "주요 가축 사육마릿수",
+      "group": "축산",
+      "unit": "천마리",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "주요 축종별 사육마릿수(연도말)",
+      "keywords": [
+        "가축",
+        "사육",
+        "한우",
+        "젖소",
+        "돼지",
+        "닭"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅵ. 축산 > 가축사육마릿수 및 호수",
+        "page": 372,
+        "org": "국가데이터처 가축동향조사",
+        "license": "공공누리 출처표시"
+      },
+      "breakdown": [
+        {
+          "label": "한·육우",
+          "series": [
+            {
+              "year": 1970,
+              "value": 1286
+            },
+            {
+              "year": 1975,
+              "value": 1556
+            },
+            {
+              "year": 1980,
+              "value": 1361
+            },
+            {
+              "year": 1985,
+              "value": 2553
+            },
+            {
+              "year": 1990,
+              "value": 1622
+            },
+            {
+              "year": 1995,
+              "value": 2594
+            },
+            {
+              "year": 2000,
+              "value": 1590
+            },
+            {
+              "year": 2005,
+              "value": 1819
+            },
+            {
+              "year": 2010,
+              "value": 2922
+            },
+            {
+              "year": 2011,
+              "value": 2950
+            },
+            {
+              "year": 2012,
+              "value": 3059
+            },
+            {
+              "year": 2013,
+              "value": 2918
+            },
+            {
+              "year": 2014,
+              "value": 2759
+            },
+            {
+              "year": 2015,
+              "value": 2676
+            },
+            {
+              "year": 2016,
+              "value": 2717
+            },
+            {
+              "year": 2017,
+              "value": 3020
+            },
+            {
+              "year": 2018,
+              "value": 3113
+            },
+            {
+              "year": 2019,
+              "value": 3237
+            },
+            {
+              "year": 2020,
+              "value": 3395
+            },
+            {
+              "year": 2021,
+              "value": 3589
+            },
+            {
+              "year": 2022,
+              "value": 3727
+            },
+            {
+              "year": 2023,
+              "value": 3648
+            },
+            {
+              "year": 2024,
+              "value": 3507,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "젖소",
+          "series": [
+            {
+              "year": 1970,
+              "value": 24
+            },
+            {
+              "year": 1975,
+              "value": 86
+            },
+            {
+              "year": 1980,
+              "value": 180
+            },
+            {
+              "year": 1985,
+              "value": 390
+            },
+            {
+              "year": 1990,
+              "value": 504
+            },
+            {
+              "year": 1995,
+              "value": 553
+            },
+            {
+              "year": 2000,
+              "value": 544
+            },
+            {
+              "year": 2005,
+              "value": 479
+            },
+            {
+              "year": 2010,
+              "value": 430
+            },
+            {
+              "year": 2011,
+              "value": 404
+            },
+            {
+              "year": 2012,
+              "value": 420
+            },
+            {
+              "year": 2013,
+              "value": 424
+            },
+            {
+              "year": 2014,
+              "value": 431
+            },
+            {
+              "year": 2015,
+              "value": 411
+            },
+            {
+              "year": 2016,
+              "value": 404
+            },
+            {
+              "year": 2017,
+              "value": 409
+            },
+            {
+              "year": 2018,
+              "value": 408
+            },
+            {
+              "year": 2019,
+              "value": 408
+            },
+            {
+              "year": 2020,
+              "value": 410
+            },
+            {
+              "year": 2021,
+              "value": 401
+            },
+            {
+              "year": 2022,
+              "value": 390
+            },
+            {
+              "year": 2023,
+              "value": 387
+            },
+            {
+              "year": 2024,
+              "value": 382,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "돼지",
+          "series": [
+            {
+              "year": 1970,
+              "value": 1126
+            },
+            {
+              "year": 1975,
+              "value": 1247
+            },
+            {
+              "year": 1980,
+              "value": 1784
+            },
+            {
+              "year": 1985,
+              "value": 2853
+            },
+            {
+              "year": 1990,
+              "value": 4528
+            },
+            {
+              "year": 1995,
+              "value": 6461
+            },
+            {
+              "year": 2000,
+              "value": 8214
+            },
+            {
+              "year": 2005,
+              "value": 8962
+            },
+            {
+              "year": 2010,
+              "value": 9881
+            },
+            {
+              "year": 2011,
+              "value": 8171
+            },
+            {
+              "year": 2012,
+              "value": 9916
+            },
+            {
+              "year": 2013,
+              "value": 9912
+            },
+            {
+              "year": 2014,
+              "value": 10090
+            },
+            {
+              "year": 2015,
+              "value": 10187
+            },
+            {
+              "year": 2016,
+              "value": 10367
+            },
+            {
+              "year": 2017,
+              "value": 11273
+            },
+            {
+              "year": 2018,
+              "value": 11333
+            },
+            {
+              "year": 2019,
+              "value": 11280
+            },
+            {
+              "year": 2020,
+              "value": 11078
+            },
+            {
+              "year": 2021,
+              "value": 11217
+            },
+            {
+              "year": 2022,
+              "value": 11124
+            },
+            {
+              "year": 2023,
+              "value": 11089
+            },
+            {
+              "year": 2024,
+              "value": 10846,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "닭",
+          "series": [
+            {
+              "year": 1970,
+              "value": 23633
+            },
+            {
+              "year": 1975,
+              "value": 29939
+            },
+            {
+              "year": 1980,
+              "value": 40130
+            },
+            {
+              "year": 1985,
+              "value": 51081
+            },
+            {
+              "year": 1990,
+              "value": 74463
+            },
+            {
+              "year": 1995,
+              "value": 85800
+            },
+            {
+              "year": 2000,
+              "value": 102547
+            },
+            {
+              "year": 2005,
+              "value": 109628
+            },
+            {
+              "year": 2010,
+              "value": 149200
+            },
+            {
+              "year": 2011,
+              "value": 149511
+            },
+            {
+              "year": 2012,
+              "value": 146836
+            },
+            {
+              "year": 2013,
+              "value": 151337
+            },
+            {
+              "year": 2014,
+              "value": 156410
+            },
+            {
+              "year": 2015,
+              "value": 164131
+            },
+            {
+              "year": 2016,
+              "value": 170147
+            },
+            {
+              "year": 2017,
+              "value": 170551
+            },
+            {
+              "year": 2018,
+              "value": 172993
+            },
+            {
+              "year": 2019,
+              "value": 172920
+            },
+            {
+              "year": 2020,
+              "value": 178528
+            },
+            {
+              "year": 2021,
+              "value": 177194
+            },
+            {
+              "year": 2022,
+              "value": 173136
+            },
+            {
+              "year": 2023,
+              "value": 182127
+            },
+            {
+              "year": 2024,
+              "value": 178474,
+              "flag": "p"
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "meat_production"
+      ]
+    },
+    {
+      "id": "meat_production",
+      "name": "축산물(육류) 생산량",
+      "group": "축산",
+      "unit": "천t",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "육류 국내 생산량(계)",
+      "keywords": [
+        "축산물",
+        "육류",
+        "생산량",
+        "고기"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅵ. 축산 > 축산물 수급실적",
+        "page": 378,
+        "org": "농림축산식품부",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 165
+        },
+        {
+          "year": 1975,
+          "value": 225
+        },
+        {
+          "year": 1980,
+          "value": 424
+        },
+        {
+          "year": 1985,
+          "value": 590
+        },
+        {
+          "year": 1990,
+          "value": 775
+        },
+        {
+          "year": 1995,
+          "value": 1059
+        },
+        {
+          "year": 2000,
+          "value": 1189
+        },
+        {
+          "year": 2005,
+          "value": 1154
+        },
+        {
+          "year": 2010,
+          "value": 1395
+        },
+        {
+          "year": 2011,
+          "value": 1256
+        },
+        {
+          "year": 2012,
+          "value": 1459
+        },
+        {
+          "year": 2013,
+          "value": 1598
+        },
+        {
+          "year": 2014,
+          "value": 1631
+        },
+        {
+          "year": 2015,
+          "value": 1694
+        },
+        {
+          "year": 2016,
+          "value": 1721
+        },
+        {
+          "year": 2017,
+          "value": 1691
+        },
+        {
+          "year": 2018,
+          "value": 1777
+        },
+        {
+          "year": 2019,
+          "value": 1851
+        },
+        {
+          "year": 2020,
+          "value": 1993
+        },
+        {
+          "year": 2021,
+          "value": 1984
+        },
+        {
+          "year": 2022,
+          "value": 2011
+        },
+        {
+          "year": 2023,
+          "value": 2025
+        },
+        {
+          "year": 2024,
+          "value": 2071,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "livestock_self_suff",
+        "livestock_heads"
+      ]
+    },
+    {
+      "id": "livestock_self_suff",
+      "name": "축산물(육류) 자급률",
+      "group": "축산",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "육류 자급률(생산÷수요)",
+      "keywords": [
+        "자급률",
+        "축산물",
+        "육류"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅵ. 축산 > 축산물 수급실적",
+        "page": 378,
+        "org": "농림축산식품부",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 100.0
+        },
+        {
+          "year": 1975,
+          "value": 100.0
+        },
+        {
+          "year": 1980,
+          "value": 95.5
+        },
+        {
+          "year": 1985,
+          "value": 97.7
+        },
+        {
+          "year": 1990,
+          "value": 81.6
+        },
+        {
+          "year": 1995,
+          "value": 75.4
+        },
+        {
+          "year": 2000,
+          "value": 65.3
+        },
+        {
+          "year": 2005,
+          "value": 66.7
+        },
+        {
+          "year": 2010,
+          "value": 64.5
+        },
+        {
+          "year": 2011,
+          "value": 62.1
+        },
+        {
+          "year": 2012,
+          "value": 69.3
+        },
+        {
+          "year": 2013,
+          "value": 74.5
+        },
+        {
+          "year": 2014,
+          "value": 70.5
+        },
+        {
+          "year": 2015,
+          "value": 69.1
+        },
+        {
+          "year": 2016,
+          "value": 68.7
+        },
+        {
+          "year": 2017,
+          "value": 67.5
+        },
+        {
+          "year": 2018,
+          "value": 63.9
+        },
+        {
+          "year": 2019,
+          "value": 65.2
+        },
+        {
+          "year": 2020,
+          "value": 69.6
+        },
+        {
+          "year": 2021,
+          "value": 68.6
+        },
+        {
+          "year": 2022,
+          "value": 64.5
+        },
+        {
+          "year": 2023,
+          "value": 65.0
+        },
+        {
+          "year": 2024,
+          "value": 65.7,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "meat_production"
+      ]
+    },
+    {
+      "id": "vegetable_production",
+      "name": "채소류 생산량",
+      "group": "채소·과일",
+      "unit": "천t",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "전국 채소류 생산량",
+      "keywords": [
+        "채소",
+        "생산량",
+        "엽채",
+        "근채"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅴ. 경제작물 > 채소류 생산량",
+        "page": 340,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 2653
+        },
+        {
+          "year": 1975,
+          "value": 4767
+        },
+        {
+          "year": 1980,
+          "value": 7676
+        },
+        {
+          "year": 1985,
+          "value": 7763
+        },
+        {
+          "year": 1990,
+          "value": 8677
+        },
+        {
+          "year": 1995,
+          "value": 10586
+        },
+        {
+          "year": 2000,
+          "value": 11282
+        },
+        {
+          "year": 2005,
+          "value": 9584
+        },
+        {
+          "year": 2010,
+          "value": 8381
+        },
+        {
+          "year": 2011,
+          "value": 9747
+        },
+        {
+          "year": 2012,
+          "value": 8662
+        },
+        {
+          "year": 2013,
+          "value": 9243
+        },
+        {
+          "year": 2014,
+          "value": 9904
+        },
+        {
+          "year": 2015,
+          "value": 8549
+        },
+        {
+          "year": 2016,
+          "value": 8070
+        },
+        {
+          "year": 2017,
+          "value": 8662
+        },
+        {
+          "year": 2018,
+          "value": 9186
+        },
+        {
+          "year": 2019,
+          "value": 8681
+        },
+        {
+          "year": 2020,
+          "value": 8486
+        },
+        {
+          "year": 2021,
+          "value": 8724
+        },
+        {
+          "year": 2022,
+          "value": 8368
+        },
+        {
+          "year": 2023,
+          "value": 8254
+        },
+        {
+          "year": 2024,
+          "value": 8075,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "fruit_production"
+      ]
+    },
+    {
+      "id": "fruit_production",
+      "name": "과실류 생산량",
+      "group": "채소·과일",
+      "unit": "천t",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "과실류 생산량(계)",
+      "keywords": [
+        "과일",
+        "과실",
+        "생산량",
+        "사과",
+        "배"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 > Ⅴ. 경제작물 > 과실류 생산량",
+        "page": 348,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 423
+        },
+        {
+          "year": 1975,
+          "value": 543
+        },
+        {
+          "year": 1980,
+          "value": 833
+        },
+        {
+          "year": 1985,
+          "value": 1464
+        },
+        {
+          "year": 1990,
+          "value": 1766
+        },
+        {
+          "year": 1995,
+          "value": 2300
+        },
+        {
+          "year": 2000,
+          "value": 2429
+        },
+        {
+          "year": 2005,
+          "value": 2611
+        },
+        {
+          "year": 2010,
+          "value": 2216
+        },
+        {
+          "year": 2011,
+          "value": 2102
+        },
+        {
+          "year": 2012,
+          "value": 2027
+        },
+        {
+          "year": 2013,
+          "value": 2207
+        },
+        {
+          "year": 2014,
+          "value": 2347
+        },
+        {
+          "year": 2015,
+          "value": 2364
+        },
+        {
+          "year": 2016,
+          "value": 2387
+        },
+        {
+          "year": 2017,
+          "value": 2358
+        },
+        {
+          "year": 2018,
+          "value": 2160
+        },
+        {
+          "year": 2019,
+          "value": 2206
+        },
+        {
+          "year": 2020,
+          "value": 1976
+        },
+        {
+          "year": 2021,
+          "value": 2109
+        },
+        {
+          "year": 2022,
+          "value": 2206
+        },
+        {
+          "year": 2023,
+          "value": 1918
+        },
+        {
+          "year": 2024,
+          "value": 1986,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "vegetable_production"
+      ]
+    },
+    {
+      "id": "agri_export",
+      "name": "농림축산물 수출액",
+      "group": "무역",
+      "unit": "백만$",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "농림축산품 수출액(통관)",
+      "keywords": [
+        "무역",
+        "수출",
+        "수입",
+        "무역수지"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅵ. 국제수지 및 무역 > 수출입 실적(총괄)",
+        "page": 136,
+        "org": "식품산업정책관 농식품수출진흥과",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2020,
+          "value": 7569.8
+        },
+        {
+          "year": 2021,
+          "value": 8560.0
+        },
+        {
+          "year": 2022,
+          "value": 8825.4
+        },
+        {
+          "year": 2023,
+          "value": 9022.3
+        },
+        {
+          "year": 2024,
+          "value": 9825.9,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "agri_export",
+        "agri_import",
+        "agri_trade_balance"
+      ]
+    },
+    {
+      "id": "agri_import",
+      "name": "농림축산물 수입액",
+      "group": "무역",
+      "unit": "백만$",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "농림축산품 수입액(통관)",
+      "keywords": [
+        "무역",
+        "수출",
+        "수입",
+        "무역수지"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅵ. 국제수지 및 무역 > 수출입 실적(총괄)",
+        "page": 136,
+        "org": "식품산업정책관 농식품수출진흥과",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2020,
+          "value": 34278.9
+        },
+        {
+          "year": 2021,
+          "value": 41904.7
+        },
+        {
+          "year": 2022,
+          "value": 48570.9
+        },
+        {
+          "year": 2023,
+          "value": 43815.9
+        },
+        {
+          "year": 2024,
+          "value": 42854.2,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "agri_export",
+        "agri_import",
+        "agri_trade_balance"
+      ]
+    },
+    {
+      "id": "agri_trade_balance",
+      "name": "농림축산물 무역수지",
+      "group": "무역",
+      "unit": "백만$",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "농림축산품 무역수지(수출−수입)",
+      "keywords": [
+        "무역",
+        "수출",
+        "수입",
+        "무역수지"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅵ. 국제수지 및 무역 > 수출입 실적(총괄)",
+        "page": 136,
+        "org": "식품산업정책관 농식품수출진흥과",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2020,
+          "value": -26709.1
+        },
+        {
+          "year": 2021,
+          "value": -33344.7
+        },
+        {
+          "year": 2022,
+          "value": -39745.5
+        },
+        {
+          "year": 2023,
+          "value": -34793.6
+        },
+        {
+          "year": 2024,
+          "value": -33028.3,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "agri_export",
+        "agri_import",
+        "agri_trade_balance"
+      ]
+    },
+    {
+      "id": "forest_output",
+      "name": "임산물 생산액",
+      "group": "임업",
+      "unit": "백만원",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "임산물 생산실적(합계 금액)",
+      "keywords": [
+        "임산물",
+        "임업",
+        "생산액"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "임업 > Ⅱ. 임산물 생산 및 수급 > 연도별 임산물 생산실적",
+        "page": 426,
+        "org": "산림청",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1975,
+          "value": 135363
+        },
+        {
+          "year": 1980,
+          "value": 429532
+        },
+        {
+          "year": 1985,
+          "value": 706179
+        },
+        {
+          "year": 1990,
+          "value": 731433
+        },
+        {
+          "year": 1995,
+          "value": 979775
+        },
+        {
+          "year": 2000,
+          "value": 2962444
+        },
+        {
+          "year": 2005,
+          "value": 3178511
+        },
+        {
+          "year": 2010,
+          "value": 5537303
+        },
+        {
+          "year": 2011,
+          "value": 5726748
+        },
+        {
+          "year": 2012,
+          "value": 6750788
+        },
+        {
+          "year": 2013,
+          "value": 6909995
+        },
+        {
+          "year": 2014,
+          "value": 7815920
+        },
+        {
+          "year": 2015,
+          "value": 8337848
+        },
+        {
+          "year": 2016,
+          "value": 9203159
+        },
+        {
+          "year": 2017,
+          "value": 8965239
+        },
+        {
+          "year": 2018,
+          "value": 7380040
+        },
+        {
+          "year": 2019,
+          "value": 6566682
+        },
+        {
+          "year": 2020,
+          "value": 8285544
+        },
+        {
+          "year": 2021,
+          "value": 7198240
+        },
+        {
+          "year": 2022,
+          "value": 7746693
+        },
+        {
+          "year": 2023,
+          "value": 7129810
+        },
+        {
+          "year": 2024,
+          "value": 7378448,
+          "flag": "p"
+        }
+      ],
+      "related_ids": []
+    },
+    {
+      "id": "fishery_income",
+      "name": "어가소득(호당)",
+      "group": "어업",
+      "unit": "천원",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "어가 1호당 연간 소득",
+      "keywords": [
+        "어가",
+        "소득",
+        "어업"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "어업 > Ⅱ. 어가경제 > 어가경제 주요지표",
+        "page": 442,
+        "org": "국가데이터처 어가경제조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2003,
+          "value": 23916
+        },
+        {
+          "year": 2005,
+          "value": 28028
+        },
+        {
+          "year": 2006,
+          "value": 30006
+        },
+        {
+          "year": 2007,
+          "value": 30668
+        },
+        {
+          "year": 2008,
+          "value": 31176
+        },
+        {
+          "year": 2009,
+          "value": 33945
+        },
+        {
+          "year": 2010,
+          "value": 35696
+        },
+        {
+          "year": 2011,
+          "value": 38623
+        },
+        {
+          "year": 2012,
+          "value": 37381
+        },
+        {
+          "year": 2013,
+          "value": 38586
+        },
+        {
+          "year": 2014,
+          "value": 41015
+        },
+        {
+          "year": 2015,
+          "value": 43895
+        },
+        {
+          "year": 2016,
+          "value": 47077
+        },
+        {
+          "year": 2017,
+          "value": 49016
+        },
+        {
+          "year": 2018,
+          "value": 51836
+        },
+        {
+          "year": 2019,
+          "value": 48415
+        },
+        {
+          "year": 2020,
+          "value": 53187
+        },
+        {
+          "year": 2021,
+          "value": 52392
+        },
+        {
+          "year": 2022,
+          "value": 52911
+        },
+        {
+          "year": 2023,
+          "value": 54779
+        },
+        {
+          "year": 2024,
+          "value": 63652,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "farm_income"
+      ]
+    },
+    {
+      "id": "food_industry_size",
+      "name": "식품산업 시장규모",
+      "group": "식품산업",
+      "unit": "백만원",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "식품산업 시장규모(제조업+음식점·주점업)",
+      "keywords": [
+        "식품산업",
+        "시장규모",
+        "외식"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "식품 > Ⅰ. 식품산업 현황 > 식품산업 규모",
+        "page": 461,
+        "org": "국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 2013,
+          "value": 156870080
+        },
+        {
+          "year": 2014,
+          "value": 163745255
+        },
+        {
+          "year": 2015,
+          "value": 191950523
+        },
+        {
+          "year": 2016,
+          "value": 205464498
+        },
+        {
+          "year": 2017,
+          "value": 218017695
+        },
+        {
+          "year": 2018,
+          "value": 230196350
+        },
+        {
+          "year": 2019,
+          "value": 240621624
+        },
+        {
+          "year": 2020,
+          "value": 242727415
+        },
+        {
+          "year": 2021,
+          "value": 263895892
+        },
+        {
+          "year": 2022,
+          "value": 306888370
+        },
+        {
+          "year": 2023,
+          "value": 327543251
+        }
+      ],
+      "related_ids": []
+    },
+    {
+      "id": "farmer_aging_rate",
+      "name": "경영주 고령화율(65세+)",
+      "group": "농촌·사람",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": true,
+      "description": "경영주가 65세 이상인 농가 비율",
+      "keywords": [
+        "고령화",
+        "65세",
+        "경영주"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 > Ⅲ. 인구 및 가구 > 경영주 연령별 농가",
+        "page": 52,
+        "org": "국가데이터처 농림어업조사",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": null
+        },
+        {
+          "year": 1975,
+          "value": null
+        },
+        {
+          "year": 1980,
+          "value": null
+        },
+        {
+          "year": 1985,
+          "value": null
+        },
+        {
+          "year": 1990,
+          "value": 18.3
+        },
+        {
+          "year": 1995,
+          "value": 24.7
+        },
+        {
+          "year": 2000,
+          "value": 32.7
+        },
+        {
+          "year": 2005,
+          "value": 43.1
+        },
+        {
+          "year": 2010,
+          "value": 46.4
+        },
+        {
+          "year": 2011,
+          "value": 48.6
+        },
+        {
+          "year": 2012,
+          "value": 51.3
+        },
+        {
+          "year": 2013,
+          "value": 53.5
+        },
+        {
+          "year": 2014,
+          "value": 55.7
+        },
+        {
+          "year": 2015,
+          "value": 53.4
+        },
+        {
+          "year": 2016,
+          "value": 55.5
+        },
+        {
+          "year": 2017,
+          "value": 58.3
+        },
+        {
+          "year": 2018,
+          "value": 60.3
+        },
+        {
+          "year": 2019,
+          "value": 62.0
+        },
+        {
+          "year": 2020,
+          "value": 55.9
+        },
+        {
+          "year": 2021,
+          "value": 59.9
+        },
+        {
+          "year": 2022,
+          "value": 63.1
+        },
+        {
+          "year": 2023,
+          "value": 66.5
+        },
+        {
+          "year": 2024,
+          "value": 69.6,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "farm_population",
+        "farm_households"
+      ]
+    },
+    {
+      "id": "nk_population",
+      "name": "북한 인구",
+      "group": "남북한비교",
+      "unit": "천명",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "북한 총인구",
+      "keywords": [
+        "북한",
+        "인구",
+        "남북한"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "남북한 주요통계 > 인구 > 총인구",
+        "page": 560,
+        "org": "통계청 북한통계",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1953,
+          "value": 8491
+        },
+        {
+          "year": 1960,
+          "value": 10789
+        },
+        {
+          "year": 1965,
+          "value": 12252
+        },
+        {
+          "year": 1970,
+          "value": 14905
+        },
+        {
+          "year": 1975,
+          "value": 16646
+        },
+        {
+          "year": 1980,
+          "value": 17622
+        },
+        {
+          "year": 1985,
+          "value": 19097
+        },
+        {
+          "year": 1990,
+          "value": 20221
+        },
+        {
+          "year": 1995,
+          "value": 21715
+        },
+        {
+          "year": 2000,
+          "value": 22702
+        },
+        {
+          "year": 2005,
+          "value": 23561
+        },
+        {
+          "year": 2010,
+          "value": 24245
+        },
+        {
+          "year": 2011,
+          "value": 24386
+        },
+        {
+          "year": 2012,
+          "value": 24525
+        },
+        {
+          "year": 2013,
+          "value": 24660
+        },
+        {
+          "year": 2014,
+          "value": 24796
+        },
+        {
+          "year": 2015,
+          "value": 24931
+        },
+        {
+          "year": 2016,
+          "value": 25063
+        },
+        {
+          "year": 2017,
+          "value": 25194
+        },
+        {
+          "year": 2018,
+          "value": 25314
+        },
+        {
+          "year": 2019,
+          "value": 25418
+        },
+        {
+          "year": 2020,
+          "value": 25513
+        },
+        {
+          "year": 2021,
+          "value": 25607
+        },
+        {
+          "year": 2022,
+          "value": 25697
+        },
+        {
+          "year": 2023,
+          "value": 25784
+        },
+        {
+          "year": 2024,
+          "value": 25866,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "nk_economy",
+        "nk_agriculture"
+      ]
+    },
+    {
+      "id": "nk_economy",
+      "name": "북한 명목 GNI",
+      "group": "남북한비교",
+      "unit": "십억원",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "북한 명목 국민총소득(추정)",
+      "keywords": [
+        "북한",
+        "GNI",
+        "국민총소득",
+        "경제"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "남북한 주요통계 > 국민경제 > GNI 및 경제성장률",
+        "page": 565,
+        "org": "한국은행 추정",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1990,
+          "value": 16407.3
+        },
+        {
+          "year": 1995,
+          "value": 17169.5
+        },
+        {
+          "year": 2000,
+          "value": 18977.9
+        },
+        {
+          "year": 2005,
+          "value": 24791.6
+        },
+        {
+          "year": 2006,
+          "value": 24429.2
+        },
+        {
+          "year": 2007,
+          "value": 24826.8
+        },
+        {
+          "year": 2008,
+          "value": 27347.2
+        },
+        {
+          "year": 2009,
+          "value": 28634.6
+        },
+        {
+          "year": 2010,
+          "value": 30048.7
+        },
+        {
+          "year": 2011,
+          "value": 32438.3
+        },
+        {
+          "year": 2012,
+          "value": 33479.0
+        },
+        {
+          "year": 2013,
+          "value": 33844.0
+        },
+        {
+          "year": 2014,
+          "value": 34235.9
+        },
+        {
+          "year": 2015,
+          "value": 34512.0
+        },
+        {
+          "year": 2016,
+          "value": 36373.3
+        },
+        {
+          "year": 2017,
+          "value": 36630.8
+        },
+        {
+          "year": 2018,
+          "value": 35895.1
+        },
+        {
+          "year": 2019,
+          "value": 35561.6
+        },
+        {
+          "year": 2020,
+          "value": 34970.4
+        },
+        {
+          "year": 2021,
+          "value": 36253.2
+        },
+        {
+          "year": 2022,
+          "value": 36704.2
+        },
+        {
+          "year": 2023,
+          "value": 40858.0
+        }
+      ],
+      "related_ids": [
+        "nk_population"
+      ]
+    },
+    {
+      "id": "nk_agriculture",
+      "name": "북한 농가인구",
+      "group": "남북한비교",
+      "unit": "천명",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "북한 농가인구(추정)",
+      "keywords": [
+        "북한",
+        "농가인구",
+        "농업"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "남북한 주요통계 > 농림축산업 > 농가인구",
+        "page": 568,
+        "org": "통계청 북한통계",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1980,
+          "value": 6731
+        },
+        {
+          "year": 1985,
+          "value": 7161
+        },
+        {
+          "year": 1990,
+          "value": 7644
+        },
+        {
+          "year": 1995,
+          "value": 7863
+        },
+        {
+          "year": 1997,
+          "value": 8048
+        },
+        {
+          "year": 1998,
+          "value": 8009
+        },
+        {
+          "year": 1999,
+          "value": 8104
+        },
+        {
+          "year": 2000,
+          "value": 8160
+        },
+        {
+          "year": 2005,
+          "value": 8460
+        },
+        {
+          "year": 2010,
+          "value": null
+        },
+        {
+          "year": 2011,
+          "value": null
+        },
+        {
+          "year": 2012,
+          "value": null
+        },
+        {
+          "year": 2013,
+          "value": null
+        },
+        {
+          "year": 2014,
+          "value": null
+        },
+        {
+          "year": 2015,
+          "value": null
+        },
+        {
+          "year": 2016,
+          "value": null
+        },
+        {
+          "year": 2017,
+          "value": null
+        },
+        {
+          "year": 2018,
+          "value": null
+        },
+        {
+          "year": 2019,
+          "value": null
+        },
+        {
+          "year": 2020,
+          "value": null
+        },
+        {
+          "year": 2021,
+          "value": null
+        },
+        {
+          "year": 2022,
+          "value": null
+        },
+        {
+          "year": 2023,
+          "value": null
+        },
+        {
+          "year": 2024,
+          "value": null
+        }
+      ],
+      "related_ids": [
+        "nk_population"
+      ]
+    },
+    {
+      "id": "nk_trade",
+      "name": "북한 무역총액",
+      "group": "남북한비교",
+      "unit": "억$",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "북한 무역총액(추정)",
+      "keywords": [
+        "북한",
+        "무역",
+        "교역"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "남북한 주요통계 > 무역 > 무역총액",
+        "page": 575,
+        "org": "KOTRA/통계청 추정",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1975,
+          "value": 17.4
+        },
+        {
+          "year": 1980,
+          "value": 34.5
+        },
+        {
+          "year": 1985,
+          "value": 30.9
+        },
+        {
+          "year": 1990,
+          "value": 41.7
+        },
+        {
+          "year": 1995,
+          "value": 20.5
+        },
+        {
+          "year": 2000,
+          "value": 19.7
+        },
+        {
+          "year": 2005,
+          "value": 30.0
+        },
+        {
+          "year": 2010,
+          "value": 41.7
+        },
+        {
+          "year": 2011,
+          "value": 63.6
+        },
+        {
+          "year": 2012,
+          "value": 68.1
+        },
+        {
+          "year": 2013,
+          "value": 73.4
+        },
+        {
+          "year": 2014,
+          "value": 76.1
+        },
+        {
+          "year": 2015,
+          "value": 62.5
+        },
+        {
+          "year": 2016,
+          "value": 65.3
+        },
+        {
+          "year": 2017,
+          "value": 55.5
+        },
+        {
+          "year": 2018,
+          "value": 28.4
+        },
+        {
+          "year": 2019,
+          "value": 32.4
+        },
+        {
+          "year": 2020,
+          "value": 8.6
+        },
+        {
+          "year": 2021,
+          "value": 7.1
+        },
+        {
+          "year": 2022,
+          "value": 15.9
+        },
+        {
+          "year": 2023,
+          "value": 27.7
+        },
+        {
+          "year": 2024,
+          "value": 27.0,
+          "flag": "p"
+        }
+      ],
+      "related_ids": [
+        "nk_economy"
+      ]
+    }
+  ]
+}
