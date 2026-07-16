@@ -1,0 +1,27 @@
+# 민감 파일 — 절대 커밋 금지
+.env
+.env.*
+*.key
+*.pem
+secrets*
+**/secret*
+api_key*
+*credentials*
+
+# 의존성 / 빌드
+node_modules/
+dist/
+build/
+.cache/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 로그 / 임시
+*.log
+tmp/
+temp/
