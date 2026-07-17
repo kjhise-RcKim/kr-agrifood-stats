@@ -85,12 +85,12 @@
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v5 · AI 챗봇</span></h1>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v6 · 품목별 자급률</span></h1>
   <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
 </header>
 <div class="wrap">
   <div class="searchbar">
-    <input id="q" type="text" placeholder="🔍 지표 검색  (예: 자급률, 쌀, 수출, 물가, 북한, 일본)" autocomplete="off">
+    <input id="q" type="text" placeholder="🔍 지표 검색  (예: 자급률, 쌀, 밀, 수출, 물가, 북한, 일본)" autocomplete="off">
     <span class="qcount" id="qcount"></span>
   </div>
   <div class="tabs" id="tabs"></div>
@@ -108,7 +108,7 @@
     <div class="chips" id="chips"></div>
     <div class="chatlog" id="chatlog"></div>
     <div class="chatform">
-      <input id="cq" type="text" placeholder="예: 농가인구와 고령화율의 관계를 설명해줘" autocomplete="off">
+      <input id="cq" type="text" placeholder="예: 밀의 2024년 자급률은? / 품목별 자급률 비교해줘" autocomplete="off">
       <button id="csend">전송</button>
     </div>
   </div>
@@ -147,7 +147,8 @@ function renderTabs(){
 function matchList(){
   const terms=query.trim().toLowerCase().split(/\s+/);
   return INDS.filter(i=>{
-    const hay=[i.name,i.group,i.unit,i.description,(i.keywords||[]).join(' '),
+    const bl=(i.breakdown?i.breakdown.map(b=>b.label).join(' '):'');
+    const hay=[i.name,i.group,i.unit,i.description,(i.keywords||[]).join(' '),bl,
       (i.compare?i.compare.map(c=>c.label).join(' '):'')].join(' ').toLowerCase();
     return terms.every(t=>hay.includes(t));
   });
@@ -160,7 +161,7 @@ function renderCards(){
   document.getElementById('qcount').textContent = searching ? (list.length+'개 결과') : '';
   document.getElementById('tabs').style.opacity = searching ? .4 : 1;
   if(searching && !list.length){
-    c.innerHTML='<div class="empty">검색 결과가 없어요. 다른 키워드로 시도해보세요. (예: 자급률, 쌀, 수출, 물가, 축산, 북한, 일본)</div>';
+    c.innerHTML='<div class="empty">검색 결과가 없어요. 다른 키워드로 시도해보세요. (예: 자급률, 쌀, 밀, 수출, 물가, 축산, 북한, 일본)</div>';
     return;
   }
   list.forEach(ind=>{
@@ -192,7 +193,7 @@ function renderCards(){
   });
   if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
 }
-const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1'];
+const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1','#f78fb3'];
 const pctc=(a,b)=>(a-b)/Math.abs(b)*100;
 const arw=x=>x>=0?'▲':'▼';
 function insightFor(ind){
@@ -222,6 +223,14 @@ function insightFor(ind){
   const peak=pts.reduce((a,b)=>b.value>a.value?b:a);
   const trough=pts.reduce((a,b)=>b.value<a.value?b:a);
   out.push('최고 '+peak.year+'년 '+fmt(peak.value)+' · 최저 '+trough.year+'년 '+fmt(trough.value)+' '+ind.unit+'.');
+  if(ind.breakdown){
+    const latestYear=last.year;
+    const items=ind.breakdown.map(b=>{const p=b.series.filter(x=>x.value!==null).pop();return p?{l:b.label,v:p.value}:null;}).filter(Boolean);
+    if(items.length){
+      const hi=items.reduce((a,b)=>b.v>a.v?b:a), lo=items.reduce((a,b)=>b.v<a.v?b:a);
+      out.push('품목 중 최고 <b>'+hi.l+' '+fmt(hi.v)+'</b> · 최저 <b>'+lo.l+' '+fmt(lo.v)+'</b> '+ind.unit+' ('+latestYear+').');
+    }
+  }
   return out;
 }
 function relatedInsight(ind){
@@ -265,24 +274,28 @@ function renderDetail(ind){
           y:{ticks:{color:'#c7d6e6'},grid:{display:false}}}}});
     return;
   }
-  let datasets, labels;
-  if(ind.breakdown){
-    const yset=new Set();
-    ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
-    labels=[...yset].sort((a,b)=>a-b);
-    datasets=ind.breakdown.map((b,i)=>({
-      label:b.label, data:labels.map(y=>{const p=b.series.find(x=>x.year===y);return p?p.value:null;}),
-      borderColor:PALETTE[i%PALETTE.length], backgroundColor:PALETTE[i%PALETTE.length]+'22',
-      tension:.25, pointRadius:2, borderWidth:2, spanGaps:true}));
-  } else {
-    const s2=ind.series.filter(p=>p.value!==null);
-    labels=s2.map(p=>p.year);
-    datasets=[{label:ind.name,data:s2.map(p=>p.value),borderColor:PALETTE[0],
-      backgroundColor:'rgba(63,167,255,.12)',fill:true,tension:.25,pointRadius:2,borderWidth:2}];
+  // 시계열: series(계)와 breakdown(품목)을 함께 그림
+  const yset=new Set();
+  if(ind.series) ind.series.forEach(p=>{if(p.value!==null)yset.add(p.year)});
+  if(ind.breakdown) ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
+  const labels=[...yset].sort((a,b)=>a-b);
+  const pick=arr=>labels.map(y=>{const p=arr.find(x=>x.year===y);return p&&p.value!=null?p.value:null;});
+  const datasets=[];
+  if(ind.series){
+    datasets.push({label: ind.breakdown?'계(전체)':ind.name, data:pick(ind.series),
+      borderColor:'#e8eef4', backgroundColor: ind.breakdown?'transparent':'rgba(63,167,255,.12)',
+      fill:!ind.breakdown, tension:.25, pointRadius: ind.breakdown?0:2,
+      borderWidth: ind.breakdown?3:2, spanGaps:true});
   }
+  if(ind.breakdown){
+    ind.breakdown.forEach((b,i)=>datasets.push({label:b.label, data:pick(b.series),
+      borderColor:PALETTE[i%PALETTE.length], backgroundColor:'transparent',
+      tension:.25, pointRadius:1, borderWidth:2, spanGaps:true}));
+  }
+  const multi = datasets.length>1;
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
     options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:!!ind.breakdown,labels:{color:'#c7d6e6',boxWidth:12}},
+      plugins:{legend:{display:multi,labels:{color:'#c7d6e6',boxWidth:12}},
         tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}}},
       scales:{x:{ticks:{color:'#7f97ae',maxTicksLimit:12},grid:{color:'#1d2c3d'}},
         y:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}}}}});
@@ -291,7 +304,7 @@ document.getElementById('q').addEventListener('input', e=>{query=e.target.value;
 renderTabs();renderCards();
 
 // ── AI 챗봇 ──
-const CHIPS=['식량자급률은 왜 낮아?','농가인구와 고령화율의 관계는?','쌀 소비량 추세 요약','한국과 일본 자급률 비교','수출입 무역수지 어때?'];
+const CHIPS=['밀의 2024년 자급률은?','품목별 식량자급률 비교','식량자급률은 왜 낮아?','농가인구와 고령화율의 관계는?','한국과 일본 자급률 비교'];
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
 function ctx(){ return JSON.stringify(INDS.map(({keywords, ...r})=>r)); }
