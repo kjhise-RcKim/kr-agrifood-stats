@@ -6,12 +6,12 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v2 (국내 26 + 남북한 4)",
+    "status": "v3 (국내 26 + 남북한 4 + 국제비교 4)",
     "pending": [
-      "meat_consumption_pc(1인당 축산물소비)",
-      "timber_self_suff(목재자급률)",
+      "meat_consumption_pc",
+      "timber_self_suff",
       "fishery_production·return_farming(본서 미수록)",
-      "외국비교 japan/taiwan/china/OECD(전치형)"
+      "OECD 다품목·일본 스냅샷 상세"
     ]
   },
   "groups": [
@@ -69,6 +69,11 @@
       "id": "nk",
       "name": "남북한비교",
       "order": 12
+    },
+    {
+      "id": "intl",
+      "name": "국제비교",
+      "order": 11
     }
   ],
   "indicators": [
@@ -3644,6 +3649,366 @@
       ],
       "related_ids": [
         "nk_economy"
+      ]
+    },
+    {
+      "id": "japan_agri",
+      "name": "일본 곡물자급률",
+      "group": "국제비교",
+      "unit": "%",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "일본 곡물자급률(식용+사료용)",
+      "keywords": [
+        "일본",
+        "자급률",
+        "곡물",
+        "국제비교"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "외국 주요통계 > Ⅱ. 일본 > 농산물 자급률",
+        "page": 535,
+        "org": "일본 농림수산성",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1980,
+          "value": 33
+        },
+        {
+          "year": 1985,
+          "value": 31
+        },
+        {
+          "year": 1990,
+          "value": 30
+        },
+        {
+          "year": 1995,
+          "value": 30
+        },
+        {
+          "year": 2000,
+          "value": 28
+        },
+        {
+          "year": 2005,
+          "value": 28
+        },
+        {
+          "year": 2010,
+          "value": 27
+        },
+        {
+          "year": 2015,
+          "value": 29
+        },
+        {
+          "year": 2018,
+          "value": 28
+        },
+        {
+          "year": 2019,
+          "value": 28
+        },
+        {
+          "year": 2020,
+          "value": 28
+        },
+        {
+          "year": 2021,
+          "value": 29
+        },
+        {
+          "year": 2022,
+          "value": 29
+        },
+        {
+          "year": 2023,
+          "value": 30
+        }
+      ],
+      "related_ids": [
+        "grain_self_suff",
+        "food_self_suff"
+      ]
+    },
+    {
+      "id": "taiwan_agri",
+      "name": "대만 농가인구",
+      "group": "국제비교",
+      "unit": "천명",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "대만 농가인구",
+      "keywords": [
+        "대만",
+        "농가인구",
+        "국제비교"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "외국 주요통계 > Ⅲ. 대만 > 농가인구 및 가구",
+        "page": 537,
+        "org": "대만 행정원 농업위원회",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 5997
+        },
+        {
+          "year": 1975,
+          "value": 5598
+        },
+        {
+          "year": 1980,
+          "value": 5389
+        },
+        {
+          "year": 1985,
+          "value": 4685
+        },
+        {
+          "year": 1990,
+          "value": 4289
+        },
+        {
+          "year": 1995,
+          "value": 3930
+        },
+        {
+          "year": 2000,
+          "value": 3669
+        },
+        {
+          "year": 2005,
+          "value": 3400
+        },
+        {
+          "year": 2010,
+          "value": 2962
+        },
+        {
+          "year": 2011,
+          "value": 2907
+        },
+        {
+          "year": 2012,
+          "value": 2853
+        },
+        {
+          "year": 2013,
+          "value": 2800
+        },
+        {
+          "year": 2014,
+          "value": 2748
+        },
+        {
+          "year": 2015,
+          "value": 2698
+        },
+        {
+          "year": 2016,
+          "value": 2818
+        },
+        {
+          "year": 2017,
+          "value": 2778
+        },
+        {
+          "year": 2018,
+          "value": 2760
+        },
+        {
+          "year": 2019,
+          "value": 2694
+        },
+        {
+          "year": 2020,
+          "value": 2515
+        },
+        {
+          "year": 2021,
+          "value": 2392
+        },
+        {
+          "year": 2022,
+          "value": 2388
+        },
+        {
+          "year": 2023,
+          "value": 2339
+        }
+      ],
+      "related_ids": [
+        "farm_population"
+      ]
+    },
+    {
+      "id": "china_agri",
+      "name": "중국 농촌인구",
+      "group": "국제비교",
+      "unit": "천명",
+      "frequency": "연간",
+      "is_headline": false,
+      "description": "중국 농촌인구",
+      "keywords": [
+        "중국",
+        "농촌인구",
+        "국제비교"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "외국 주요통계 > Ⅳ. 중국 > 농촌인구 및 가구",
+        "page": 547,
+        "org": "중국 국가통계국",
+        "license": "공공누리 출처표시"
+      },
+      "series": [
+        {
+          "year": 1980,
+          "value": 795650
+        },
+        {
+          "year": 1985,
+          "value": 807570
+        },
+        {
+          "year": 1990,
+          "value": 841380
+        },
+        {
+          "year": 1995,
+          "value": 859470
+        },
+        {
+          "year": 2000,
+          "value": 808370
+        },
+        {
+          "year": 2005,
+          "value": 745440
+        },
+        {
+          "year": 2010,
+          "value": 671130
+        },
+        {
+          "year": 2013,
+          "value": 622240
+        },
+        {
+          "year": 2014,
+          "value": 609080
+        },
+        {
+          "year": 2015,
+          "value": 590240
+        },
+        {
+          "year": 2016,
+          "value": 573080
+        },
+        {
+          "year": 2017,
+          "value": 556680
+        },
+        {
+          "year": 2018,
+          "value": 541080
+        },
+        {
+          "year": 2019,
+          "value": 525820
+        },
+        {
+          "year": 2020,
+          "value": 509920
+        },
+        {
+          "year": 2021,
+          "value": 498350
+        },
+        {
+          "year": 2022,
+          "value": 491040
+        },
+        {
+          "year": 2023,
+          "value": 477000
+        }
+      ],
+      "related_ids": [
+        "farm_population"
+      ]
+    },
+    {
+      "id": "intl_rice_compare",
+      "name": "주요국 쌀 생산량 비교",
+      "group": "국제비교",
+      "unit": "천t",
+      "frequency": "단년",
+      "is_headline": false,
+      "description": "OECD 주요국 쌀 생산량 비교(최근년, 한국 포함)",
+      "keywords": [
+        "OECD",
+        "쌀",
+        "생산량",
+        "국제비교",
+        "주요국"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "외국 주요통계 > Ⅰ. 주요국별 기본통계 > 농업",
+        "page": 502,
+        "org": "OECD/국가데이터처",
+        "license": "공공누리 출처표시"
+      },
+      "compare": [
+        {
+          "label": "일본",
+          "value": 10136
+        },
+        {
+          "label": "미국",
+          "value": 9902
+        },
+        {
+          "label": "한국",
+          "value": 4898
+        },
+        {
+          "label": "이탈리아",
+          "value": 1379
+        },
+        {
+          "label": "튀르키예",
+          "value": 900
+        },
+        {
+          "label": "오스트레일리아",
+          "value": 497
+        },
+        {
+          "label": "스페인",
+          "value": 334
+        },
+        {
+          "label": "멕시코",
+          "value": 252
+        },
+        {
+          "label": "그리스",
+          "value": 190
+        }
+      ],
+      "related_ids": [
+        "rice_production"
       ]
     }
   ]

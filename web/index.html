@@ -50,7 +50,7 @@
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v2 · 30개 지표</span></h1>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v3 · 34개 지표</span></h1>
   <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
 </header>
 <div class="wrap">
@@ -94,19 +94,28 @@ function renderCards(){
   const c=document.getElementById('cards'); c.innerHTML='';
   const list = INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
   list.forEach(ind=>{
-    const [prev,last]=lastTwo(ind);
     const card=document.createElement('div');
     card.className='card'+(ind.id===curId?' sel':'');
-    let delta='';
-    if(prev&&last&&prev.value){
-      const dp=((last.value-prev.value)/Math.abs(prev.value)*100);
-      const up=dp>=0;
-      delta=`<div class="delta ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(dp).toFixed(1)}% <span style="color:var(--muted)">전년比</span></div>`;
+    if(ind.compare){
+      // 국가별 비교 지표: 국가 수 + 대표(1위) 표시
+      const top=ind.compare[0];
+      card.innerHTML=`<div class="yr">비교</div>
+        <div class="nm">${ind.name}</div>
+        <div class="val">${ind.compare.length}<small>개국</small></div>
+        <div class="delta" style="color:var(--muted)">최다 ${top.label} ${fmt(top.value)} ${ind.unit}</div>`;
+    } else {
+      const [prev,last]=lastTwo(ind);
+      let delta='';
+      if(prev&&last&&prev.value){
+        const dp=((last.value-prev.value)/Math.abs(prev.value)*100);
+        const up=dp>=0;
+        delta=`<div class="delta ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(dp).toFixed(1)}% <span style="color:var(--muted)">전년比</span></div>`;
+      }
+      const val = last? fmt(last.value):'–';
+      card.innerHTML=`<div class="yr">${last?last.year:''}${last&&last.flag==='p'?' p':''}</div>
+        <div class="nm">${ind.name}</div>
+        <div class="val">${val}<small>${ind.unit}</small></div>${delta}`;
     }
-    const val = last? fmt(last.value):'–';
-    card.innerHTML=`<div class="yr">${last?last.year:''}${last&&last.flag==='p'?' p':''}</div>
-      <div class="nm">${ind.name}</div>
-      <div class="val">${val}<small>${ind.unit}</small></div>${delta}`;
     card.onclick=()=>{curId=ind.id;renderCards();renderDetail(ind);};
     c.appendChild(card);
   });
@@ -121,6 +130,20 @@ function renderDetail(ind){
   document.getElementById('d-src').innerHTML=
     `출처: ${s.publication||''} · ${s.section||''} (p.${s.page||'?'})<br>제공: ${s.org||''} · ${s.license||''}`;
   let datasets, labels;
+  if(ind.compare){
+    labels=ind.compare.map(c=>c.label);
+    const cols=ind.compare.map(c=>c.label==='한국'?'#ffb84d':'#3fa7ff');
+    datasets=[{label:ind.name,data:ind.compare.map(c=>c.value),
+      backgroundColor:cols,borderColor:cols,borderWidth:0}];
+    if(chart)chart.destroy();
+    chart=new Chart(document.getElementById('chart'),{type:'bar',data:{labels,datasets},
+      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:c=>` ${fmt(c.parsed.x)} ${ind.unit}`}}},
+        scales:{x:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}},
+          y:{ticks:{color:'#c7d6e6'},grid:{display:false}}}}});
+    return;
+  }
   if(ind.breakdown){
     const yset=new Set();
     ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
