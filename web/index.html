@@ -60,6 +60,24 @@
     border-top:1px dashed var(--line);padding-top:9px;}
   .src{margin-top:14px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);
     padding-top:10px;line-height:1.6;}
+  .chat{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;}
+  .chat .chead{font-size:15px;font-weight:600;margin-bottom:4px;}
+  .chat .csub{color:var(--muted);font-size:12px;margin-bottom:14px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .chip{font-size:12px;color:var(--muted);background:var(--panel2);border:1px solid var(--line);
+    border-radius:16px;padding:6px 12px;cursor:pointer;transition:.15s;}
+  .chip:hover{color:var(--text);border-color:var(--accent);}
+  .chatlog{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;margin-bottom:14px;}
+  .msg{padding:11px 14px;border-radius:12px;font-size:14px;line-height:1.7;max-width:88%;}
+  .msg.user{align-self:flex-end;background:var(--accent);color:#04121f;border-bottom-right-radius:3px;}
+  .msg.bot{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:3px;}
+  .chatform{display:flex;gap:10px;}
+  .chatform input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);
+    border-radius:12px;padding:12px 15px;font-size:14px;outline:none;font-family:inherit;}
+  .chatform input:focus{border-color:var(--accent);}
+  .chatform button{background:var(--accent);color:#04121f;border:0;border-radius:12px;
+    padding:0 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .chatform button:disabled{opacity:.5;cursor:default;}
   .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
   .badge{display:inline-block;font-size:10px;background:var(--chip);color:var(--accent2);
     padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;}
@@ -67,7 +85,7 @@
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v4 · 자동분석</span></h1>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v5 · AI 챗봇</span></h1>
   <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
 </header>
 <div class="wrap">
@@ -83,6 +101,16 @@
     <div class="chartbox"><canvas id="chart"></canvas></div>
     <div class="insight" id="d-insight"></div>
     <div class="src" id="d-src"></div>
+  </div>
+  <div class="chat">
+    <div class="chead">💬 AI에게 물어보기 <span class="badge">Gemini</span></div>
+    <div class="csub">데이터에 있는 실제 수치만 근거로 답하고 출처를 밝힙니다. 없는 값은 지어내지 않아요.</div>
+    <div class="chips" id="chips"></div>
+    <div class="chatlog" id="chatlog"></div>
+    <div class="chatform">
+      <input id="cq" type="text" placeholder="예: 농가인구와 고령화율의 관계를 설명해줘" autocomplete="off">
+      <button id="csend">전송</button>
+    </div>
   </div>
   <div class="footer">
     데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
@@ -104,10 +132,7 @@ function seriesPts(ind){
   }
   return [];
 }
-function lastTwo(ind){
-  const s=seriesPts(ind);
-  return [s[s.length-2], s[s.length-1]];
-}
+function lastTwo(ind){ const s=seriesPts(ind); return [s[s.length-2], s[s.length-1]]; }
 function groups(){ return ['전체', ...new Set(INDS.map(i=>i.group))]; }
 let curGroup='전체', curId=null, chart=null, query='';
 function renderTabs(){
@@ -180,9 +205,7 @@ function insightFor(ind){
       const rank=sorted.findIndex(c=>c.label==='한국')+1;
       out.push('한국은 비교 '+ind.compare.length+'개국 중 <b>'+rank+'위</b> ('+fmt(kr.value)+' '+ind.unit+').');
       if(top.label!=='한국') out.push('1위 '+top.label+'('+fmt(top.value)+')의 <b>'+(kr.value/top.value).toFixed(2)+'배</b> 수준.');
-    } else {
-      out.push('최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'.');
-    }
+    } else { out.push('최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'.'); }
     return out;
   }
   const pts=seriesPts(ind);
@@ -266,6 +289,41 @@ function renderDetail(ind){
 }
 document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();});
 renderTabs();renderCards();
+
+// ── AI 챗봇 ──
+const CHIPS=['식량자급률은 왜 낮아?','농가인구와 고령화율의 관계는?','쌀 소비량 추세 요약','한국과 일본 자급률 비교','수출입 무역수지 어때?'];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
+function ctx(){ return JSON.stringify(INDS.map(({keywords, ...r})=>r)); }
+const chatHist=[];
+function addMsg(role,html){
+  const log=document.getElementById('chatlog');
+  const d=document.createElement('div'); d.className='msg '+role; d.innerHTML=html;
+  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+}
+async function sendChat(q){
+  q=(q||'').trim(); if(!q) return;
+  addMsg('user', esc(q));
+  document.getElementById('cq').value='';
+  const btn=document.getElementById('csend'); btn.disabled=true;
+  const bubble=addMsg('bot','⏳ 분석 중…');
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question:q, context:ctx(), history:chatHist})});
+    const d=await r.json().catch(()=>({error:'응답 파싱 실패'}));
+    if(!r.ok){ bubble.innerHTML='⚠️ '+esc(d.error||('오류 '+r.status))+(d.detail?'<br><span style="color:var(--muted)">'+esc(d.detail)+'</span>':''); }
+    else { bubble.innerHTML=mdLite(d.answer); chatHist.push({role:'user',text:q},{role:'bot',text:d.answer}); }
+  }catch(e){
+    bubble.innerHTML='⚠️ 챗봇 서버에 연결할 수 없어요. 이 기능은 <b>Vercel 배포 후</b> 작동합니다.<br><span style="color:var(--muted)">로컬 미리보기·GitHub Pages에서는 그래프·검색·자동분석까지 사용할 수 있어요.</span>';
+  }
+  btn.disabled=false;
+}
+(function initChat(){
+  const cw=document.getElementById('chips');
+  CHIPS.forEach(t=>{const b=document.createElement('div');b.className='chip';b.textContent=t;b.onclick=()=>sendChat(t);cw.appendChild(b);});
+  document.getElementById('csend').onclick=()=>sendChat(document.getElementById('cq').value);
+  document.getElementById('cq').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat(e.target.value);});
+})();
 </script>
 </body>
 </html>
