@@ -1,5 +1,4 @@
-// Vercel 서버리스 함수 — Gemini(무료) 호출 + 원문 RAG
-// 구조화 지표(프론트가 보내는 context) + 원문 코퍼스(corpus.json) 검색 결과를 함께 근거로 답변.
+// Vercel 서버리스 함수 — Gemini(무료) + 원문 RAG (표 라벨링 코퍼스)
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
 
@@ -48,10 +47,11 @@ var SYSTEM_PROMPT = [
   "",
   "규칙:",
   "1. (A)에 값이 있으면 우선 사용하고, (A)에 없어도 (B) 원문 발췌에 값이 있으면 그것을 근거로 답하세요.",
-  "2. 어느 쪽이든 실제 있는 수치만 쓰고, 없는 값은 절대 지어내지 마세요. (A)·(B) 모두 없으면 '해당 자료를 찾지 못했습니다'라고 답하세요.",
-  "3. 답에 사용한 근거의 출처를 밝히세요. (A)는 source의 section·page, (B)는 발췌의 (p.쪽번호). 예: (p.332)",
-  "4. 원문 발췌는 표를 텍스트로 옮긴 것이라 열이 어긋날 수 있으니, 숫자를 인용할 때 항목·연도를 신중히 확인하고 애매하면 '원문 p.XX 표 참고'로 안내하세요.",
-  "5. 한국어로 간결히. 단위를 함께 표기. 값이 null이면 결측, flag 'p'는 잠정치입니다."
+  "2. 원문 발췌 안에 '[표 데이터]' 섹션이 있으면 그 라벨 값(예: 밀=37.5)을 반드시 우선 사용하세요. 절대 열을 직접 세어 추정하지 마세요. '[원문 텍스트]'는 참고용입니다.",
+  "3. 실제 있는 수치만 쓰고, 없는 값은 절대 지어내지 마세요. (A)·(B) 모두 없으면 '해당 자료를 찾지 못했습니다'라고 답하세요.",
+  "4. 답에 사용한 근거의 출처를 밝히세요. (A)는 source의 section·page, (B)는 발췌의 (p.쪽번호). 예: (p.332)",
+  "5. '[표 데이터]'에 없고 '[원문 텍스트]'만으로 특정 셀 값을 확신하기 어려우면, 억지로 숫자를 만들지 말고 해당 행을 그대로 인용하며 'p.XX 원문 표 참고'로 안내하세요.",
+  "6. 한국어로 간결히. 단위를 함께 표기. 값이 null/결측이면 결측, flag 'p'는 잠정치입니다."
 ].join("\n");
 
 module.exports = async function (req, res) {
@@ -83,7 +83,7 @@ module.exports = async function (req, res) {
     var r = await fetch(ENDPOINT, {
       method: "POST",
       headers: { "Authorization": "Bearer " + process.env.GEMINI_API_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: MODEL, messages: messages, temperature: 0.2 })
+      body: JSON.stringify({ model: MODEL, messages: messages, temperature: 0 })
     });
     if (!r.ok) {
       var t = await r.text();
