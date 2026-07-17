@@ -19,7 +19,13 @@
   header h1{margin:0;font-size:22px;letter-spacing:-.3px;}
   header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px;}
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 20px;}
+  .searchbar{margin:22px 0 4px;display:flex;align-items:center;gap:12px;}
+  .searchbar input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);
+    border-radius:12px;padding:12px 16px;font-size:15px;outline:none;transition:.15s;font-family:inherit;}
+  .searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(63,167,255,.12);}
+  .searchbar input::placeholder{color:var(--muted);}
+  .qcount{color:var(--muted);font-size:13px;white-space:nowrap;}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px;}
   .tab{padding:8px 15px;border:1px solid var(--line);background:var(--panel);
     color:var(--muted);border-radius:20px;cursor:pointer;font-size:13px;transition:.15s;}
   .tab:hover{color:var(--text);border-color:var(--accent);}
@@ -36,11 +42,22 @@
   .up{color:var(--up)} .down{color:var(--down)}
   .card .yr{position:absolute;top:14px;right:15px;font-size:11px;color:var(--muted);
     background:var(--chip);padding:2px 7px;border-radius:8px;}
+  .gtag{position:absolute;top:14px;right:15px;font-size:10px;color:var(--accent);
+    background:var(--chip);padding:2px 7px;border-radius:8px;}
+  .empty{color:var(--muted);padding:30px 4px;font-size:14px;}
   .detail{margin-top:26px;background:var(--panel);border:1px solid var(--line);
     border-radius:16px;padding:22px;}
   .detail h2{margin:0 0 3px;font-size:18px;}
   .detail .meta{color:var(--muted);font-size:12px;margin-bottom:16px;line-height:1.6;}
   .chartbox{height:340px;position:relative;}
+  .insight{margin-top:16px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;}
+  .insight .ihead{font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:8px;}
+  .insight .ismall{font-weight:400;color:var(--muted);font-size:11px;margin-left:6px;}
+  .insight ul{margin:0;padding-left:18px;}
+  .insight li{font-size:13px;color:var(--text);line-height:1.95;}
+  .insight .irel{margin-top:9px;font-size:12px;color:var(--muted);
+    border-top:1px dashed var(--line);padding-top:9px;}
   .src{margin-top:14px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);
     padding-top:10px;line-height:1.6;}
   .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
@@ -50,21 +67,27 @@
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v3 · 34개 지표</span></h1>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v4 · 자동분석</span></h1>
   <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
 </header>
 <div class="wrap">
+  <div class="searchbar">
+    <input id="q" type="text" placeholder="🔍 지표 검색  (예: 자급률, 쌀, 수출, 물가, 북한, 일본)" autocomplete="off">
+    <span class="qcount" id="qcount"></span>
+  </div>
   <div class="tabs" id="tabs"></div>
   <div class="cards" id="cards"></div>
   <div class="detail" id="detail" style="display:none">
     <h2 id="d-name"></h2>
     <div class="meta" id="d-desc"></div>
     <div class="chartbox"><canvas id="chart"></canvas></div>
+    <div class="insight" id="d-insight"></div>
     <div class="src" id="d-src"></div>
   </div>
   <div class="footer">
     데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
-    본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.
+    본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.<br>
+    <span style="color:#6f869c">미수록 지표: <b>어업 생산량·귀농귀촌</b>은 원자료(주요통계 2025)에 해당 표가 없어 제외 · <b>1인당 축산물 소비·목재 자급률</b>은 원자료에 직접 표가 없어(별도 계산 필요) 보류.</span>
   </div>
 </div>
 <script>
@@ -72,49 +95,72 @@ const D = window.INDICATORS;
 const INDS = D.indicators;
 const fmt = n => n===null||n===undefined ? '–' :
   (Math.abs(n)>=1000 ? n.toLocaleString('ko-KR') : (Number.isInteger(n)?n:n.toFixed(1)));
-
+function seriesPts(ind){
+  if(ind.series) return ind.series.filter(p=>p.value!==null);
+  if(ind.breakdown){
+    const ymap={};
+    ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)ymap[p.year]=(ymap[p.year]||0)+p.value;}));
+    return Object.keys(ymap).map(y=>({year:+y,value:ymap[y]})).sort((a,b)=>a.year-b.year);
+  }
+  return [];
+}
 function lastTwo(ind){
-  const s = (ind.series || (ind.breakdown ? ind.breakdown[0].series : [])).filter(p=>p.value!==null);
+  const s=seriesPts(ind);
   return [s[s.length-2], s[s.length-1]];
 }
-function groups(){
-  const gs = [...new Set(INDS.map(i=>i.group))];
-  return ['전체', ...gs];
-}
-let curGroup='전체', curId=null, chart=null;
-
+function groups(){ return ['전체', ...new Set(INDS.map(i=>i.group))]; }
+let curGroup='전체', curId=null, chart=null, query='';
 function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
   groups().forEach(g=>{
-    const b=document.createElement('div'); b.className='tab'+(g===curGroup?' active':'');
-    b.textContent=g; b.onclick=()=>{curGroup=g;renderTabs();renderCards();}; t.appendChild(b);
+    const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
+    b.textContent=g;
+    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;renderTabs();renderCards();};
+    t.appendChild(b);
+  });
+}
+function matchList(){
+  const terms=query.trim().toLowerCase().split(/\s+/);
+  return INDS.filter(i=>{
+    const hay=[i.name,i.group,i.unit,i.description,(i.keywords||[]).join(' '),
+      (i.compare?i.compare.map(c=>c.label).join(' '):'')].join(' ').toLowerCase();
+    return terms.every(t=>hay.includes(t));
   });
 }
 function renderCards(){
   const c=document.getElementById('cards'); c.innerHTML='';
-  const list = INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
+  const searching=!!query.trim();
+  const list = searching ? matchList()
+    : INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
+  document.getElementById('qcount').textContent = searching ? (list.length+'개 결과') : '';
+  document.getElementById('tabs').style.opacity = searching ? .4 : 1;
+  if(searching && !list.length){
+    c.innerHTML='<div class="empty">검색 결과가 없어요. 다른 키워드로 시도해보세요. (예: 자급률, 쌀, 수출, 물가, 축산, 북한, 일본)</div>';
+    return;
+  }
   list.forEach(ind=>{
     const card=document.createElement('div');
     card.className='card'+(ind.id===curId?' sel':'');
+    const gtag='<div class="gtag">'+ind.group+'</div>';
     if(ind.compare){
-      // 국가별 비교 지표: 국가 수 + 대표(1위) 표시
       const top=ind.compare[0];
-      card.innerHTML=`<div class="yr">비교</div>
-        <div class="nm">${ind.name}</div>
-        <div class="val">${ind.compare.length}<small>개국</small></div>
-        <div class="delta" style="color:var(--muted)">최다 ${top.label} ${fmt(top.value)} ${ind.unit}</div>`;
+      const corner = searching ? gtag : '<div class="yr">비교</div>';
+      card.innerHTML=corner+'<div class="nm">'+ind.name+'</div>'+
+        '<div class="val">'+ind.compare.length+'<small>개국</small></div>'+
+        '<div class="delta" style="color:var(--muted)">최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'</div>';
     } else {
       const [prev,last]=lastTwo(ind);
       let delta='';
       if(prev&&last&&prev.value){
         const dp=((last.value-prev.value)/Math.abs(prev.value)*100);
         const up=dp>=0;
-        delta=`<div class="delta ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(dp).toFixed(1)}% <span style="color:var(--muted)">전년比</span></div>`;
+        delta='<div class="delta '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(dp).toFixed(1)+'% <span style="color:var(--muted)">전년比</span></div>';
       }
-      const val = last? fmt(last.value):'–';
-      card.innerHTML=`<div class="yr">${last?last.year:''}${last&&last.flag==='p'?' p':''}</div>
-        <div class="nm">${ind.name}</div>
-        <div class="val">${val}<small>${ind.unit}</small></div>${delta}`;
+      const val=last?fmt(last.value):'–';
+      const corner = searching ? gtag
+        : '<div class="yr">'+(last?last.year:'')+(last&&last.flag==='p'?' p':'')+'</div>';
+      card.innerHTML=corner+'<div class="nm">'+ind.name+'</div>'+
+        '<div class="val">'+val+'<small>'+ind.unit+'</small></div>'+delta;
     }
     card.onclick=()=>{curId=ind.id;renderCards();renderDetail(ind);};
     c.appendChild(card);
@@ -122,28 +168,81 @@ function renderCards(){
   if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
 }
 const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1'];
+const pctc=(a,b)=>(a-b)/Math.abs(b)*100;
+const arw=x=>x>=0?'▲':'▼';
+function insightFor(ind){
+  const out=[];
+  if(ind.compare){
+    const sorted=[...ind.compare].sort((a,b)=>b.value-a.value);
+    const kr=ind.compare.find(c=>c.label==='한국');
+    const top=sorted[0];
+    if(kr){
+      const rank=sorted.findIndex(c=>c.label==='한국')+1;
+      out.push('한국은 비교 '+ind.compare.length+'개국 중 <b>'+rank+'위</b> ('+fmt(kr.value)+' '+ind.unit+').');
+      if(top.label!=='한국') out.push('1위 '+top.label+'('+fmt(top.value)+')의 <b>'+(kr.value/top.value).toFixed(2)+'배</b> 수준.');
+    } else {
+      out.push('최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'.');
+    }
+    return out;
+  }
+  const pts=seriesPts(ind);
+  if(pts.length<2) return out;
+  const first=pts[0], last=pts[pts.length-1];
+  const tot=pctc(last.value,first.value);
+  out.push('최신 '+last.year+'년 <b>'+fmt(last.value)+' '+ind.unit+'</b>'+(last.flag==='p'?' (잠정)':'')+'.');
+  out.push(first.year+'→'+last.year+'년 '+arw(tot)+' <b>'+Math.abs(tot).toFixed(0)+'%</b> ('+fmt(first.value)+'→'+fmt(last.value)+').');
+  [5,10].forEach(n=>{
+    const base=pts.filter(p=>p.year<=last.year-n).pop();
+    if(base){const c=pctc(last.value,base.value);
+      out.push('최근 '+n+'년('+base.year+'→'+last.year+') '+arw(c)+' '+Math.abs(c).toFixed(1)+'%.');}
+  });
+  const peak=pts.reduce((a,b)=>b.value>a.value?b:a);
+  const trough=pts.reduce((a,b)=>b.value<a.value?b:a);
+  out.push('최고 '+peak.year+'년 '+fmt(peak.value)+' · 최저 '+trough.year+'년 '+fmt(trough.value)+' '+ind.unit+'.');
+  return out;
+}
+function relatedInsight(ind){
+  const out=[];
+  (ind.related_ids||[]).forEach(rid=>{
+    const r=INDS.find(i=>i.id===rid); if(!r||r.compare) return;
+    const pts=seriesPts(r); if(pts.length<2) return;
+    const last=pts[pts.length-1];
+    const base=pts.filter(p=>p.year<=last.year-5).pop()||pts[0];
+    const c=pctc(last.value,base.value);
+    out.push(r.name+' 최근 '+arw(c)+' '+Math.abs(c).toFixed(0)+'%');
+  });
+  return out;
+}
+function fillInsight(ind){
+  const ins=insightFor(ind), rel=relatedInsight(ind);
+  let html='<div class="ihead">📊 자동 분석 <span class="ismall">규칙기반 · 원자료 수치만 사용, 출처 아래</span></div>';
+  html+='<ul>'+ins.map(s=>'<li>'+s+'</li>').join('')+'</ul>';
+  if(rel.length) html+='<div class="irel">관련 지표 추이 — '+rel.join(' · ')+'</div>';
+  document.getElementById('d-insight').innerHTML=html;
+}
 function renderDetail(ind){
   document.getElementById('detail').style.display='block';
   document.getElementById('d-name').textContent=ind.name;
   document.getElementById('d-desc').textContent=ind.description||'';
   const s=ind.source||{};
   document.getElementById('d-src').innerHTML=
-    `출처: ${s.publication||''} · ${s.section||''} (p.${s.page||'?'})<br>제공: ${s.org||''} · ${s.license||''}`;
-  let datasets, labels;
+    '출처: '+(s.publication||'')+' · '+(s.section||'')+' (p.'+(s.page||'?')+')<br>제공: '+(s.org||'')+' · '+(s.license||'');
+  fillInsight(ind);
+  if(chart)chart.destroy();
   if(ind.compare){
-    labels=ind.compare.map(c=>c.label);
+    const labels=ind.compare.map(c=>c.label);
     const cols=ind.compare.map(c=>c.label==='한국'?'#ffb84d':'#3fa7ff');
-    datasets=[{label:ind.name,data:ind.compare.map(c=>c.value),
-      backgroundColor:cols,borderColor:cols,borderWidth:0}];
-    if(chart)chart.destroy();
-    chart=new Chart(document.getElementById('chart'),{type:'bar',data:{labels,datasets},
+    chart=new Chart(document.getElementById('chart'),{type:'bar',
+      data:{labels,datasets:[{label:ind.name,data:ind.compare.map(c=>c.value),
+        backgroundColor:cols,borderColor:cols,borderWidth:0}]},
       options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
         plugins:{legend:{display:false},
-          tooltip:{callbacks:{label:c=>` ${fmt(c.parsed.x)} ${ind.unit}`}}},
+          tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.x)+' '+ind.unit}}},
         scales:{x:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}},
           y:{ticks:{color:'#c7d6e6'},grid:{display:false}}}}});
     return;
   }
+  let datasets, labels;
   if(ind.breakdown){
     const yset=new Set();
     ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
@@ -158,14 +257,14 @@ function renderDetail(ind){
     datasets=[{label:ind.name,data:s2.map(p=>p.value),borderColor:PALETTE[0],
       backgroundColor:'rgba(63,167,255,.12)',fill:true,tension:.25,pointRadius:2,borderWidth:2}];
   }
-  if(chart)chart.destroy();
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:!!ind.breakdown,labels:{color:'#c7d6e6',boxWidth:12}},
-        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.parsed.y)} ${ind.unit}`}}},
+        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}}},
       scales:{x:{ticks:{color:'#7f97ae',maxTicksLimit:12},grid:{color:'#1d2c3d'}},
         y:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}}}}});
 }
+document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();});
 renderTabs();renderCards();
 </script>
 </body>
