@@ -101,6 +101,7 @@
     padding:0 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
   .chatform button:disabled{opacity:.5;cursor:default;}
   .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
+  .footer a{color:var(--accent);text-decoration:none;}
   .badge{display:inline-block;font-size:10px;background:var(--chip);color:var(--accent2);
     padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;}
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;
@@ -129,7 +130,7 @@
 <body>
 <header>
   <div>
-    <h1>농식품 주요통계 대시보드 <span class="badge">공개용</span></h1>
+    <h1 id="homeTitle" style="cursor:pointer" title="처음으로 (홈)">농식품 주요통계 대시보드 <span class="badge">공개용</span></h1>
     <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
   </div>
   <div class="hbtns">
@@ -169,6 +170,10 @@
   <div class="footer">
     데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
     본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);line-height:1.9">
+      Copyright© 2026 우리밀살리기운동본부 &amp; (주)네니아. All Rights Reserved. / Designed by RichardKim<br>
+      <span style="color:var(--muted)">[무료 배포 안내] 홈페이지 수정 · 에러 신고 · 추가 기능 요청은 <a href="mailto:kjhise@gmail.com">kjhise@gmail.com</a>으로 문의 바랍니다.</span>
+    </div>
   </div>
 </div>
 
@@ -213,7 +218,6 @@ function lastTwo(ind){ const s=seriesPts(ind); return [s[s.length-2], s[s.length
 function groups(){ return ['전체', ...new Set(INDS.map(i=>i.group))]; }
 let curGroup='전체', curId=null, chart=null, query='';
 
-// ── 테마 ──
 function css(v){ return getComputedStyle(document.body).getPropertyValue(v).trim(); }
 function applyTheme(t){
   document.body.setAttribute('data-theme', t);
@@ -227,10 +231,16 @@ function applyTheme(t){
 })();
 document.getElementById('themeBtn').onclick=()=>applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
 
-// ── 이용안내 모달 ──
 document.getElementById('helpBtn').onclick=()=>document.getElementById('help').style.display='flex';
 document.getElementById('helpClose').onclick=()=>document.getElementById('help').style.display='none';
 document.getElementById('help').onclick=e=>{ if(e.target.id==='help') e.currentTarget.style.display='none'; };
+
+function goHome(){
+  query=''; document.getElementById('q').value=''; curGroup='전체'; curId=null;
+  renderTabs(); renderCards(); renderOrig('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('homeTitle').onclick=goHome;
 
 function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
@@ -290,7 +300,6 @@ function renderCards(){
   if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
 }
 
-// ── 원문 전체 검색 ──
 let ORIG=null, origLoading=false;
 async function ensureOrig(){
   if(ORIG) return ORIG;
@@ -319,8 +328,7 @@ async function renderOrig(q){
   if(!top.length){ box.innerHTML=''; return; }
   box.innerHTML='<div class="orig-h">📄 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 AI가 그 자료로 답합니다</div>'+
     top.map(x=>'<div class="orig-item"><b>p.'+x.e.p+'</b> '+esc(x.e.t||'(제목 없음)')+'</div>').join('');
-  const items=box.querySelectorAll('.orig-item');
-  items.forEach((el,i)=>el.onclick=()=>{ sendChat(q); document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'}); });
+  box.querySelectorAll('.orig-item').forEach(el=>el.onclick=()=>{ sendChat(q); document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'}); });
 }
 
 const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1','#f78fb3'];
@@ -433,7 +441,6 @@ function renderDetail(ind){
         y:{ticks:{color:AX},grid:{color:GRID}}}}});
 }
 
-// ── 다운로드 ──
 function downloadFile(name, content, type){
   const blob=new Blob([content],{type:type});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
@@ -469,7 +476,6 @@ function downloadPNG(ind){
 document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();renderOrig(query);});
 renderTabs();renderCards();
 
-// ── AI 챗봇 ──
 const CHIPS=['밀의 2024년 자급률은?','농약 사용량 추세','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
 function ctx(){ return JSON.stringify(INDS.map(({keywords, ...r})=>r)); }
