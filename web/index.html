@@ -263,12 +263,13 @@ document.getElementById('pmClose').onclick=()=>document.getElementById('pageModa
 document.getElementById('pageModal').onclick=e=>{ if(e.target.id==='pageModal') e.currentTarget.style.display='none'; };
 
 function goHome(){
-  query=''; document.getElementById('q').value=''; curGroup='전체'; curId=null; compareMode=false;
-  document.getElementById('detail').style.display='none';
+  query=''; var qel=document.getElementById('q'); if(qel) qel.value='';
+  curGroup='전체'; curId=null; compareMode=false;
   renderTabs(); renderCards(); renderOrig('');
-  window.scrollTo({top:0,behavior:'smooth'});
+  try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); }
 }
-document.getElementById('homeTitle').onclick=goHome;
+var _homeEl=document.getElementById('homeTitle');
+if(_homeEl){ _homeEl.style.cursor='pointer'; _homeEl.addEventListener('click',goHome); }
 
 function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
