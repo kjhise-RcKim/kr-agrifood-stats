@@ -8,16 +8,27 @@
 <script src="./data.js"></script>
 <style>
   :root{
-    --bg:#0f1720; --panel:#16212e; --panel2:#1c2a3a; --line:#24384d;
+    --bg1:#0d141d; --bg2:#0f1720; --panel:#16212e; --panel2:#1c2a3a; --line:#24384d;
     --text:#e8eef4; --muted:#8fa6bd; --accent:#3fa7ff; --accent2:#38d39f;
-    --up:#38d39f; --down:#ff6b6b; --chip:#22344a;
+    --up:#38d39f; --down:#ff6b6b; --chip:#22344a; --btn:#22344a; --btntext:#cfe0f2;
+    --grid:#1d2c3d; --axis:#7f97ae; --total:#e8eef4;
+  }
+  body[data-theme="light"]{
+    --bg1:#eef2f7; --bg2:#f6f9fc; --panel:#ffffff; --panel2:#eef3f8; --line:#d7e0ea;
+    --text:#1a2836; --muted:#5c6f80; --accent:#1f7ae0; --accent2:#12a97a;
+    --up:#12a97a; --down:#e5484d; --chip:#e6eef6; --btn:#e6eef6; --btntext:#274158;
+    --grid:#e5ecf3; --axis:#708698; --total:#1a2836;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#0d141d,#0f1720);color:var(--text);
-    font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;}
-  header{padding:28px 32px 18px;border-bottom:1px solid var(--line);}
+  body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);
+    font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;transition:background .2s,color .2s;}
+  header{padding:24px 32px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   header h1{margin:0;font-size:22px;letter-spacing:-.3px;}
   header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
+  .hbtns{display:flex;gap:8px;flex-shrink:0;}
+  .hbtn{background:var(--btn);color:var(--btntext);border:1px solid var(--line);border-radius:10px;
+    padding:8px 13px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+  .hbtn:hover{border-color:var(--accent);}
   .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px;}
   .searchbar{margin:22px 0 4px;display:flex;align-items:center;gap:12px;}
   .searchbar input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);
@@ -29,7 +40,7 @@
   .tab{padding:8px 15px;border:1px solid var(--line);background:var(--panel);
     color:var(--muted);border-radius:20px;cursor:pointer;font-size:13px;transition:.15s;}
   .tab:hover{color:var(--text);border-color:var(--accent);}
-  .tab.active{background:var(--accent);color:#04121f;border-color:var(--accent);font-weight:600;}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
     padding:16px 17px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;}
@@ -44,11 +55,22 @@
     background:var(--chip);padding:2px 7px;border-radius:8px;}
   .gtag{position:absolute;top:14px;right:15px;font-size:10px;color:var(--accent);
     background:var(--chip);padding:2px 7px;border-radius:8px;}
-  .empty{color:var(--muted);padding:30px 4px;font-size:14px;}
+  .empty{color:var(--muted);padding:16px 4px;font-size:14px;}
+  .orig{margin-top:18px;}
+  .orig-h{font-size:13px;color:var(--muted);margin-bottom:8px;}
+  .orig-h b{color:var(--accent2);}
+  .orig-item{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:10px 13px;margin-bottom:7px;cursor:pointer;font-size:13px;transition:.15s;}
+  .orig-item:hover{border-color:var(--accent);color:var(--accent);}
+  .orig-item b{color:var(--accent);margin-right:6px;}
   .detail{margin-top:26px;background:var(--panel);border:1px solid var(--line);
     border-radius:16px;padding:22px;}
   .detail h2{margin:0 0 3px;font-size:18px;}
-  .detail .meta{color:var(--muted);font-size:12px;margin-bottom:16px;line-height:1.6;}
+  .detail .meta{color:var(--muted);font-size:12px;margin-bottom:12px;line-height:1.6;}
+  .dlrow{display:flex;gap:8px;margin-bottom:14px;}
+  .dlrow button{background:var(--btn);color:var(--btntext);border:1px solid var(--line);
+    border-radius:9px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;}
+  .dlrow button:hover{border-color:var(--accent);}
   .chartbox{height:340px;position:relative;}
   .insight{margin-top:16px;background:var(--panel2);border:1px solid var(--line);
     border-radius:12px;padding:14px 16px;}
@@ -69,60 +91,115 @@
   .chip:hover{color:var(--text);border-color:var(--accent);}
   .chatlog{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;margin-bottom:14px;}
   .msg{padding:11px 14px;border-radius:12px;font-size:14px;line-height:1.7;max-width:88%;}
-  .msg.user{align-self:flex-end;background:var(--accent);color:#04121f;border-bottom-right-radius:3px;}
+  .msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:3px;}
   .msg.bot{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:3px;}
   .chatform{display:flex;gap:10px;}
   .chatform input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);
     border-radius:12px;padding:12px 15px;font-size:14px;outline:none;font-family:inherit;}
   .chatform input:focus{border-color:var(--accent);}
-  .chatform button{background:var(--accent);color:#04121f;border:0;border-radius:12px;
+  .chatform button{background:var(--accent);color:#fff;border:0;border-radius:12px;
     padding:0 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
   .chatform button:disabled{opacity:.5;cursor:default;}
   .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
   .badge{display:inline-block;font-size:10px;background:var(--chip);color:var(--accent2);
     padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;
+    justify-content:center;padding:20px;z-index:100;}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:680px;
+    width:100%;max-height:85vh;overflow-y:auto;padding:26px 28px;}
+  .modal h2{margin:0 0 4px;font-size:20px;}
+  .modal h3{margin:20px 0 6px;font-size:15px;color:var(--accent);}
+  .modal p,.modal li{font-size:13.5px;line-height:1.75;color:var(--text);}
+  .modal ul{padding-left:20px;margin:6px 0;}
+  .modal .mmuted{color:var(--muted);font-size:12px;}
+  .modal-close{margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:10px;
+    padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  @media (max-width:640px){
+    header{padding:18px 16px 14px;}
+    header h1{font-size:18px;}
+    .wrap{padding:0 12px 50px;}
+    .cards{grid-template-columns:1fr 1fr;gap:10px;}
+    .card .val{font-size:22px;}
+    .chartbox{height:280px;}
+    .msg{max-width:94%;}
+    .modal{padding:20px 18px;}
+  }
 </style>
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v6 · 품목별</span></h1>
-  <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
+  <div>
+    <h1>농식품 주요통계 대시보드 <span class="badge">공개용</span></h1>
+    <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
+  </div>
+  <div class="hbtns">
+    <button class="hbtn" id="helpBtn">ℹ️ 이용안내</button>
+    <button class="hbtn" id="themeBtn">🌙</button>
+  </div>
 </header>
 <div class="wrap">
   <div class="searchbar">
-    <input id="q" type="text" placeholder="🔍 지표 검색  (예: 자급률, 쌀, 밀, 수출, 물가, 북한, 일본)" autocomplete="off">
+    <input id="q" type="text" placeholder="🔍 검색  (지표 + 원문 전체 · 예: 자급률, 농약, 산불, 인삼 수출)" autocomplete="off">
     <span class="qcount" id="qcount"></span>
   </div>
   <div class="tabs" id="tabs"></div>
   <div class="cards" id="cards"></div>
+  <div class="orig" id="orig"></div>
   <div class="detail" id="detail" style="display:none">
     <h2 id="d-name"></h2>
     <div class="meta" id="d-desc"></div>
+    <div class="dlrow">
+      <button id="dl-csv">⬇ CSV</button>
+      <button id="dl-png">⬇ 그래프 이미지</button>
+    </div>
     <div class="chartbox"><canvas id="chart"></canvas></div>
     <div class="insight" id="d-insight"></div>
     <div class="src" id="d-src"></div>
   </div>
   <div class="chat">
     <div class="chead">💬 AI에게 물어보기 <span class="badge">Gemini</span></div>
-    <div class="csub">데이터에 있는 실제 수치만 근거로 답하고 출처를 밝힙니다. 없는 값은 지어내지 않아요.</div>
+    <div class="csub">원문 581쪽 전체에서 실제 수치만 근거로 답하고 출처를 밝힙니다. 없는 값은 지어내지 않아요.</div>
     <div class="chips" id="chips"></div>
     <div class="chatlog" id="chatlog"></div>
     <div class="chatform">
-      <input id="cq" type="text" placeholder="예: 밀의 2024년 자급률은? / 품목별 자급률 비교해줘" autocomplete="off">
+      <input id="cq" type="text" placeholder="예: 밀의 2024년 자급률은? / 농약 사용량 추세는?" autocomplete="off">
       <button id="csend">전송</button>
     </div>
   </div>
   <div class="footer">
     데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
-    본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.<br>
-    <span style="color:#6f869c">미수록 지표: <b>어업 생산량·귀농귀촌</b>은 원자료(주요통계 2025)에 해당 표가 없어 제외 · <b>1인당 축산물 소비·목재 자급률</b>은 원자료에 직접 표가 없어(별도 계산 필요) 보류.</span>
+    본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.
   </div>
 </div>
+
+<div class="modal-overlay" id="help" style="display:none">
+  <div class="modal">
+    <h2>이용안내</h2>
+    <p class="mmuted">농림축산식품부 『농림축산식품 주요통계 2025』(581쪽)를 누구나 쉽게 보도록 만든 공개 도구입니다.</p>
+    <h3>① 대시보드</h3>
+    <p>지표 카드를 누르면 시계열 그래프와 자동 분석(추세·최고최저)이 나옵니다. 위쪽 그룹 탭으로 분야별로 볼 수 있어요. 자급률·소비량 등은 계(전체)+품목별 라인이 함께 표시됩니다.</p>
+    <h3>② 검색</h3>
+    <p>검색창에 단어를 넣으면 <b>주요 지표</b>와 <b>원문 전체</b>를 함께 찾습니다. 원문 결과(📄 p.XX)를 누르면 AI가 그 자료를 근거로 답해줘요.</p>
+    <h3>③ AI에게 물어보기</h3>
+    <p>자연어로 질문하면 원문에서 관련 표를 찾아 답합니다. 지표에 없는 자료(농약 사용량·산불·수출 실적 등)도 원문 페이지를 근거로 답해요.</p>
+    <h3>신뢰 원칙</h3>
+    <ul>
+      <li>답변은 <b>원자료에 실제 있는 수치만</b> 사용하고, 근거 출처(장·페이지)를 밝힙니다.</li>
+      <li>원자료에 없는 값은 지어내지 않고 "자료를 찾지 못했다"고 답합니다.</li>
+      <li>표 구조가 복잡한 일부는 값 대신 "원문 p.XX 표 참고"로 안내할 수 있습니다.</li>
+      <li>2024년 수치는 잠정치(p)입니다.</li>
+    </ul>
+    <p class="mmuted">출처표시: 농림축산식품부, 『농림축산식품 주요통계 2025』, 공공누리 제1유형(출처표시).</p>
+    <button class="modal-close" id="helpClose">닫기</button>
+  </div>
+</div>
+
 <script>
 const D = window.INDICATORS;
 const INDS = D.indicators;
 const fmt = n => n===null||n===undefined ? '–' :
   (Math.abs(n)>=1000 ? n.toLocaleString('ko-KR') : (Number.isInteger(n)?n:n.toFixed(1)));
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function seriesPts(ind){
   if(ind.series) return ind.series.filter(p=>p.value!==null);
   if(ind.breakdown){
@@ -135,12 +212,32 @@ function seriesPts(ind){
 function lastTwo(ind){ const s=seriesPts(ind); return [s[s.length-2], s[s.length-1]]; }
 function groups(){ return ['전체', ...new Set(INDS.map(i=>i.group))]; }
 let curGroup='전체', curId=null, chart=null, query='';
+
+// ── 테마 ──
+function css(v){ return getComputedStyle(document.body).getPropertyValue(v).trim(); }
+function applyTheme(t){
+  document.body.setAttribute('data-theme', t);
+  try{ localStorage.setItem('theme', t); }catch(e){}
+  document.getElementById('themeBtn').textContent = t==='light' ? '☀️' : '🌙';
+  if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
+}
+(function initTheme(){
+  let t='dark'; try{ t=localStorage.getItem('theme')||'dark'; }catch(e){}
+  applyTheme(t);
+})();
+document.getElementById('themeBtn').onclick=()=>applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
+
+// ── 이용안내 모달 ──
+document.getElementById('helpBtn').onclick=()=>document.getElementById('help').style.display='flex';
+document.getElementById('helpClose').onclick=()=>document.getElementById('help').style.display='none';
+document.getElementById('help').onclick=e=>{ if(e.target.id==='help') e.currentTarget.style.display='none'; };
+
 function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
     b.textContent=g;
-    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;renderTabs();renderCards();};
+    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;renderTabs();renderCards();renderOrig('');};
     t.appendChild(b);
   });
 }
@@ -158,11 +255,10 @@ function renderCards(){
   const searching=!!query.trim();
   const list = searching ? matchList()
     : INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
-  document.getElementById('qcount').textContent = searching ? (list.length+'개 결과') : '';
+  document.getElementById('qcount').textContent = searching ? (list.length+'개 지표') : '';
   document.getElementById('tabs').style.opacity = searching ? .4 : 1;
   if(searching && !list.length){
-    c.innerHTML='<div class="empty">검색 결과가 없어요. 다른 키워드로 시도해보세요. (예: 자급률, 쌀, 밀, 수출, 물가, 축산, 북한, 일본)</div>';
-    return;
+    c.innerHTML='<div class="empty">일치하는 주요 지표가 없어요. 아래 원문 검색 결과나 AI 질문을 이용해보세요.</div>';
   }
   list.forEach(ind=>{
     const card=document.createElement('div');
@@ -193,6 +289,40 @@ function renderCards(){
   });
   if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
 }
+
+// ── 원문 전체 검색 ──
+let ORIG=null, origLoading=false;
+async function ensureOrig(){
+  if(ORIG) return ORIG;
+  if(origLoading) return null;
+  origLoading=true;
+  try{ const r=await fetch('./search_index.json'); ORIG=await r.json(); }catch(e){ ORIG=[]; }
+  origLoading=false; return ORIG;
+}
+async function renderOrig(q){
+  const box=document.getElementById('orig');
+  q=(q||'').trim();
+  if(!q){ box.innerHTML=''; return; }
+  const idx=await ensureOrig();
+  if(q!==query.trim()) return;
+  if(!idx){ box.innerHTML='<div class="orig-h">원문 검색 불러오는 중…</div>'; return; }
+  const terms=q.toLowerCase().split(/\s+/);
+  const scored=[];
+  for(const e of idx){
+    const hay=((e.t||'')+' '+(e.x||'')).toLowerCase();
+    if(!terms.every(t=>hay.includes(t))) continue;
+    let s=0; for(const t of terms){ if((e.t||'').toLowerCase().includes(t)) s+=3; s+=1; }
+    scored.push({e,s});
+  }
+  scored.sort((a,b)=>b.s-a.s);
+  const top=scored.slice(0,8);
+  if(!top.length){ box.innerHTML=''; return; }
+  box.innerHTML='<div class="orig-h">📄 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 AI가 그 자료로 답합니다</div>'+
+    top.map(x=>'<div class="orig-item"><b>p.'+x.e.p+'</b> '+esc(x.e.t||'(제목 없음)')+'</div>').join('');
+  const items=box.querySelectorAll('.orig-item');
+  items.forEach((el,i)=>el.onclick=()=>{ sendChat(q); document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'}); });
+}
+
 const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1','#f78fb3'];
 const pctc=(a,b)=>(a-b)/Math.abs(b)*100;
 const arw=x=>x>=0?'▲':'▼';
@@ -259,6 +389,9 @@ function renderDetail(ind){
   document.getElementById('d-src').innerHTML=
     '출처: '+(s.publication||'')+' · '+(s.section||'')+' (p.'+(s.page||'?')+')<br>제공: '+(s.org||'')+' · '+(s.license||'');
   fillInsight(ind);
+  document.getElementById('dl-csv').onclick=()=>downloadCSV(ind);
+  document.getElementById('dl-png').onclick=()=>downloadPNG(ind);
+  const AX=css('--axis'), GRID=css('--grid'), TOTAL=css('--total'), LEG=css('--total');
   if(chart)chart.destroy();
   if(ind.compare){
     const labels=ind.compare.map(c=>c.label);
@@ -269,8 +402,8 @@ function renderDetail(ind){
       options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
         plugins:{legend:{display:false},
           tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.x)+' '+ind.unit}}},
-        scales:{x:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}},
-          y:{ticks:{color:'#c7d6e6'},grid:{display:false}}}}});
+        scales:{x:{ticks:{color:AX},grid:{color:GRID}},
+          y:{ticks:{color:LEG},grid:{display:false}}}}});
     return;
   }
   const yset=new Set();
@@ -281,7 +414,7 @@ function renderDetail(ind){
   const datasets=[];
   if(ind.series){
     datasets.push({label: ind.breakdown?'계(전체)':ind.name, data:pick(ind.series),
-      borderColor:'#e8eef4', backgroundColor: ind.breakdown?'transparent':'rgba(63,167,255,.12)',
+      borderColor:TOTAL, backgroundColor: ind.breakdown?'transparent':'rgba(63,167,255,.14)',
       fill:!ind.breakdown, tension:.25, pointRadius: ind.breakdown?0:2,
       borderWidth: ind.breakdown?3:2, spanGaps:true});
   }
@@ -294,17 +427,50 @@ function renderDetail(ind){
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
     options:{responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:multi,labels:{color:'#c7d6e6',boxWidth:12}},
+      plugins:{legend:{display:multi,labels:{color:LEG,boxWidth:12}},
         tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}}},
-      scales:{x:{ticks:{color:'#7f97ae',maxTicksLimit:12},grid:{color:'#1d2c3d'}},
-        y:{ticks:{color:'#7f97ae'},grid:{color:'#1d2c3d'}}}}});
+      scales:{x:{ticks:{color:AX,maxTicksLimit:12},grid:{color:GRID}},
+        y:{ticks:{color:AX},grid:{color:GRID}}}}});
 }
-document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();});
+
+// ── 다운로드 ──
+function downloadFile(name, content, type){
+  const blob=new Blob([content],{type:type});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function toCSV(ind){
+  let rows=[];
+  if(ind.compare){ rows.push(['국가',ind.unit]); ind.compare.forEach(c=>rows.push([c.label,c.value])); }
+  else{
+    const yset=new Set();
+    if(ind.series) ind.series.forEach(p=>{if(p.value!==null)yset.add(p.year)});
+    if(ind.breakdown) ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
+    const years=[...yset].sort((a,b)=>a-b);
+    const head=['연도']; if(ind.series) head.push('계('+ind.unit+')');
+    (ind.breakdown||[]).forEach(b=>head.push(b.label));
+    rows.push(head);
+    years.forEach(y=>{
+      const r=[y];
+      if(ind.series){const p=ind.series.find(x=>x.year===y);r.push(p&&p.value!=null?p.value:'');}
+      (ind.breakdown||[]).forEach(b=>{const p=b.series.find(x=>x.year===y);r.push(p&&p.value!=null?p.value:'');});
+      rows.push(r);
+    });
+  }
+  return rows.map(r=>r.join(',')).join('\n');
+}
+function downloadCSV(ind){ downloadFile(ind.name+'.csv', '﻿'+toCSV(ind), 'text/csv;charset=utf-8'); }
+function downloadPNG(ind){
+  if(!chart) return;
+  const a=document.createElement('a'); a.href=chart.toBase64Image('image/png',1);
+  a.download=ind.name+'.png'; document.body.appendChild(a); a.click(); a.remove();
+}
+
+document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();renderOrig(query);});
 renderTabs();renderCards();
 
 // ── AI 챗봇 ──
-const CHIPS=['밀의 2024년 자급률은?','품목별 식량자급률 비교','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const CHIPS=['밀의 2024년 자급률은?','농약 사용량 추세','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
 function ctx(){ return JSON.stringify(INDS.map(({keywords, ...r})=>r)); }
 const chatHist=[];
@@ -326,7 +492,7 @@ async function sendChat(q){
     if(!r.ok){ bubble.innerHTML='⚠️ '+esc(d.error||('오류 '+r.status))+(d.detail?'<br><span style="color:var(--muted)">'+esc(d.detail)+'</span>':''); }
     else { bubble.innerHTML=mdLite(d.answer); chatHist.push({role:'user',text:q},{role:'bot',text:d.answer}); }
   }catch(e){
-    bubble.innerHTML='⚠️ 챗봇 서버에 연결할 수 없어요. 이 기능은 <b>Vercel 배포 후</b> 작동합니다.<br><span style="color:var(--muted)">로컬 미리보기·GitHub Pages에서는 그래프·검색·자동분석까지 사용할 수 있어요.</span>';
+    bubble.innerHTML='⚠️ 챗봇 서버에 연결할 수 없어요. 이 기능은 <b>Vercel 배포 후</b> 작동합니다.<br><span style="color:var(--muted)">로컬 미리보기에서는 그래프·검색·자동분석까지 사용할 수 있어요.</span>';
   }
   btn.disabled=false;
 }
