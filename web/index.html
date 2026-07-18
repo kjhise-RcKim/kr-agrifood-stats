@@ -85,7 +85,7 @@
 </head>
 <body>
 <header>
-  <h1>농식품 주요통계 대시보드 <span class="badge">v6 · 품목별 자급률</span></h1>
+  <h1>농식품 주요통계 대시보드 <span class="badge">v6 · 품목별</span></h1>
   <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
 </header>
 <div class="wrap">
@@ -224,11 +224,10 @@ function insightFor(ind){
   const trough=pts.reduce((a,b)=>b.value<a.value?b:a);
   out.push('최고 '+peak.year+'년 '+fmt(peak.value)+' · 최저 '+trough.year+'년 '+fmt(trough.value)+' '+ind.unit+'.');
   if(ind.breakdown){
-    const latestYear=last.year;
     const items=ind.breakdown.map(b=>{const p=b.series.filter(x=>x.value!==null).pop();return p?{l:b.label,v:p.value}:null;}).filter(Boolean);
     if(items.length){
       const hi=items.reduce((a,b)=>b.v>a.v?b:a), lo=items.reduce((a,b)=>b.v<a.v?b:a);
-      out.push('품목 중 최고 <b>'+hi.l+' '+fmt(hi.v)+'</b> · 최저 <b>'+lo.l+' '+fmt(lo.v)+'</b> '+ind.unit+' ('+latestYear+').');
+      out.push('품목 중 최고 <b>'+hi.l+' '+fmt(hi.v)+'</b> · 최저 <b>'+lo.l+' '+fmt(lo.v)+'</b> '+ind.unit+' ('+last.year+').');
     }
   }
   return out;
@@ -274,7 +273,6 @@ function renderDetail(ind){
           y:{ticks:{color:'#c7d6e6'},grid:{display:false}}}}});
     return;
   }
-  // 시계열: series(계)와 breakdown(품목)을 함께 그림
   const yset=new Set();
   if(ind.series) ind.series.forEach(p=>{if(p.value!==null)yset.add(p.year)});
   if(ind.breakdown) ind.breakdown.forEach(b=>b.series.forEach(p=>{if(p.value!==null)yset.add(p.year)}));
@@ -295,6 +293,7 @@ function renderDetail(ind){
   const multi = datasets.length>1;
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
     options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:multi,labels:{color:'#c7d6e6',boxWidth:12}},
         tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}}},
       scales:{x:{ticks:{color:'#7f97ae',maxTicksLimit:12},grid:{color:'#1d2c3d'}},
@@ -304,7 +303,7 @@ document.getElementById('q').addEventListener('input', e=>{query=e.target.value;
 renderTabs();renderCards();
 
 // ── AI 챗봇 ──
-const CHIPS=['밀의 2024년 자급률은?','품목별 식량자급률 비교','식량자급률은 왜 낮아?','농가인구와 고령화율의 관계는?','한국과 일본 자급률 비교'];
+const CHIPS=['밀의 2024년 자급률은?','품목별 식량자급률 비교','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
 function ctx(){ return JSON.stringify(INDS.map(({keywords, ...r})=>r)); }
