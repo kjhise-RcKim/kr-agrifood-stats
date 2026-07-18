@@ -223,7 +223,7 @@
 </div>
 
 <div class="modal-overlay" id="pageModal" style="display:none">
-  <div class="modal">
+  <div class="modal" style="max-width:940px">
     <h2 id="pm-title">원문</h2>
     <div id="pm-body" style="overflow-x:auto;margin:10px 0 0"></div>
     <button class="modal-close" id="pmClose">닫기</button>
@@ -429,10 +429,10 @@ async function openPage(p){
   document.getElementById('pm-title').textContent='원문 p.'+p+(e&&e.t?' · '+e.t:'');
   var body=document.getElementById('pm-body');
   var txt=e? (e.x||'') : '';
-  var tbl=txt? null : null;
-  try{ tbl=txt? textToTable(txt): null; }catch(err){ tbl=null; }
-  if(tbl){ body.innerHTML=tbl; }
-  else { body.innerHTML='<pre style="white-space:pre;overflow-x:auto;font-size:12px;line-height:1.55;font-family:monospace;margin:0;color:var(--text)">'+esc(txt||'원문 미리보기를 불러오지 못했습니다.')+'</pre>'; }
+  var fb=''; try{ fb=txt?(textToTable(txt)||('<pre style="white-space:pre;overflow-x:auto;font-size:12px;font-family:monospace;margin:0;color:var(--text)">'+esc(txt)+'</pre>')):''; }catch(err){ fb=''; }
+  body.innerHTML='<img src="/pages/p'+p+'.png" alt="원문 p.'+p+'" style="width:100%;height:auto;border-radius:8px;display:block" onerror="this.remove();var f=document.getElementById(\'pm-fb\');if(f)f.style.display=\'block\';">'
+    +'<div style="color:var(--muted);font-size:11px;margin-top:8px">원문 이미지 · 농림축산식품부 『농림축산식품 주요통계 2025』 p.'+p+'</div>'
+    +'<div id="pm-fb" style="display:none;margin-top:10px">'+fb+'</div>';
   document.getElementById('pageModal').style.display='flex';
 }
 
