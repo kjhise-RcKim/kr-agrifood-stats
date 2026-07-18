@@ -1,4 +1,4 @@
-// Vercel 서버리스 함수 — Gemini(무료) + 원문 RAG (표 라벨링 코퍼스)
+// Vercel 서버리스 함수 — Gemini(무료) + 원문 RAG (표 라벨링 코퍼스 v3, IDF 랭킹)
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
 
@@ -13,13 +13,28 @@ function tokenize(q) {
   return (q || "").toLowerCase().split(/[^0-9a-z가-힣]+/i)
     .filter(function (t) { return t && t.length >= 1 && !STOP.has(t); });
 }
+
+// 문서빈도(DF) 사전 — 콜드스타트 시 1회 계산 → IDF 가중치로 희귀 키워드 우대
+var DF = {};
+(function buildDF() {
+  for (var i = 0; i < CORPUS.length; i++) {
+    var toks = tokenize(((CORPUS[i].title || "") + " " + (CORPUS[i].text || "")));
+    var seen = {};
+    for (var j = 0; j < toks.length; j++) {
+      var t = toks[j];
+      if (!seen[t]) { seen[t] = 1; DF[t] = (DF[t] || 0) + 1; }
+    }
+  }
+})();
+function idf(t) { return Math.log((CORPUS.length + 1) / ((DF[t] || 0) + 1)) + 1; }
+
 function countOcc(hay, t) {
   var idx = 0, cnt = 0;
-  while ((idx = hay.indexOf(t, idx)) >= 0) { cnt++; idx += t.length; if (cnt > 8) break; }
+  while ((idx = hay.indexOf(t, idx)) >= 0) { cnt++; idx += t.length; if (cnt > 6) break; }
   return cnt;
 }
 function retrieve(q, k) {
-  k = k || 8;
+  k = k || 10;
   var toks = tokenize(q);
   if (!toks.length || !CORPUS.length) return [];
   var scored = [];
@@ -29,9 +44,11 @@ function retrieve(q, k) {
     var text = (c.text || "").toLowerCase();
     var s = 0;
     for (var j = 0; j < toks.length; j++) {
-      var t = toks[j];
-      if (title.indexOf(t) >= 0) s += 5;
-      s += countOcc(text, t);
+      var t = toks[j], w = idf(t);
+      var base = 0;
+      if (title.indexOf(t) >= 0) base += 5;
+      base += countOcc(text, t);
+      s += base * w;
     }
     if (s > 0) scored.push({ c: c, s: s });
   }
@@ -47,7 +64,7 @@ var SYSTEM_PROMPT = [
   "",
   "규칙:",
   "1. (A)에 값이 있으면 우선 사용하고, (A)에 없어도 (B) 원문 발췌에 값이 있으면 그것을 근거로 답하세요.",
-  "2. 원문 발췌 안에 '[표 데이터]' 섹션이 있으면 그 라벨 값(예: 밀=37.5)을 반드시 우선 사용하세요. 절대 열을 직접 세어 추정하지 마세요. '[원문 텍스트]'는 참고용입니다.",
+  "2. 원문 발췌 안에 '[표 데이터]' 섹션이 있으면 그 라벨 값(예: 밀=37.5, 또는 농림업: 2014년=51044.7)을 반드시 우선 사용하세요. 절대 열을 직접 세어 추정하지 마세요. '[원문 텍스트]'는 참고용입니다.",
   "3. 실제 있는 수치만 쓰고, 없는 값은 절대 지어내지 마세요. (A)·(B) 모두 없으면 '해당 자료를 찾지 못했습니다'라고 답하세요.",
   "4. 답에 사용한 근거의 출처를 밝히세요. (A)는 source의 section·page, (B)는 발췌의 (p.쪽번호). 예: (p.332)",
   "5. '[표 데이터]'에 없고 '[원문 텍스트]'만으로 특정 셀 값을 확신하기 어려우면, 억지로 숫자를 만들지 말고 해당 행을 그대로 인용하며 'p.XX 원문 표 참고'로 안내하세요.",
@@ -65,7 +82,7 @@ module.exports = async function (req, res) {
     var history = Array.isArray(body.history) ? body.history.slice(-6) : [];
     if (!question.trim()) return res.status(400).json({ error: "질문이 비어 있습니다." });
 
-    var hits = retrieve(question, 8);
+    var hits = retrieve(question, 10);
     var corpusText = hits.length
       ? hits.map(function (c) { return "(p." + c.p + ") " + c.title + "\n" + c.text; }).join("\n\n---\n\n")
       : "(관련 원문 발췌 없음)";
