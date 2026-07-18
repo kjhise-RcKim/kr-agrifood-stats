@@ -129,6 +129,10 @@
   .modal .mmuted{color:var(--muted);font-size:12px;}
   .modal-close{margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:10px;
     padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .ptbl{border-collapse:collapse;font-size:12px;font-family:'Consolas','Menlo','Courier New',monospace;min-width:100%;}
+  .ptbl td{border:1px solid var(--line);padding:3px 8px;white-space:nowrap;text-align:right;color:var(--text);}
+  .ptbl td.hdr{text-align:left;color:var(--muted);background:var(--panel2);white-space:normal;}
+  #pm-body{max-width:100%;}
   @media (max-width:640px){
     header{padding:18px 16px 14px;}
     header h1{font-size:18px;}
@@ -220,7 +224,7 @@
 <div class="modal-overlay" id="pageModal" style="display:none">
   <div class="modal">
     <h2 id="pm-title">원문</h2>
-    <pre id="pm-body" style="white-space:pre;overflow-x:auto;font-size:12px;line-height:1.55;color:var(--text);font-family:'D2Coding','Consolas','Menlo','Courier New',monospace;margin:8px 0 0"></pre>
+    <div id="pm-body" style="overflow-x:auto;margin:10px 0 0"></div>
     <button class="modal-close" id="pmClose">닫기</button>
   </div>
 </div>
@@ -379,11 +383,41 @@ async function renderOrig(q){
   box.querySelectorAll('.orig-item').forEach(el=>el.onclick=()=>openPage(+el.getAttribute('data-p')));
 }
 
+function textToTable(txt){
+  var mk=txt.indexOf('[원문 텍스트]');
+  if(mk>=0) txt=txt.slice(mk+'[원문 텍스트]'.length).replace(/^[\s\n]+/,'');
+  if(txt.indexOf('[표 데이터]')===0){ var m2=txt.indexOf('\n'); txt=txt.slice(m2+1); }
+  var raw=txt.split('\n').map(function(l){return l.replace(/\s+$/,'');}).filter(function(l){return l.trim().length;});
+  function toks(l){ return l.trim().split(/\s+/); }
+  var isRow=function(l){ return /^\s*\d{2}\s/.test(l) && (l.match(/\d/g)||[]).length>=3; };
+  var drows=raw.filter(isRow);
+  if(drows.length<3) return null;
+  var counts={}; drows.forEach(function(l){ var n=toks(l).length; counts[n]=(counts[n]||0)+1; });
+  var N=+Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];})[0];
+  if(N<3) return null;
+  var html='<table class="ptbl">';
+  raw.forEach(function(line){
+    var t=line.trim(); if(!t) return;
+    if(isRow(line)){
+      var cs=toks(line);
+      if(cs.length===N) html+='<tr>'+cs.map(function(x){return '<td>'+esc(x)+'</td>';}).join('')+'</tr>';
+      else html+='<tr><td class="hdr" colspan="'+N+'">'+esc(t)+'</td></tr>';
+    } else {
+      html+='<tr><td class="hdr" colspan="'+N+'">'+esc(t)+'</td></tr>';
+    }
+  });
+  return html+'</table>';
+}
 async function openPage(p){
   const idx=await ensureOrig();
   const e=(idx||[]).find(x=>x.p===p);
   document.getElementById('pm-title').textContent='원문 p.'+p+(e&&e.t?' · '+e.t:'');
-  document.getElementById('pm-body').textContent=e? (e.x||'') : '원문 미리보기를 불러오지 못했습니다.';
+  var body=document.getElementById('pm-body');
+  var txt=e? (e.x||'') : '';
+  var tbl=txt? null : null;
+  try{ tbl=txt? textToTable(txt): null; }catch(err){ tbl=null; }
+  if(tbl){ body.innerHTML=tbl; }
+  else { body.innerHTML='<pre style="white-space:pre;overflow-x:auto;font-size:12px;line-height:1.55;font-family:monospace;margin:0;color:var(--text)">'+esc(txt||'원문 미리보기를 불러오지 못했습니다.')+'</pre>'; }
   document.getElementById('pageModal').style.display='flex';
 }
 
