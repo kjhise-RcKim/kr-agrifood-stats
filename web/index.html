@@ -279,7 +279,7 @@ function renderTabs(){
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
     b.textContent=g;
-    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;compareMode=false;renderTabs();renderCards();renderOrig('');};
+    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;curId=null;compareMode=false;renderTabs();renderCards();renderOrig('');};
     t.appendChild(b);
   });
 }
