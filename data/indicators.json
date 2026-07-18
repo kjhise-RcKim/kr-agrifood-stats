@@ -6,7 +6,7 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v4 (34지표 + 자급률 품목별)",
+    "status": "v5 (자급률·1인당소비 품목별)",
     "pending": [
       "meat_consumption_pc",
       "timber_self_suff",
@@ -2406,16 +2406,22 @@
     },
     {
       "id": "rice_consumption_pc",
-      "name": "1인당 쌀 소비량",
+      "name": "1인당 양곡 소비량",
       "group": "식량·자급률",
       "unit": "kg",
       "frequency": "연간",
       "is_headline": false,
-      "description": "1인당 연간 쌀 소비량",
+      "description": "1인당 연간 양곡 소비량(계) + 품목별(쌀·보리쌀·밀·옥수수·콩·서류)",
       "keywords": [
-        "쌀소비",
+        "소비량",
         "1인당",
-        "소비량"
+        "쌀",
+        "밀",
+        "옥수수",
+        "보리",
+        "콩",
+        "양곡",
+        "식생활"
       ],
       "source": {
         "publication": "농림축산식품 주요통계 2025",
@@ -2427,100 +2433,690 @@
       "series": [
         {
           "year": 1970,
-          "value": 136.4
+          "value": 219.4
         },
         {
           "year": 1975,
-          "value": 123.6
+          "value": 207.3
         },
         {
           "year": 1980,
-          "value": 132.4
+          "value": 195.2
         },
         {
           "year": 1985,
-          "value": 128.1
+          "value": 181.7
         },
         {
           "year": 1990,
-          "value": 119.6
+          "value": 167.0
         },
         {
           "year": 1995,
-          "value": 106.5
+          "value": 160.5
         },
         {
           "year": 2000,
-          "value": 93.6
+          "value": 153.3
         },
         {
           "year": 2005,
-          "value": 80.7
+          "value": 135.5
         },
         {
           "year": 2010,
-          "value": 72.8
+          "value": 125.6
         },
         {
           "year": 2011,
-          "value": 71.2
+          "value": 137.6
         },
         {
           "year": 2012,
-          "value": 69.8
+          "value": 132.7
         },
         {
           "year": 2013,
-          "value": 67.2
+          "value": 132.0
         },
         {
           "year": 2014,
-          "value": 65.1
+          "value": 127.9
         },
         {
           "year": 2015,
-          "value": 62.9
+          "value": 126.4
         },
         {
           "year": 2016,
-          "value": 61.9
+          "value": 124.6
         },
         {
           "year": 2017,
-          "value": 61.8
+          "value": 122.5
         },
         {
           "year": 2018,
-          "value": 61.0
+          "value": 121.6
         },
         {
           "year": 2019,
-          "value": 59.2
+          "value": 119.4
         },
         {
           "year": 2020,
-          "value": 57.7
+          "value": 118.1
         },
         {
           "year": 2021,
-          "value": 56.9
+          "value": 123.9
         },
         {
           "year": 2022,
-          "value": 56.7
+          "value": 125.4
         },
         {
           "year": 2023,
-          "value": 56.4
+          "value": 124.4
         },
         {
           "year": 2024,
-          "value": 55.8,
+          "value": 124.6,
           "flag": "p"
         }
       ],
       "related_ids": [
         "rice_production"
+      ],
+      "breakdown": [
+        {
+          "label": "쌀",
+          "series": [
+            {
+              "year": 1970,
+              "value": 136.4
+            },
+            {
+              "year": 1975,
+              "value": 123.6
+            },
+            {
+              "year": 1980,
+              "value": 132.4
+            },
+            {
+              "year": 1985,
+              "value": 128.1
+            },
+            {
+              "year": 1990,
+              "value": 119.6
+            },
+            {
+              "year": 1995,
+              "value": 106.5
+            },
+            {
+              "year": 2000,
+              "value": 93.6
+            },
+            {
+              "year": 2005,
+              "value": 80.7
+            },
+            {
+              "year": 2010,
+              "value": 72.8
+            },
+            {
+              "year": 2011,
+              "value": 71.2
+            },
+            {
+              "year": 2012,
+              "value": 69.8
+            },
+            {
+              "year": 2013,
+              "value": 67.2
+            },
+            {
+              "year": 2014,
+              "value": 65.1
+            },
+            {
+              "year": 2015,
+              "value": 62.9
+            },
+            {
+              "year": 2016,
+              "value": 61.9
+            },
+            {
+              "year": 2017,
+              "value": 61.8
+            },
+            {
+              "year": 2018,
+              "value": 61.0
+            },
+            {
+              "year": 2019,
+              "value": 59.2
+            },
+            {
+              "year": 2020,
+              "value": 57.7
+            },
+            {
+              "year": 2021,
+              "value": 56.9
+            },
+            {
+              "year": 2022,
+              "value": 56.7
+            },
+            {
+              "year": 2023,
+              "value": 56.4
+            },
+            {
+              "year": 2024,
+              "value": 55.8,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "보리쌀",
+          "series": [
+            {
+              "year": 1970,
+              "value": 37.3
+            },
+            {
+              "year": 1975,
+              "value": 36.3
+            },
+            {
+              "year": 1980,
+              "value": 13.9
+            },
+            {
+              "year": 1985,
+              "value": 4.6
+            },
+            {
+              "year": 1990,
+              "value": 1.6
+            },
+            {
+              "year": 1995,
+              "value": 1.5
+            },
+            {
+              "year": 2000,
+              "value": 1.6
+            },
+            {
+              "year": 2005,
+              "value": 1.2
+            },
+            {
+              "year": 2010,
+              "value": 1.3
+            },
+            {
+              "year": 2011,
+              "value": 1.3
+            },
+            {
+              "year": 2012,
+              "value": 1.3
+            },
+            {
+              "year": 2013,
+              "value": 1.3
+            },
+            {
+              "year": 2014,
+              "value": 1.3
+            },
+            {
+              "year": 2015,
+              "value": 1.3
+            },
+            {
+              "year": 2016,
+              "value": 1.4
+            },
+            {
+              "year": 2017,
+              "value": 1.3
+            },
+            {
+              "year": 2018,
+              "value": 1.3
+            },
+            {
+              "year": 2019,
+              "value": 1.4
+            },
+            {
+              "year": 2020,
+              "value": 1.4
+            },
+            {
+              "year": 2021,
+              "value": 0.6
+            },
+            {
+              "year": 2022,
+              "value": 0.5
+            },
+            {
+              "year": 2023,
+              "value": 0.5
+            },
+            {
+              "year": 2024,
+              "value": 0.5,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "밀",
+          "series": [
+            {
+              "year": 1970,
+              "value": 26.1
+            },
+            {
+              "year": 1975,
+              "value": 29.5
+            },
+            {
+              "year": 1980,
+              "value": 29.4
+            },
+            {
+              "year": 1985,
+              "value": 32.1
+            },
+            {
+              "year": 1990,
+              "value": 29.8
+            },
+            {
+              "year": 1995,
+              "value": 33.9
+            },
+            {
+              "year": 2000,
+              "value": 35.9
+            },
+            {
+              "year": 2005,
+              "value": 31.8
+            },
+            {
+              "year": 2010,
+              "value": 32.1
+            },
+            {
+              "year": 2011,
+              "value": 35.0
+            },
+            {
+              "year": 2012,
+              "value": 32.9
+            },
+            {
+              "year": 2013,
+              "value": 31.3
+            },
+            {
+              "year": 2014,
+              "value": 31.7
+            },
+            {
+              "year": 2015,
+              "value": 32.2
+            },
+            {
+              "year": 2016,
+              "value": 32.1
+            },
+            {
+              "year": 2017,
+              "value": 32.4
+            },
+            {
+              "year": 2018,
+              "value": 31.6
+            },
+            {
+              "year": 2019,
+              "value": 31.6
+            },
+            {
+              "year": 2020,
+              "value": 31.2
+            },
+            {
+              "year": 2021,
+              "value": 36.9
+            },
+            {
+              "year": 2022,
+              "value": 38.3
+            },
+            {
+              "year": 2023,
+              "value": 37.5
+            },
+            {
+              "year": 2024,
+              "value": 38.4,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "옥수수",
+          "series": [
+            {
+              "year": 1970,
+              "value": 1.1
+            },
+            {
+              "year": 1975,
+              "value": 2.4
+            },
+            {
+              "year": 1980,
+              "value": 3.1
+            },
+            {
+              "year": 1985,
+              "value": 3.1
+            },
+            {
+              "year": 1990,
+              "value": 2.7
+            },
+            {
+              "year": 1995,
+              "value": 3.3
+            },
+            {
+              "year": 2000,
+              "value": 5.9
+            },
+            {
+              "year": 2005,
+              "value": 4.9
+            },
+            {
+              "year": 2010,
+              "value": 3.9
+            },
+            {
+              "year": 2011,
+              "value": 3.7
+            },
+            {
+              "year": 2012,
+              "value": 3.7
+            },
+            {
+              "year": 2013,
+              "value": 3.5
+            },
+            {
+              "year": 2014,
+              "value": 3.5
+            },
+            {
+              "year": 2015,
+              "value": 3.6
+            },
+            {
+              "year": 2016,
+              "value": 3.4
+            },
+            {
+              "year": 2017,
+              "value": 3.3
+            },
+            {
+              "year": 2018,
+              "value": 3.2
+            },
+            {
+              "year": 2019,
+              "value": 3.1
+            },
+            {
+              "year": 2020,
+              "value": 3.1
+            },
+            {
+              "year": 2021,
+              "value": 3.6
+            },
+            {
+              "year": 2022,
+              "value": 3.6
+            },
+            {
+              "year": 2023,
+              "value": 3.5
+            },
+            {
+              "year": 2024,
+              "value": 3.7,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "콩",
+          "series": [
+            {
+              "year": 1970,
+              "value": 5.3
+            },
+            {
+              "year": 1975,
+              "value": 6.4
+            },
+            {
+              "year": 1980,
+              "value": 8.0
+            },
+            {
+              "year": 1985,
+              "value": 9.3
+            },
+            {
+              "year": 1990,
+              "value": 8.3
+            },
+            {
+              "year": 1995,
+              "value": 9.0
+            },
+            {
+              "year": 2000,
+              "value": 8.5
+            },
+            {
+              "year": 2005,
+              "value": 9.0
+            },
+            {
+              "year": 2010,
+              "value": 8.3
+            },
+            {
+              "year": 2011,
+              "value": 7.8
+            },
+            {
+              "year": 2012,
+              "value": 8.0
+            },
+            {
+              "year": 2013,
+              "value": 7.9
+            },
+            {
+              "year": 2014,
+              "value": 8.1
+            },
+            {
+              "year": 2015,
+              "value": 8.2
+            },
+            {
+              "year": 2016,
+              "value": 8.0
+            },
+            {
+              "year": 2017,
+              "value": 6.5
+            },
+            {
+              "year": 2018,
+              "value": 6.4
+            },
+            {
+              "year": 2019,
+              "value": 6.3
+            },
+            {
+              "year": 2020,
+              "value": 6.5
+            },
+            {
+              "year": 2021,
+              "value": 6.4
+            },
+            {
+              "year": 2022,
+              "value": 7.3
+            },
+            {
+              "year": 2023,
+              "value": 6.9
+            },
+            {
+              "year": 2024,
+              "value": 7.2,
+              "flag": "p"
+            }
+          ]
+        },
+        {
+          "label": "서류",
+          "series": [
+            {
+              "year": 1970,
+              "value": 10.2
+            },
+            {
+              "year": 1975,
+              "value": 7.1
+            },
+            {
+              "year": 1980,
+              "value": 6.3
+            },
+            {
+              "year": 1985,
+              "value": 3.1
+            },
+            {
+              "year": 1990,
+              "value": 3.3
+            },
+            {
+              "year": 1995,
+              "value": 3.0
+            },
+            {
+              "year": 2000,
+              "value": 4.3
+            },
+            {
+              "year": 2005,
+              "value": 4.2
+            },
+            {
+              "year": 2010,
+              "value": 3.5
+            },
+            {
+              "year": 2011,
+              "value": 14.3
+            },
+            {
+              "year": 2012,
+              "value": 13.3
+            },
+            {
+              "year": 2013,
+              "value": 16.8
+            },
+            {
+              "year": 2014,
+              "value": 14.1
+            },
+            {
+              "year": 2015,
+              "value": 13.7
+            },
+            {
+              "year": 2016,
+              "value": 13.2
+            },
+            {
+              "year": 2017,
+              "value": 12.3
+            },
+            {
+              "year": 2018,
+              "value": 13.0
+            },
+            {
+              "year": 2019,
+              "value": 12.9
+            },
+            {
+              "year": 2020,
+              "value": 12.7
+            },
+            {
+              "year": 2021,
+              "value": 13.7
+            },
+            {
+              "year": 2022,
+              "value": 13.0
+            },
+            {
+              "year": 2023,
+              "value": 13.9
+            },
+            {
+              "year": 2024,
+              "value": 14.1,
+              "flag": "p"
+            }
+          ]
+        }
       ]
     },
     {
