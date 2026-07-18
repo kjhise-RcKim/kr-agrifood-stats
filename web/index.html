@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>농식품 주요통계 대시보드</title>
+<meta name="description" content="농림축산식품부 『농림축산식품 주요통계 2025』를 대시보드·검색·AI 챗봇으로 쉽게. 실제 수치·출처 기반.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="농식품 주요통계 대시보드">
+<meta property="og:description" content="농림축산식품부 주요통계 2025를 대시보드·검색·AI로. 실제 수치와 출처 기반.">
+<meta property="og:image" content="https://kr-agrifood-stats.vercel.app/og.png">
+<meta property="og:url" content="https://kr-agrifood-stats.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="./data.js"></script>
 <style>
@@ -11,13 +19,13 @@
     --bg1:#0d141d; --bg2:#0f1720; --panel:#16212e; --panel2:#1c2a3a; --line:#24384d;
     --text:#e8eef4; --muted:#8fa6bd; --accent:#3fa7ff; --accent2:#38d39f;
     --up:#38d39f; --down:#ff6b6b; --chip:#22344a; --btn:#22344a; --btntext:#cfe0f2;
-    --grid:#1d2c3d; --axis:#7f97ae; --total:#e8eef4;
+    --grid:#1d2c3d; --axis:#7f97ae; --total:#e8eef4; --star:#ffce54;
   }
   body[data-theme="light"]{
     --bg1:#eef2f7; --bg2:#f6f9fc; --panel:#ffffff; --panel2:#eef3f8; --line:#d7e0ea;
     --text:#1a2836; --muted:#5c6f80; --accent:#1f7ae0; --accent2:#12a97a;
     --up:#12a97a; --down:#e5484d; --chip:#e6eef6; --btn:#e6eef6; --btntext:#274158;
-    --grid:#e5ecf3; --axis:#708698; --total:#1a2836;
+    --grid:#e5ecf3; --axis:#708698; --total:#1a2836; --star:#f5a623;
   }
   *{box-sizing:border-box}
   body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);
@@ -36,17 +44,22 @@
   .searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(63,167,255,.12);}
   .searchbar input::placeholder{color:var(--muted);}
   .qcount{color:var(--muted);font-size:13px;white-space:nowrap;}
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px;}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px;}
   .tab{padding:8px 15px;border:1px solid var(--line);background:var(--panel);
     color:var(--muted);border-radius:20px;cursor:pointer;font-size:13px;transition:.15s;}
   .tab:hover{color:var(--text);border-color:var(--accent);}
   .tab.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;}
+  .favbar{margin:0 0 14px;}
+  .favbar button{background:var(--btn);color:var(--btntext);border:1px solid var(--line);
+    border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:inherit;}
+  .favbar button:hover{border-color:var(--accent);}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
     padding:16px 17px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;}
   .card:hover{border-color:var(--accent);transform:translateY(-2px);}
   .card.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
   .card .nm{font-size:13px;color:var(--muted);}
+  .card .fav{color:var(--star);margin-right:3px;}
   .card .val{font-size:26px;font-weight:700;margin-top:8px;letter-spacing:-.5px;}
   .card .val small{font-size:13px;color:var(--muted);font-weight:500;margin-left:3px;}
   .card .delta{font-size:12px;margin-top:6px;display:inline-flex;gap:5px;align-items:center;}
@@ -67,7 +80,7 @@
     border-radius:16px;padding:22px;}
   .detail h2{margin:0 0 3px;font-size:18px;}
   .detail .meta{color:var(--muted);font-size:12px;margin-bottom:12px;line-height:1.6;}
-  .dlrow{display:flex;gap:8px;margin-bottom:14px;}
+  .dlrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
   .dlrow button{background:var(--btn);color:var(--btntext);border:1px solid var(--line);
     border-radius:9px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;}
   .dlrow button:hover{border-color:var(--accent);}
@@ -89,10 +102,11 @@
   .chip{font-size:12px;color:var(--muted);background:var(--panel2);border:1px solid var(--line);
     border-radius:16px;padding:6px 12px;cursor:pointer;transition:.15s;}
   .chip:hover{color:var(--text);border-color:var(--accent);}
-  .chatlog{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;margin-bottom:14px;}
+  .chatlog{display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;margin-bottom:14px;}
   .msg{padding:11px 14px;border-radius:12px;font-size:14px;line-height:1.7;max-width:88%;}
   .msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:3px;}
   .msg.bot{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:3px;}
+  .pglink{cursor:pointer;color:var(--accent);margin-right:8px;}
   .chatform{display:flex;gap:10px;}
   .chatform input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);
     border-radius:12px;padding:12px 15px;font-size:14px;outline:none;font-family:inherit;}
@@ -144,12 +158,14 @@
     <span class="qcount" id="qcount"></span>
   </div>
   <div class="tabs" id="tabs"></div>
+  <div class="favbar" id="favbar"></div>
   <div class="cards" id="cards"></div>
   <div class="orig" id="orig"></div>
   <div class="detail" id="detail" style="display:none">
     <h2 id="d-name"></h2>
     <div class="meta" id="d-desc"></div>
-    <div class="dlrow">
+    <div class="dlrow" id="dlrow">
+      <button id="dl-fav">☆ 즐겨찾기</button>
       <button id="dl-csv">⬇ CSV</button>
       <button id="dl-png">⬇ 그래프 이미지</button>
     </div>
@@ -182,20 +198,27 @@
     <h2>이용안내</h2>
     <p class="mmuted">농림축산식품부 『농림축산식품 주요통계 2025』(581쪽)를 누구나 쉽게 보도록 만든 공개 도구입니다.</p>
     <h3>① 대시보드</h3>
-    <p>지표 카드를 누르면 시계열 그래프와 자동 분석(추세·최고최저)이 나옵니다. 위쪽 그룹 탭으로 분야별로 볼 수 있어요. 자급률·소비량 등은 계(전체)+품목별 라인이 함께 표시됩니다.</p>
+    <p>지표 카드를 누르면 시계열 그래프와 자동 분석이 나옵니다. 그룹 탭으로 분야별로 보고, ⭐ 즐겨찾기한 지표는 겹쳐서 비교할 수 있어요. 표는 CSV·이미지로 저장됩니다.</p>
     <h3>② 검색</h3>
-    <p>검색창에 단어를 넣으면 <b>주요 지표</b>와 <b>원문 전체</b>를 함께 찾습니다. 원문 결과(📄 p.XX)를 누르면 AI가 그 자료를 근거로 답해줘요.</p>
+    <p>검색창은 <b>주요 지표</b>와 <b>원문 전체</b>를 함께 찾습니다. 원문 결과(📄 p.XX)를 누르면 AI가 그 자료로 답해줘요.</p>
     <h3>③ AI에게 물어보기</h3>
-    <p>자연어로 질문하면 원문에서 관련 표를 찾아 답합니다. 지표에 없는 자료(농약 사용량·산불·수출 실적 등)도 원문 페이지를 근거로 답해요.</p>
+    <p>자연어로 질문하면 원문에서 관련 표를 찾아 답합니다. 답변 아래 <b>근거 원문(p.XX)</b>을 누르면 실제 원문 내용을 볼 수 있어요.</p>
     <h3>신뢰 원칙</h3>
     <ul>
-      <li>답변은 <b>원자료에 실제 있는 수치만</b> 사용하고, 근거 출처(장·페이지)를 밝힙니다.</li>
-      <li>원자료에 없는 값은 지어내지 않고 "자료를 찾지 못했다"고 답합니다.</li>
-      <li>표 구조가 복잡한 일부는 값 대신 "원문 p.XX 표 참고"로 안내할 수 있습니다.</li>
+      <li>답변은 <b>원자료에 실제 있는 수치만</b> 사용하고, 출처(장·페이지)를 밝힙니다.</li>
+      <li>없는 값은 지어내지 않고 "자료를 찾지 못했다"고 답합니다.</li>
       <li>2024년 수치는 잠정치(p)입니다.</li>
     </ul>
     <p class="mmuted">출처표시: 농림축산식품부, 『농림축산식품 주요통계 2025』, 공공누리 제1유형(출처표시).</p>
     <button class="modal-close" id="helpClose">닫기</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="pageModal" style="display:none">
+  <div class="modal">
+    <h2 id="pm-title">원문</h2>
+    <pre id="pm-body" style="white-space:pre-wrap;font-size:12.5px;line-height:1.7;color:var(--text);font-family:inherit;margin:8px 0 0"></pre>
+    <button class="modal-close" id="pmClose">닫기</button>
   </div>
 </div>
 
@@ -215,28 +238,33 @@ function seriesPts(ind){
   return [];
 }
 function lastTwo(ind){ const s=seriesPts(ind); return [s[s.length-2], s[s.length-1]]; }
-function groups(){ return ['전체', ...new Set(INDS.map(i=>i.group))]; }
-let curGroup='전체', curId=null, chart=null, query='';
+const FAV='⭐ 즐겨찾기';
+function groups(){ return ['전체', FAV, ...new Set(INDS.map(i=>i.group))]; }
+let curGroup='전체', curId=null, chart=null, query='', compareMode=false;
+let favs=[]; try{ favs=JSON.parse(localStorage.getItem('favs')||'[]'); }catch(e){ favs=[]; }
+function saveFavs(){ try{ localStorage.setItem('favs', JSON.stringify(favs)); }catch(e){} }
+function toggleFav(id){ const i=favs.indexOf(id); if(i>=0)favs.splice(i,1); else favs.push(id); saveFavs(); }
 
 function css(v){ return getComputedStyle(document.body).getPropertyValue(v).trim(); }
 function applyTheme(t){
   document.body.setAttribute('data-theme', t);
   try{ localStorage.setItem('theme', t); }catch(e){}
   document.getElementById('themeBtn').textContent = t==='light' ? '☀️' : '🌙';
-  if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
+  if(compareMode) renderCompare();
+  else if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
 }
-(function initTheme(){
-  let t='dark'; try{ t=localStorage.getItem('theme')||'dark'; }catch(e){}
-  applyTheme(t);
-})();
+(function initTheme(){ let t='dark'; try{ t=localStorage.getItem('theme')||'dark'; }catch(e){} applyTheme(t); })();
 document.getElementById('themeBtn').onclick=()=>applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
 
 document.getElementById('helpBtn').onclick=()=>document.getElementById('help').style.display='flex';
 document.getElementById('helpClose').onclick=()=>document.getElementById('help').style.display='none';
 document.getElementById('help').onclick=e=>{ if(e.target.id==='help') e.currentTarget.style.display='none'; };
+document.getElementById('pmClose').onclick=()=>document.getElementById('pageModal').style.display='none';
+document.getElementById('pageModal').onclick=e=>{ if(e.target.id==='pageModal') e.currentTarget.style.display='none'; };
 
 function goHome(){
-  query=''; document.getElementById('q').value=''; curGroup='전체'; curId=null;
+  query=''; document.getElementById('q').value=''; curGroup='전체'; curId=null; compareMode=false;
+  document.getElementById('detail').style.display='none';
   renderTabs(); renderCards(); renderOrig('');
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -247,7 +275,7 @@ function renderTabs(){
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
     b.textContent=g;
-    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;renderTabs();renderCards();renderOrig('');};
+    b.onclick=()=>{query='';document.getElementById('q').value='';curGroup=g;compareMode=false;renderTabs();renderCards();renderOrig('');};
     t.appendChild(b);
   });
 }
@@ -260,24 +288,40 @@ function matchList(){
     return terms.every(t=>hay.includes(t));
   });
 }
+function renderFavbar(){
+  const fb=document.getElementById('favbar'); fb.innerHTML='';
+  if(!query && curGroup===FAV && favs.filter(id=>{const i=INDS.find(x=>x.id===id);return i&&!i.compare;}).length>=2){
+    const b=document.createElement('button'); b.textContent='📊 즐겨찾기 겹쳐보기 (각 지표 첫해=100 지수)';
+    b.onclick=()=>{compareMode=true;renderCompare();document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'});};
+    fb.appendChild(b);
+  }
+}
 function renderCards(){
   const c=document.getElementById('cards'); c.innerHTML='';
   const searching=!!query.trim();
-  const list = searching ? matchList()
-    : INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
+  let list;
+  if(searching) list=matchList();
+  else if(curGroup===FAV) list=INDS.filter(i=>favs.includes(i.id));
+  else list=INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
   document.getElementById('qcount').textContent = searching ? (list.length+'개 지표') : '';
   document.getElementById('tabs').style.opacity = searching ? .4 : 1;
+  renderFavbar();
+  if(!searching && curGroup===FAV && !list.length){
+    c.innerHTML='<div class="empty">아직 즐겨찾기한 지표가 없어요. 지표를 열고 <b>☆ 즐겨찾기</b>를 눌러 추가하세요.</div>';
+    return;
+  }
   if(searching && !list.length){
     c.innerHTML='<div class="empty">일치하는 주요 지표가 없어요. 아래 원문 검색 결과나 AI 질문을 이용해보세요.</div>';
   }
   list.forEach(ind=>{
     const card=document.createElement('div');
-    card.className='card'+(ind.id===curId?' sel':'');
+    card.className='card'+(ind.id===curId&&!compareMode?' sel':'');
+    const star=favs.includes(ind.id)?'<span class="fav">★</span>':'';
     const gtag='<div class="gtag">'+ind.group+'</div>';
     if(ind.compare){
       const top=ind.compare[0];
       const corner = searching ? gtag : '<div class="yr">비교</div>';
-      card.innerHTML=corner+'<div class="nm">'+ind.name+'</div>'+
+      card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
         '<div class="val">'+ind.compare.length+'<small>개국</small></div>'+
         '<div class="delta" style="color:var(--muted)">최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'</div>';
     } else {
@@ -291,13 +335,13 @@ function renderCards(){
       const val=last?fmt(last.value):'–';
       const corner = searching ? gtag
         : '<div class="yr">'+(last?last.year:'')+(last&&last.flag==='p'?' p':'')+'</div>';
-      card.innerHTML=corner+'<div class="nm">'+ind.name+'</div>'+
+      card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
         '<div class="val">'+val+'<small>'+ind.unit+'</small></div>'+delta;
     }
-    card.onclick=()=>{curId=ind.id;renderCards();renderDetail(ind);};
+    card.onclick=()=>{compareMode=false;curId=ind.id;renderCards();renderDetail(ind);};
     c.appendChild(card);
   });
-  if(!curId && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
+  if(!curId && !compareMode && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
 }
 
 let ORIG=null, origLoading=false;
@@ -326,9 +370,17 @@ async function renderOrig(q){
   scored.sort((a,b)=>b.s-a.s);
   const top=scored.slice(0,8);
   if(!top.length){ box.innerHTML=''; return; }
-  box.innerHTML='<div class="orig-h">📄 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 AI가 그 자료로 답합니다</div>'+
-    top.map(x=>'<div class="orig-item"><b>p.'+x.e.p+'</b> '+esc(x.e.t||'(제목 없음)')+'</div>').join('');
-  box.querySelectorAll('.orig-item').forEach(el=>el.onclick=()=>{ sendChat(q); document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'}); });
+  box.innerHTML='<div class="orig-h">📄 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 원문을 보고 AI에게 물어봅니다</div>'+
+    top.map(x=>'<div class="orig-item" data-p="'+x.e.p+'"><b>p.'+x.e.p+'</b> '+esc(x.e.t||'(제목 없음)')+'</div>').join('');
+  box.querySelectorAll('.orig-item').forEach(el=>el.onclick=()=>openPage(+el.getAttribute('data-p')));
+}
+
+async function openPage(p){
+  const idx=await ensureOrig();
+  const e=(idx||[]).find(x=>x.p===p);
+  document.getElementById('pm-title').textContent='원문 p.'+p+(e&&e.t?' · '+e.t:'');
+  document.getElementById('pm-body').textContent=e? (e.x||'') : '원문 미리보기를 불러오지 못했습니다.';
+  document.getElementById('pageModal').style.display='flex';
 }
 
 const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1','#f78fb3'];
@@ -389,17 +441,23 @@ function fillInsight(ind){
   if(rel.length) html+='<div class="irel">관련 지표 추이 — '+rel.join(' · ')+'</div>';
   document.getElementById('d-insight').innerHTML=html;
 }
+function chartColors(){ return {AX:css('--axis'),GRID:css('--grid'),TOTAL:css('--total'),LEG:css('--total')}; }
 function renderDetail(ind){
+  compareMode=false;
   document.getElementById('detail').style.display='block';
+  document.getElementById('dlrow').style.display='flex';
   document.getElementById('d-name').textContent=ind.name;
   document.getElementById('d-desc').textContent=ind.description||'';
   const s=ind.source||{};
   document.getElementById('d-src').innerHTML=
     '출처: '+(s.publication||'')+' · '+(s.section||'')+' (p.'+(s.page||'?')+')<br>제공: '+(s.org||'')+' · '+(s.license||'');
   fillInsight(ind);
+  const favBtn=document.getElementById('dl-fav');
+  favBtn.textContent = favs.includes(ind.id)?'★ 즐겨찾기 해제':'☆ 즐겨찾기';
+  favBtn.onclick=()=>{ toggleFav(ind.id); renderDetail(ind); renderCards(); };
   document.getElementById('dl-csv').onclick=()=>downloadCSV(ind);
   document.getElementById('dl-png').onclick=()=>downloadPNG(ind);
-  const AX=css('--axis'), GRID=css('--grid'), TOTAL=css('--total'), LEG=css('--total');
+  const {AX,GRID,TOTAL,LEG}=chartColors();
   if(chart)chart.destroy();
   if(ind.compare){
     const labels=ind.compare.map(c=>c.label);
@@ -441,6 +499,34 @@ function renderDetail(ind){
         y:{ticks:{color:AX},grid:{color:GRID}}}}});
 }
 
+function renderCompare(){
+  const sel=favs.map(id=>INDS.find(i=>i.id===id)).filter(i=>i&&!i.compare);
+  if(sel.length<2) return;
+  compareMode=true; curId=null;
+  document.getElementById('detail').style.display='block';
+  document.getElementById('dlrow').style.display='none';
+  document.getElementById('d-name').textContent='⭐ 즐겨찾기 비교 (각 지표 첫해=100 지수)';
+  document.getElementById('d-desc').textContent='단위가 다른 지표를 함께 보기 위해, 각 지표의 가장 이른 해를 100으로 맞춰 상대적 변화를 비교합니다.';
+  document.getElementById('d-insight').innerHTML='';
+  document.getElementById('d-src').innerHTML='출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 각 지표 원값은 개별 카드에서 확인하세요.';
+  const {AX,GRID,LEG}=chartColors();
+  const yset=new Set(); const smap=[];
+  sel.forEach(i=>{const pts=seriesPts(i); if(pts.length){smap.push({i,pts}); pts.forEach(p=>yset.add(p.year));}});
+  const labels=[...yset].sort((a,b)=>a-b);
+  const datasets=smap.map((m,idx)=>{
+    const base=m.pts[0].value;
+    return {label:m.i.name, data:labels.map(y=>{const p=m.pts.find(x=>x.year===y);return p&&base?Math.round(p.value/base*1000)/10:null;}),
+      borderColor:PALETTE[idx%PALETTE.length], backgroundColor:'transparent', tension:.25, pointRadius:1, borderWidth:2, spanGaps:true};
+  });
+  if(chart)chart.destroy();
+  chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true,labels:{color:LEG,boxWidth:12}},
+        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' (지수)'}}},
+      scales:{x:{ticks:{color:AX,maxTicksLimit:12},grid:{color:GRID}},
+        y:{ticks:{color:AX},grid:{color:GRID}}}}});
+}
+
 function downloadFile(name, content, type){
   const blob=new Blob([content],{type:type});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
@@ -470,10 +556,10 @@ function downloadCSV(ind){ downloadFile(ind.name+'.csv', '﻿'+toCSV(ind), 'text
 function downloadPNG(ind){
   if(!chart) return;
   const a=document.createElement('a'); a.href=chart.toBase64Image('image/png',1);
-  a.download=ind.name+'.png'; document.body.appendChild(a); a.click(); a.remove();
+  a.download=(ind&&ind.name?ind.name:'chart')+'.png'; document.body.appendChild(a); a.click(); a.remove();
 }
 
-document.getElementById('q').addEventListener('input', e=>{query=e.target.value;renderTabs();renderCards();renderOrig(query);});
+document.getElementById('q').addEventListener('input', e=>{query=e.target.value;compareMode=false;renderTabs();renderCards();renderOrig(query);});
 renderTabs();renderCards();
 
 const CHIPS=['밀의 2024년 자급률은?','농약 사용량 추세','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
@@ -496,7 +582,18 @@ async function sendChat(q){
       body:JSON.stringify({question:q, context:ctx(), history:chatHist})});
     const d=await r.json().catch(()=>({error:'응답 파싱 실패'}));
     if(!r.ok){ bubble.innerHTML='⚠️ '+esc(d.error||('오류 '+r.status))+(d.detail?'<br><span style="color:var(--muted)">'+esc(d.detail)+'</span>':''); }
-    else { bubble.innerHTML=mdLite(d.answer); chatHist.push({role:'user',text:q},{role:'bot',text:d.answer}); }
+    else {
+      bubble.innerHTML=mdLite(d.answer);
+      chatHist.push({role:'user',text:q},{role:'bot',text:d.answer});
+      if(Array.isArray(d.sources)&&d.sources.length){
+        const uniq=[...new Set(d.sources)].slice(0,8);
+        const sc=document.createElement('div');
+        sc.style.cssText='margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted)';
+        sc.innerHTML='📄 근거 원문: '+uniq.map(p=>'<span class="pglink" data-p="'+p+'">p.'+p+'</span>').join('');
+        bubble.appendChild(sc);
+        sc.querySelectorAll('.pglink').forEach(el=>el.onclick=()=>openPage(+el.getAttribute('data-p')));
+      }
+    }
   }catch(e){
     bubble.innerHTML='⚠️ 챗봇 서버에 연결할 수 없어요. 이 기능은 <b>Vercel 배포 후</b> 작동합니다.<br><span style="color:var(--muted)">로컬 미리보기에서는 그래프·검색·자동분석까지 사용할 수 있어요.</span>';
   }
