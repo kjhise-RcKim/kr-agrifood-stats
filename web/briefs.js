@@ -81,7 +81,7 @@ window.BRIEFS = [
 },
 {
   id: 'rice', icon: '🍚', name: '쌀 수급 브리프', short: '쌀 수급',
-  desc: '쌀의 자급률·재배면적·생산량·1인당 소비량을 한 화면에 모았습니다.',
+  desc: '쌀의 자급률·재배면적·생산량·1인당 소비량과 수급실적(생산·소비·재고·도입)을 한 화면에 모았습니다.',
   kpis: [
     { label: '쌀 자급률 (식량자급률 기준)', src: ['food_self_suff', '쌀'],      unit: '%' },
     { label: '쌀 재배면적',       src: ['food_crop_area', '쌀'],       unit: '천ha' },
@@ -106,6 +106,24 @@ window.BRIEFS = [
       series: [
         { label: '식량작물 계 (천t)', src: ['food_crop_production'],      color: '__TOTAL__', axis: 'y' },
         { label: '쌀 (천t)',         src: ['food_crop_production', '쌀'], color: '#ffb84d', fill: true, axis: 'y' }
+      ] },
+    { title: '쌀 생산량과 소비량', cap: '천t · 양곡년도(전년 11.1~당년 10.31) 기준',
+      page: 307, ind: 'rice_supply_demand', y1: '천t',
+      series: [
+        { label: '생산 (천t)', src: ['rice_supply_demand', '생산'], color: '#38d39f', fill: true, axis: 'y' },
+        { label: '소비 (천t)', src: ['rice_supply_demand', '소비'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '연말재고와 쌀 자급률', cap: '왼쪽 축 천t · 오른쪽 축 % · 양곡년도 기준',
+      page: 307, ind: 'rice_supply_demand', y1: '천t', y2: '%',
+      series: [
+        { label: '연말재고 (천t)', src: ['rice_supply_demand', '연말재고'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '자급률 (%)',     src: ['rice_self_suff_grainyear'],       color: '#ffb84d', axis: 'y2' }
+      ] },
+    { title: '쌀 도입(수입)량과 이월량', cap: '천t · 도입은 수입량, 이월은 전년도에서 넘어온 재고',
+      page: 307, ind: 'rice_supply_demand', y1: '천t',
+      series: [
+        { label: '도입 (천t)', src: ['rice_supply_demand', '도입'], color: '#ff6b6b', fill: true, axis: 'y' },
+        { label: '이월 (천t)', src: ['rice_supply_demand', '이월'], color: '#3fa7ff', axis: 'y' }
       ] }
   ]
 },
@@ -337,6 +355,88 @@ window.BRIEFS = [
         { label: '설탕류 (kcal)', src: ['energy_supply_pc', '설탕류'], color: '#ffb84d', axis: 'y' },
         { label: '두류 (kcal)',   src: ['energy_supply_pc', '두류'],   color: '#38d39f', axis: 'y' },
         { label: '서류 (kcal)',   src: ['energy_supply_pc', '서류'],   color: '#ff6b6b', axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'cropecon', icon: '🌾', name: '작물 생산비·소득 브리프', short: '생산비·소득',
+  desc: '논벼·겉보리·쌀보리·콩의 10a(300평)당 총수입·생산비·소득·순수익을 한 화면에 모았습니다. 물가를 반영하지 않은 그해 금액입니다.',
+  kpis: [
+    { label: '논벼 10a당 소득',   src: ['crop_income_10a', '논벼'],   unit: '원' },
+    { label: '콩 10a당 소득',     src: ['crop_income_10a', '콩'],     unit: '원' },
+    { label: '겉보리 10a당 소득',  src: ['crop_income_10a', '겉보리'], unit: '원' },
+    { label: '쌀보리 10a당 소득',  src: ['crop_income_10a', '쌀보리'], unit: '원' }
+  ],
+  charts: [
+    { title: '작물별 10a당 소득', cap: '원/10a · 소득 = 총수입 − 경영비 · 콩은 2014년부터',
+      page: 180, ind: 'crop_income_10a', y1: '원/10a',
+      series: [
+        { label: '논벼',   src: ['crop_income_10a', '논벼'],   color: '__TOTAL__', axis: 'y' },
+        { label: '콩',     src: ['crop_income_10a', '콩'],     color: '#38d39f', axis: 'y' },
+        { label: '겉보리', src: ['crop_income_10a', '겉보리'], color: '#ffb84d', axis: 'y' },
+        { label: '쌀보리', src: ['crop_income_10a', '쌀보리'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '작물별 10a당 순수익', cap: '원/10a · 순수익 = 총수입 − 생산비 · 자기 노동비와 토지용역비까지 뺀 값이라 음수가 될 수 있습니다',
+      page: 180, ind: 'crop_netprofit_10a', y1: '원/10a',
+      series: [
+        { label: '논벼',   src: ['crop_netprofit_10a', '논벼'],   color: '__TOTAL__', axis: 'y' },
+        { label: '콩',     src: ['crop_netprofit_10a', '콩'],     color: '#38d39f', axis: 'y' },
+        { label: '겉보리', src: ['crop_netprofit_10a', '겉보리'], color: '#ffb84d', axis: 'y' },
+        { label: '쌀보리', src: ['crop_netprofit_10a', '쌀보리'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '논벼: 총수입과 생산비', cap: '원/10a',
+      page: 180, ind: 'crop_revenue_10a', y1: '원/10a',
+      series: [
+        { label: '총수입', src: ['crop_revenue_10a', '논벼'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '생산비', src: ['crop_cost_10a', '논벼'],    color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '겉보리: 총수입과 생산비', cap: '원/10a',
+      page: 181, ind: 'crop_revenue_10a', y1: '원/10a',
+      series: [
+        { label: '총수입', src: ['crop_revenue_10a', '겉보리'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '생산비', src: ['crop_cost_10a', '겉보리'],    color: '#ff6b6b', axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'korjpn', icon: '🇯🇵', name: '한일 비교 브리프', short: '한일 비교',
+  desc: '한국과 일본의 자급률·1인당 소비량을 나란히 놓았습니다. 두 나라의 조사 주체와 산출 방식이 달라 단순 비교에는 주의가 필요합니다.',
+  kpis: [
+    { label: '한국 밀 자급률',   src: ['food_self_suff', '밀'],       unit: '%' },
+    { label: '일본 밀 자급률',   src: ['japan_agri', '밀(소맥)'],      unit: '%' },
+    { label: '한국 곡물자급률',  src: ['grain_self_suff'],            unit: '%' },
+    { label: '일본 곡물자급률',  src: ['japan_agri'],                 unit: '%' }
+  ],
+  charts: [
+    { title: '밀 자급률: 한국과 일본', cap: '% · 한국은 식량자급률 기준, 일본은 농림수산성 기준',
+      page: 535, ind: 'japan_agri', y1: '%',
+      series: [
+        { label: '한국 (%)', src: ['food_self_suff', '밀'],  color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri', '밀(소맥)'], color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '곡물자급률: 한국과 일본', cap: '% · 둘 다 사료용을 포함한 기준',
+      page: 535, ind: 'japan_agri', y1: '%',
+      series: [
+        { label: '한국 (%)', src: ['grain_self_suff'], color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri'],      color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '쌀 자급률: 한국과 일본', cap: '%',
+      page: 535, ind: 'japan_agri', y1: '%',
+      series: [
+        { label: '한국 (%)', src: ['food_self_suff', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri', '쌀'],     color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '1인당 쌀 소비량: 한국과 일본', cap: 'kg · 한국은 양곡년도 기준, 일본은 연간 기준',
+      page: 534, ind: 'japan_consumption_pc', y1: 'kg',
+      series: [
+        { label: '한국 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '일본 (kg)', src: ['japan_consumption_pc'],      color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '1인당 밀 소비량: 한국과 일본', cap: 'kg',
+      page: 534, ind: 'japan_consumption_pc', y1: 'kg',
+      series: [
+        { label: '한국 (kg)', src: ['rice_consumption_pc', '밀'],   color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '일본 (kg)', src: ['japan_consumption_pc', '밀'],  color: '#3fa7ff', axis: 'y' }
       ] }
   ]
 }
