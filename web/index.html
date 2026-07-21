@@ -70,6 +70,23 @@
     background:var(--chip);padding:2px 7px;border-radius:8px;}
   .empty{color:var(--muted);padding:16px 4px;font-size:14px;}
   .allhint{margin-top:14px;font-size:12.5px;color:var(--muted);}
+  .bp{margin-top:4px;}
+  .bp .bptitle{font-size:22px;font-weight:700;letter-spacing:-.3px;margin:0 0 4px;}
+  .bp .bpsub{color:var(--muted);font-size:12.5px;margin-bottom:18px;line-height:1.7;}
+  .bpnums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:22px;}
+  .bpnum{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 17px;}
+  .bpnum .k{font-size:12px;color:var(--muted);}
+  .bpnum .v{font-size:28px;font-weight:700;margin-top:6px;letter-spacing:-.5px;}
+  .bpnum .v small{font-size:13px;color:var(--muted);font-weight:500;margin-left:3px;}
+  .bpnum .c{font-size:11.5px;color:var(--muted);margin-top:6px;}
+  .bpsec{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px;}
+  .bpsec h3{margin:0 0 2px;font-size:15px;}
+  .bpsec .cap{color:var(--muted);font-size:11.5px;margin-bottom:12px;}
+  .bpsec .lnk{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
+  .bpsec .lnk span{font-size:11.5px;color:var(--accent);cursor:pointer;border:1px solid var(--line);
+    background:var(--panel2);border-radius:8px;padding:5px 10px;}
+  .bpsec .lnk span:hover{border-color:var(--accent);}
+  .bpbox{height:300px;position:relative;}
   .allhint .alink{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
   .orig{margin-top:18px;}
   .orig-h{font-size:13px;color:var(--muted);margin-bottom:8px;}
@@ -191,6 +208,7 @@
     <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
   </div>
   <div class="hbtns">
+    <button class="hbtn" id="wheatBtn">🌾 우리밀 브리프</button>
     <button class="hbtn" id="diffBtn">📊 연도 비교</button>
     <button class="hbtn" id="helpBtn">ℹ️ 이용안내</button>
     <button class="hbtn" id="themeBtn">🌙</button>
@@ -205,6 +223,7 @@
   <div class="favbar" id="favbar"></div>
   <div class="brief" id="brief" style="display:none"></div>
   <div class="cards" id="cards"></div>
+  <div class="bp" id="briefpage" style="display:none"></div>
   <div class="allhint" id="allhint" style="display:none"></div>
   <div class="orig" id="orig"></div>
   <div class="detail" id="detail" style="display:none">
@@ -250,6 +269,10 @@
     <p>첫 화면 <b>🏠 대표지표</b> 탭은 분야별 대표 지표 <b>11개</b>만 추려 보여줍니다. 수록된 지표는 모두 <b>34개</b>이며, 맨 오른쪽 <b>📋 전체 지표</b> 탭이나 카드 아래 <b>「전체 34개 지표 보기」</b>를 누르면 한 번에 볼 수 있어요.</p>
     <p>지표 카드를 누르면 <b>시계열 그래프</b>와 <b>자동 분석</b>(추세·최고최저)이 나옵니다. 위쪽 <b>그룹 탭</b>으로 분야별로 보세요. 자급률·소비량 같은 지표는 계(전체)+품목별 선이 함께 나오고, 그래프에 마우스를 올리면 그 해의 값이 모두 표시됩니다.</p>
     <p class="mmuted">· 표 저장: 상세 화면의 <b>⬇ CSV</b>(엑셀), <b>⬇ 그래프 이미지</b> 버튼<br>· 화면: 오른쪽 위 <b>🌙</b>로 밝은/어두운 테마 전환 · 왼쪽 위 <b>제목</b>을 누르면 처음(홈)으로</p>
+
+    <h3>🌾 우리밀 브리프</h3>
+    <p>오른쪽 위 <b>🌾 우리밀 브리프</b> 버튼을 누르면, 원자료에 실린 <b>밀 관련 수치만</b> 한 화면에 모아 보여줍니다. 자급률·재배면적·생산량·1인당 소비량의 핵심 숫자와 그래프 3개, 그리고 각 항목의 <b>근거 원문 쪽수</b>가 함께 있습니다.</p>
+    <p class="mmuted">해석이나 주장을 담지 않고 <b>원자료 값과 그래프만</b> 표시합니다. 판단은 보는 분의 몫입니다.</p>
 
     <h3>ⓘ 이 지표 읽는 법 — 잘못 읽기 쉬운 곳</h3>
     <p>통계는 이름만 보고 짐작하면 틀리기 쉽습니다. 지표 이름 옆 <b>ⓘ</b> 표시가 있는 지표는 <b>주의할 점을 짧게 안내</b>합니다(15개 지표). 예를 들어—</p>
@@ -353,6 +376,8 @@ function applyTheme(t){
   document.body.setAttribute('data-theme', t);
   try{ localStorage.setItem('theme', t); }catch(e){}
   document.getElementById('themeBtn').textContent = t==='light' ? '☀️' : '🌙';
+  var bpEl=document.getElementById('briefpage');
+  if(bpEl && bpEl.style.display==='block'){ renderWheat(); return; }
   if(compareMode) renderCompare();
   else if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
 }
@@ -440,6 +465,8 @@ function applyURL(){
   var vt=get('t');   /* 링크에 담겨온 테마(밝게/어둡게) 먼저 적용 */
   if((vt==='light'||vt==='dark') && vt!==curTheme()) applyTheme(vt);
   var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
+  if(get('brief')==='wheat'){ curId=null; compareMode=false; setBriefPage(true); return; }
+  setBriefPage(false);
   if(vi){
     var ind=findInd(vi);
     if(ind){
@@ -1036,7 +1063,107 @@ document.getElementById('diffModal').onclick=function(e){ if(e.target.id==='diff
 document.getElementById('dcsv').onclick=diffCSV;
 document.getElementById('dlink').onclick=function(){ copyLink(this); };
 
+/* ══════════ ④ 우리밀 브리프 — 원자료 수치와 그래프만. 해석 문장 없음 ══════════ */
+var wheatCharts=[];
+function bdSeries(id,label){
+  var x=INDS.find(function(i){return i.id===id;}); if(!x) return [];
+  var b=(x.breakdown||[]).find(function(b){return b.label===label;});
+  return b? b.series.filter(function(p){return p.value!==null&&p.value!==undefined;}) : [];
+}
+function atYear(arr,y){ var p=arr.find(function(x){return x.year===y;}); return p?p.value:null; }
+function firstLast(arr){ return arr.length?[arr[0],arr[arr.length-1]]:[null,null]; }
+
+function renderWheat(){
+  var box=document.getElementById('briefpage');
+  wheatCharts.forEach(function(c){ try{c.destroy();}catch(e){} }); wheatCharts=[];
+
+  var SS   = bdSeries('food_self_suff','밀');          /* 밀 자급률 % (p.331) */
+  var AREA = bdSeries('food_crop_area','밀');          /* 재배면적 천ha (p.296) */
+  var PROD = bdSeries('food_crop_production','밀');    /* 생산량 천t (p.296) */
+  var CONW = bdSeries('rice_consumption_pc','밀');     /* 1인당 밀 소비 kg (p.332) */
+  var CONR = bdSeries('rice_consumption_pc','쌀');     /* 1인당 쌀 소비 kg (p.332) */
+
+  function numCard(k,arr,unit){
+    var fl=firstLast(arr); if(!fl[1]) return '';
+    var a=fl[0], b=fl[1];
+    return '<div class="bpnum"><div class="k">'+k+'</div>'+
+      '<div class="v">'+fmt(b.value)+'<small>'+unit+'</small></div>'+
+      '<div class="c">'+a.year+'년 '+fmt(a.value)+unit+' → '+b.year+'년'+(b.flag==='p'?' (잠정치)':'')+'</div></div>';
+  }
+  var h='<div class="bptitle">🌾 우리밀 브리프</div>'+
+    '<div class="bpsub">『농림축산식품 주요통계 2025』에 실린 <b>밀 관련 수치만</b> 모아 한 화면에 놓았습니다. '+
+    '해석이나 주장 없이 원자료 값과 그래프만 표시하며, 각 항목의 근거 쪽수를 함께 둡니다.</div>';
+
+  h+='<div class="bpnums">'+
+    numCard('밀 자급률 (식량자급률 기준)',SS,'%')+
+    numCard('밀 재배면적',AREA,'천ha')+
+    numCard('밀 생산량',PROD,'천t')+
+    numCard('1인당 밀 소비량',CONW,'kg')+
+    '</div>';
+
+  function sec(id,title,cap,page,indId){
+    return '<div class="bpsec"><h3>'+title+'</h3><div class="cap">'+cap+'</div>'+
+      '<div class="bpbox"><canvas id="'+id+'"></canvas></div>'+
+      '<div class="lnk"><span data-pg="'+page+'">📄 원문 p.'+page+'</span>'+
+      (indId?'<span data-ind="'+indId+'">📊 지표 자세히 보기</span>':'')+'</div></div>';
+  }
+  h+=sec('wc1','1인당 밀 소비량과 밀 자급률','왼쪽 축 kg · 오른쪽 축 % · 1970~2024',332,'rice_consumption_pc');
+  h+=sec('wc2','밀 재배면적과 생산량','왼쪽 축 천ha · 오른쪽 축 천t · 1970~2024',296,'food_crop_production');
+  h+=sec('wc3','1인당 소비량: 쌀과 밀','kg · 1970~2024',332,'rice_consumption_pc');
+  box.innerHTML=h;
+
+  box.querySelectorAll('.lnk span[data-pg]').forEach(function(el){
+    el.onclick=function(){ openPage(+el.getAttribute('data-pg')); };
+  });
+  box.querySelectorAll('.lnk span[data-ind]').forEach(function(el){
+    el.onclick=function(){ go('?i='+encodeURIComponent(el.getAttribute('data-ind'))); };
+  });
+
+  var C=chartColors(), AX=C.AX, GRID=C.GRID;
+  function yrs(){ var st={}; [].slice.call(arguments).forEach(function(a){ a.forEach(function(p){st[p.year]=1;}); });
+    return Object.keys(st).map(Number).sort(function(a,b){return a-b;}); }
+  function pick(arr,labels){ return labels.map(function(y){ return atYear(arr,y); }); }
+  function mk(cid,labels,dsets,y1,y2){
+    var sc={ x:{ticks:{color:AX,maxTicksLimit:12},grid:{color:GRID}},
+             y:{position:'left',ticks:{color:AX},grid:{color:GRID},title:{display:true,text:y1,color:AX,font:{size:11}}} };
+    if(y2) sc.y2={position:'right',ticks:{color:AX},grid:{display:false},title:{display:true,text:y2,color:AX,font:{size:11}}};
+    var c=new Chart(document.getElementById(cid),{type:'line',data:{labels:labels,datasets:dsets},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{legend:{labels:{color:C.LEG,boxWidth:12,font:{size:11}}}},scales:sc}});
+    wheatCharts.push(c);
+  }
+  var L1=yrs(CONW,SS);
+  mk('wc1',L1,[
+    {label:'1인당 밀 소비량 (kg)',data:pick(CONW,L1),borderColor:'#ffb84d',backgroundColor:'rgba(255,184,77,.12)',fill:true,tension:.25,pointRadius:0,yAxisID:'y',spanGaps:true},
+    {label:'밀 자급률 (%)',data:pick(SS,L1),borderColor:'#3fa7ff',backgroundColor:'transparent',tension:.25,pointRadius:0,yAxisID:'y2',spanGaps:true}
+  ],'kg','%');
+  var L2=yrs(AREA,PROD);
+  mk('wc2',L2,[
+    {label:'재배면적 (천ha)',data:pick(AREA,L2),borderColor:'#38d39f',backgroundColor:'rgba(56,211,159,.12)',fill:true,tension:.25,pointRadius:0,yAxisID:'y',spanGaps:true},
+    {label:'생산량 (천t)',data:pick(PROD,L2),borderColor:'#ff6b6b',backgroundColor:'transparent',tension:.25,pointRadius:0,yAxisID:'y2',spanGaps:true}
+  ],'천ha','천t');
+  var L3=yrs(CONR,CONW);
+  mk('wc3',L3,[
+    {label:'쌀 (kg)',data:pick(CONR,L3),borderColor:C.TOTAL,backgroundColor:'transparent',tension:.25,pointRadius:0,spanGaps:true},
+    {label:'밀 (kg)',data:pick(CONW,L3),borderColor:'#ffb84d',backgroundColor:'rgba(255,184,77,.12)',fill:true,tension:.25,pointRadius:0,spanGaps:true}
+  ],'kg',null);
+}
+/* 브리프 화면 켜고/끄기 — 켜면 탭·카드·상세를 숨긴다 */
+function setBriefPage(on){
+  ['tabs','favbar','brief','cards','allhint','orig','detail'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    if(on) el.style.display='none';
+    /* 끌 때는 항상 보이는 요소만 복구. brief/allhint/detail은 각자의 렌더 함수가 결정 */
+    else if(id==='tabs'||id==='favbar'||id==='cards'||id==='orig') el.style.display='';
+  });
+  var bp=document.getElementById('briefpage');
+  if(bp) bp.style.display = on ? 'block' : 'none';
+  if(on){ renderWheat(); try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }
+}
+document.getElementById('wheatBtn').onclick=function(){ go('?brief=wheat'); };
+
 document.getElementById('q').addEventListener('input', e=>{
+  setBriefPage(false);
   query=e.target.value; compareMode=false; renderTabs(); renderCards(); renderOrig(query);
   replaceURL(query.trim() ? '?q='+encodeURIComponent(query.trim()) : '');
 });
