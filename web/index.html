@@ -42,6 +42,40 @@
     padding:8px 13px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;}
   .hbtn:hover{border-color:var(--accent);}
   .wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px;}
+  /* 히어로 — 홈에서만. 배경 선은 실제 식량자급률 시계열(장식 아님) */
+  .hero{position:relative;overflow:hidden;margin:22px 0 6px;padding:34px 30px 28px;
+    border:1px solid var(--line);border-radius:16px;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));}
+  .hero .heroline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .hero .heroline path{fill:none;stroke:var(--accent);stroke-width:1.6;opacity:.13;}
+  body[data-theme="light"] .hero .heroline path{opacity:.11;}
+  .hero .hin{position:relative;}
+  .hero h2{margin:0;font-size:23px;font-weight:700;letter-spacing:-.5px;line-height:1.45;color:var(--text);}
+  .hero .hsub{margin:11px 0 24px;font-size:13px;color:var(--muted);line-height:1.75;}
+  .hnums{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px;}
+  .hnums .v{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-1px;line-height:1;
+    font-variant-numeric:tabular-nums;}
+  .hnums .k{font-size:11.5px;color:var(--muted);margin-top:7px;}
+  .hcta{display:flex;gap:9px;flex-wrap:wrap;}
+  .hcta button{border:0;border-radius:11px;padding:11px 18px;font-size:13px;font-weight:600;
+    cursor:pointer;font-family:inherit;background:var(--accent);color:#fff;}
+  .hcta button.gh{background:var(--btn);color:var(--btntext);border:1px solid var(--line);font-weight:500;}
+  .hcta button:hover{filter:brightness(1.08);}
+  .hero .fade{opacity:0;animation:heroIn .5s ease forwards;}
+  @keyframes heroIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .hero .draw{stroke-dasharray:2600;stroke-dashoffset:2600;animation:heroDraw 1.6s ease-out .15s forwards;}
+  @keyframes heroDraw{to{stroke-dashoffset:0}}
+  @media(prefers-reduced-motion:reduce){
+    .hero .fade{animation:none;opacity:1}
+    .hero .draw{animation:none;stroke-dashoffset:0}
+  }
+  @media(max-width:640px){
+    .hero{padding:26px 20px 24px}
+    .hero h2{font-size:19px}
+    .hnums{gap:24px}
+    .hnums .v{font-size:26px}
+    .hcta button{padding:10px 14px;font-size:12.5px}
+  }
   .searchbar{margin:22px 0 4px;display:flex;align-items:center;gap:12px;}
   .searchbar input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);
     border-radius:12px;padding:12px 16px;font-size:15px;outline:none;transition:.15s;font-family:inherit;}
@@ -248,6 +282,25 @@
   </div>
 </header>
 <div class="wrap">
+  <div class="hero" id="hero" style="display:none">
+    <svg class="heroline" id="heroline" viewBox="0 0 900 240" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="hin">
+      <h2 class="fade">우리 농업, 지금 어떤 모습일까요?</h2>
+      <p class="hsub fade" style="animation-delay:.1s">
+        『농림축산식품 주요통계 2025』를 그래프·검색·AI로.<br>
+        숫자는 원자료 그대로, 근거 쪽수와 함께.</p>
+      <div class="hnums">
+        <div class="fade" style="animation-delay:.15s"><div class="v" id="hn1">0</div><div class="k">지표</div></div>
+        <div class="fade" style="animation-delay:.25s"><div class="v" id="hn2">0</div><div class="k">주제별 브리프</div></div>
+        <div class="fade" style="animation-delay:.35s"><div class="v" id="hn3">0</div><div class="k">원문 쪽수</div></div>
+      </div>
+      <div class="hcta fade" style="animation-delay:.45s">
+        <button id="hc1">지표 둘러보기</button>
+        <button class="gh" id="hc2">📑 브리프 보기</button>
+        <button class="gh" id="hc3">💬 AI에게 물어보기</button>
+      </div>
+    </div>
+  </div>
   <div class="searchbar">
     <input id="q" type="text" placeholder="🔍 검색  (지표 + 원문 전체 · 예: 자급률, 농약, 산불, 인삼 수출)" autocomplete="off">
     <span class="qcount" id="qcount"></span>
@@ -336,6 +389,10 @@
       <li><b>고령화율</b>은 농가 <b>경영주</b> 기준이지 농가 구성원 전체가 아닙니다.</li>
     </ul>
     <p class="mmuted">안내 문구는 <b>원문의 주석·자료 출처에서 확인된 내용만</b> 담았고, 근거 쪽수를 함께 적었습니다. ⓘ를 다시 누르면 접힙니다.</p>
+
+    <h3>🏠 첫 화면</h3>
+    <p>처음 들어오면 이곳이 무엇을 하는 곳인지 한눈에 보이도록 <b>안내 영역</b>이 먼저 나옵니다. 배경에 옅게 지나가는 선은 장식이 아니라 <b>실제 식량자급률 시계열(1970~2024)</b>입니다.</p>
+    <p class="mmuted">지표·브리프 링크를 타고 바로 들어오신 경우에는 이 영역이 나오지 않고 <b>해당 화면이 곧바로</b> 열립니다.</p>
 
     <h3>📌 주목할 변화 TOP 5 — 뭘 봐야 할지 모를 때</h3>
     <p>첫 화면 맨 위에 <b>지금 가장 눈에 띄는 변화 5가지</b>가 자동으로 뜹니다. 34개 지표를 모두 훑어 <b>가장 최근 두 시점</b>을 비교하고, ⑴그 지표의 <b>평소 변동폭보다 유난히 큰 변화</b>와 ⑵<b>역대 최고·최저를 새로 쓴 지표</b>를 우선해 고릅니다. 항목을 누르면 그 지표 그래프로, <b>p.XX</b>를 누르면 근거 원문 페이지로 갑니다.</p>
@@ -513,6 +570,7 @@ function applyURL(){
   var P; try{ P=new URLSearchParams(location.search); }catch(e){ P=null; }
   var get=function(k){ return P? (P.get(k)||'') : ''; };
   var qel=document.getElementById('q');
+  homeView=false;
   var vt=get('t');   /* 링크에 담겨온 테마(밝게/어둡게) 먼저 적용 */
   if((vt==='light'||vt==='dark') && vt!==curTheme()) applyTheme(vt);
   var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
@@ -544,8 +602,9 @@ function applyURL(){
     query=''; if(qel) qel.value=''; curGroup=FAV; compareMode=true;
     renderTabs(); renderCards(); renderCompare(); return;
   }
-  /* 홈 (또는 알 수 없는 주소) */
+  /* 홈 (또는 알 수 없는 주소) — 여기서만 히어로를 띄운다 */
   query=''; if(qel) qel.value=''; curGroup='전체'; curId=null; compareMode=false;
+  homeView=true;
   renderTabs(); renderCards(); renderOrig('');
 }
 window.addEventListener('popstate', applyURL);
@@ -588,7 +647,7 @@ function renderCards(){
   else list=INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
   document.getElementById('qcount').textContent = searching ? (list.length+'개 지표') : '';
   document.getElementById('tabs').style.opacity = searching ? .4 : 1;
-  renderFavbar(); renderBrief(); renderBriefShortcuts();
+  renderFavbar(); renderBrief(); renderBriefShortcuts(); renderHero();
   if(!searching && curGroup===FAV && !list.length){
     c.innerHTML='<div class="empty">아직 즐겨찾기한 지표가 없어요. 지표를 열고 <b>☆ 즐겨찾기</b>를 눌러 추가하세요.</div>';
     return;
@@ -1242,7 +1301,7 @@ function renderBriefShortcuts(){
 var curBrief=null;
 function setBriefPage(v){
   var on=!!v;
-  ['tabs','favbar','brief','bfhome','cards','allhint','orig','detail'].forEach(function(id){
+  ['hero','tabs','favbar','brief','bfhome','cards','allhint','orig','detail'].forEach(function(id){
     var el=document.getElementById(id); if(!el) return;
     if(on) el.style.display='none';
     else if(id==='tabs'||id==='favbar'||id==='cards'||id==='orig') el.style.display='';
@@ -1257,6 +1316,65 @@ function setBriefPage(v){
 document.getElementById('briefBtn').onclick=function(){
   go('?brief='+(BRIEFS.length===1?BRIEFS[0].id:'list'));
 };
+
+/* ══════════ 히어로 — 홈에서만 표시. 딥링크(?i=·?brief=·?q= 등)로 들어오면 안 나온다 ══════════ */
+var homeView=false, heroDone=false;
+function heroPathD(){
+  /* 배경 선 = 실제 식량자급률 시계열. 장식이 아니라 자료다. */
+  var f=INDS.find(function(i){return i.id==='food_self_suff';});
+  var pts=f? (f.series||[]).filter(function(p){return p.value!==null&&p.value!==undefined;}) : [];
+  if(pts.length<2) return '';
+  var W=900,H=240,PAD=26;
+  var ys=pts.map(function(p){return p.year;}), vs=pts.map(function(p){return p.value;});
+  var y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys);
+  var v0=Math.min.apply(null,vs), v1=Math.max.apply(null,vs);
+  var d='';
+  pts.forEach(function(p,i){
+    var x=(p.year-y0)/(y1-y0)*W;
+    var y=PAD+(1-(p.value-v0)/(v1-v0))*(H-PAD*2);
+    d+=(i?' L':'M')+x.toFixed(1)+','+y.toFixed(1);
+  });
+  return d;
+}
+function heroCount(el,to,ms){
+  if(!el) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    el.textContent=to.toLocaleString(); return;
+  }
+  var st=performance.now();
+  (function tick(t){
+    var pr=Math.min((t-st)/ms,1), e=1-Math.pow(1-pr,3);
+    el.textContent=Math.round(to*e).toLocaleString();
+    if(pr<1) requestAnimationFrame(tick);
+  })(performance.now());
+}
+function renderHero(){
+  var el=document.getElementById('hero'); if(!el) return;
+  var show = homeView && !query.trim() && !compareMode && curGroup==='전체';
+  if(!show){ el.style.display='none'; return; }
+  if(el.style.display==='block') return;      /* 이미 떠 있으면 다시 그리지 않는다 */
+  el.style.display='block';
+  var svg=document.getElementById('heroline');
+  if(svg && !svg.firstChild){
+    var d=heroPathD();
+    if(d) svg.innerHTML='<path class="draw" d="'+d+'"/>';
+  }
+  if(!heroDone){
+    heroDone=true;
+    var N=[['hn1',INDS.length],['hn2',(window.BRIEFS||[]).length],['hn3',581]];
+    N.forEach(function(x,i){
+      setTimeout(function(){ heroCount(document.getElementById(x[0]),x[1],900); },150+i*100);
+    });
+  }
+}
+(function initHero(){
+  var b1=document.getElementById('hc1'), b2=document.getElementById('hc2'), b3=document.getElementById('hc3');
+  if(b1) b1.onclick=function(){ var t=document.getElementById('cards');
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); };
+  if(b2) b2.onclick=function(){ go('?brief=list'); };
+  if(b3) b3.onclick=function(){ var t=document.getElementById('cq');
+    if(t){ t.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){t.focus();},400); } };
+})();
 
 document.getElementById('q').addEventListener('input', e=>{
   setBriefPage(false);
