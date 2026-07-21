@@ -49,6 +49,12 @@
   .hero .heroline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
   .hero .heroline path{fill:none;stroke:var(--accent);stroke-width:1.6;opacity:.13;}
   body[data-theme="light"] .hero .heroline path{opacity:.11;}
+  .hero .herolab{position:absolute;right:18px;bottom:12px;font-size:10.5px;color:var(--muted);
+    opacity:0;cursor:pointer;z-index:1;letter-spacing:-.1px;
+    animation:heroIn 1.2s ease 4.2s forwards;}
+  .hero .herolab:hover{color:var(--accent);text-decoration:underline;text-underline-offset:2px;}
+  @media(prefers-reduced-motion:reduce){ .hero .herolab{animation:none;opacity:1} }
+  @media(max-width:640px){ .hero .herolab{position:static;display:block;margin-top:14px;text-align:right;} }
   .hero .hin{position:relative;}
   .hero h2{margin:0;font-size:23px;font-weight:700;letter-spacing:-.5px;line-height:1.45;color:var(--text);}
   .hero .hsub{margin:11px 0 24px;font-size:13px;color:var(--muted);line-height:1.75;}
@@ -61,9 +67,9 @@
     cursor:pointer;font-family:inherit;background:var(--accent);color:#fff;}
   .hcta button.gh{background:var(--btn);color:var(--btntext);border:1px solid var(--line);font-weight:500;}
   .hcta button:hover{filter:brightness(1.08);}
-  .hero .fade{opacity:0;animation:heroIn .5s ease forwards;}
+  .hero .fade{opacity:0;animation:heroIn 1.5s ease forwards;}
   @keyframes heroIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .hero .draw{stroke-dasharray:2600;stroke-dashoffset:2600;animation:heroDraw 1.6s ease-out .15s forwards;}
+  .hero .draw{stroke-dasharray:2600;stroke-dashoffset:2600;animation:heroDraw 4.8s ease-out .3s forwards;}
   @keyframes heroDraw{to{stroke-dashoffset:0}}
   @media(prefers-reduced-motion:reduce){
     .hero .fade{animation:none;opacity:1}
@@ -284,17 +290,18 @@
 <div class="wrap">
   <div class="hero" id="hero" style="display:none">
     <svg class="heroline" id="heroline" viewBox="0 0 900 240" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="herolab" id="herolab" title="이 지표 자세히 보기"></div>
     <div class="hin">
       <h2 class="fade">우리 농업, 지금 어떤 모습일까요?</h2>
-      <p class="hsub fade" style="animation-delay:.1s">
+      <p class="hsub fade" style="animation-delay:.3s">
         『농림축산식품 주요통계 2025』를 그래프·검색·AI로.<br>
         숫자는 원자료 그대로, 근거 쪽수와 함께.</p>
       <div class="hnums">
-        <div class="fade" style="animation-delay:.15s"><div class="v" id="hn1">0</div><div class="k">지표</div></div>
-        <div class="fade" style="animation-delay:.25s"><div class="v" id="hn2">0</div><div class="k">주제별 브리프</div></div>
-        <div class="fade" style="animation-delay:.35s"><div class="v" id="hn3">0</div><div class="k">원문 쪽수</div></div>
+        <div class="fade" style="animation-delay:.45s"><div class="v" id="hn1">0</div><div class="k">지표</div></div>
+        <div class="fade" style="animation-delay:.75s"><div class="v" id="hn2">0</div><div class="k">주제별 브리프</div></div>
+        <div class="fade" style="animation-delay:1.05s"><div class="v" id="hn3">0</div><div class="k">원문 쪽수</div></div>
       </div>
-      <div class="hcta fade" style="animation-delay:.45s">
+      <div class="hcta fade" style="animation-delay:1.35s">
         <button id="hc1">지표 둘러보기</button>
         <button class="gh" id="hc2">📑 브리프 보기</button>
         <button class="gh" id="hc3">💬 AI에게 물어보기</button>
@@ -1319,9 +1326,11 @@ document.getElementById('briefBtn').onclick=function(){
 
 /* ══════════ 히어로 — 홈에서만 표시. 딥링크(?i=·?brief=·?q= 등)로 들어오면 안 나온다 ══════════ */
 var homeView=false, heroDone=false;
+/* ⬇ 배경 선으로 쓸 지표. 이 값만 바꾸면 다른 지표로 교체된다. */
+var HERO_IND='food_self_suff';
 function heroPathD(){
-  /* 배경 선 = 실제 식량자급률 시계열. 장식이 아니라 자료다. */
-  var f=INDS.find(function(i){return i.id==='food_self_suff';});
+  /* 배경 선 = 실제 시계열. 장식이 아니라 자료다. */
+  var f=INDS.find(function(i){return i.id===HERO_IND;});
   var pts=f? (f.series||[]).filter(function(p){return p.value!==null&&p.value!==undefined;}) : [];
   if(pts.length<2) return '';
   var W=900,H=240,PAD=26;
@@ -1359,11 +1368,24 @@ function renderHero(){
     var d=heroPathD();
     if(d) svg.innerHTML='<path class="draw" d="'+d+'"/>';
   }
+  /* 배경 선이 무슨 자료인지 작게 밝힌다 — 클릭하면 그 지표로 이동 */
+  var lab=document.getElementById('herolab');
+  if(lab && !lab.textContent){
+    var hi=INDS.find(function(i){return i.id===HERO_IND;});
+    if(hi){
+      var hp=(hi.series||[]).filter(function(p){return p.value!==null&&p.value!==undefined;});
+      if(hp.length>1){
+        lab.textContent='배경 선: '+hi.name+' '+hp[0].year+'→'+hp[hp.length-1].year+
+                        ' ('+fmt(hp[0].value)+' → '+fmt(hp[hp.length-1].value)+hi.unit+')';
+        lab.onclick=function(){ go('?i='+encodeURIComponent(HERO_IND)); };
+      }
+    }
+  }
   if(!heroDone){
     heroDone=true;
     var N=[['hn1',INDS.length],['hn2',(window.BRIEFS||[]).length],['hn3',581]];
     N.forEach(function(x,i){
-      setTimeout(function(){ heroCount(document.getElementById(x[0]),x[1],900); },150+i*100);
+      setTimeout(function(){ heroCount(document.getElementById(x[0]),x[1],2700); },450+i*300);
     });
   }
 }
