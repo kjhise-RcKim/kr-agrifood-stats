@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>농식품 주요통계 대시보드</title>
 <meta name="description" content="농림축산식품부 『농림축산식품 주요통계 2025』를 대시보드·검색·AI 챗봇으로 쉽게. 실제 수치·출처 기반.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/brand/rk-symbol-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/brand/rk-symbol-180.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="농식품 주요통계 대시보드">
 <meta property="og:description" content="농림축산식품부 주요통계 2025를 대시보드·검색·AI로. 실제 수치와 출처 기반.">
@@ -21,12 +22,14 @@
     --text:#e8eef4; --muted:#8fa6bd; --accent:#3fa7ff; --accent2:#38d39f;
     --up:#38d39f; --down:#ff6b6b; --chip:#22344a; --btn:#22344a; --btntext:#cfe0f2;
     --grid:#1d2c3d; --axis:#7f97ae; --total:#e8eef4; --star:#ffce54;
+    --sign:#5c7288;
   }
   body[data-theme="light"]{
     --bg1:#eef2f7; --bg2:#f6f9fc; --panel:#ffffff; --panel2:#eef3f8; --line:#d7e0ea;
     --text:#1a2836; --muted:#5c6f80; --accent:#1f7ae0; --accent2:#12a97a;
     --up:#12a97a; --down:#e5484d; --chip:#e6eef6; --btn:#e6eef6; --btntext:#274158;
     --grid:#e5ecf3; --axis:#708698; --total:#1a2836; --star:#f5a623;
+    --sign:#2C7A86;
   }
   *{box-sizing:border-box}
   body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);
@@ -163,6 +166,16 @@
   .chatform button:disabled{opacity:.5;cursor:default;}
   .footer{margin-top:30px;color:var(--muted);font-size:11px;text-align:center;line-height:1.7;}
   .footer a{color:var(--accent);text-decoration:none;}
+  /* 푸터 서명 — 심볼(ㄹㅊㄷㅋ) + 저작권 2줄. 심볼은 mask로 칠해 테마별 색을 따른다 */
+  .sign{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;gap:14px;line-height:1.9;text-align:left;}
+  .sign .rksym{display:block;width:30px;height:25px;flex-shrink:0;background:var(--sign);
+    -webkit-mask:url(./brand/rk-symbol.png) center/contain no-repeat;
+    mask:url(./brand/rk-symbol.png) center/contain no-repeat;}
+  .sign .signtxt{max-width:640px;}
+  @media(max-width:640px){
+    .sign{flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  }
   .badge{display:inline-block;font-size:10px;background:var(--chip);color:var(--accent2);
     padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;}
   .brief{margin:0 0 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
@@ -274,9 +287,12 @@
   <div class="footer">
     데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 2024년은 잠정치(p)<br>
     본 대시보드는 원자료의 수치를 그대로 표시하며, 표시되지 않은 값은 원자료에 결측입니다.
-    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);line-height:1.9">
-      Copyright© 2026 우리밀운동본부. All Rights Reserved. / Designed by 농업회사법인(주)네니아 &amp; Richard Kim<br>
-      <span style="color:var(--muted)">[무료 배포 안내] 홈페이지 수정 · 에러 신고 · 추가 기능 요청은 <a href="mailto:kjhise@gmail.com">kjhise@gmail.com</a>으로 문의 바랍니다.</span>
+    <div class="sign">
+      <span class="rksym" role="img" aria-label="Richard Kim 심볼"></span>
+      <div class="signtxt">
+        Copyright© 2026 우리밀운동본부. All Rights Reserved. / Designed by 농업회사법인(주)네니아 &amp; Richard Kim<br>
+        <span style="color:var(--muted)">[무료 배포 안내] 홈페이지 수정 · 에러 신고 · 추가 기능 요청은 <a href="mailto:kjhise@gmail.com">kjhise@gmail.com</a>으로 문의 바랍니다.</span>
+      </div>
     </div>
   </div>
 </div>
