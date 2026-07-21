@@ -6,7 +6,7 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v7 (딥링크·브리핑TOP5·연도비교 / brief_weight 도입)",
+    "status": "v8 (딥링크·브리핑·연도비교·지표 툴팁)",
     "pending": [
       "meat_consumption_pc",
       "timber_self_suff",
@@ -148,7 +148,8 @@
         "farm_income",
         "cultivated_area"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "생산액 = 품목별 연간생산량 × 그해 연평균 농가판매가격입니다.\n**그해 가격으로 계산**하므로, 생산량이 그대로여도 값이 오르면 금액이 늘어납니다(물가 영향 포함). (p.84 주)"
     },
     {
       "id": "cultivated_area",
@@ -270,7 +271,8 @@
         "food_crop_area",
         "agri_output_value"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "논과 밭을 합한 경지의 넓이입니다. 자료: 국가데이터처 농업면적조사(경지이용면적). (p.24)"
     },
     {
       "id": "farm_households",
@@ -749,7 +751,8 @@
         "agri_output_value",
         "farm_population"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "농가 **1호당** 1년 소득입니다. 농사로 번 돈(농업소득)만이 아니라 농업 외 수입과 이전소득(보조금·연금 등)이 함께 들어갑니다. (p.152 주)"
     },
     {
       "id": "food_self_suff",
@@ -1460,7 +1463,8 @@
           ]
         }
       ],
-      "brief_weight": 1.5
+      "brief_weight": 1.5,
+      "tip": "사료용을 **뺀** 자급률입니다(가축이 먹는 곡물 제외). 사료용까지 포함한 것은 「곡물자급률」입니다.\n자급률은 비율이라 **품목별 값을 더해도 계가 되지 않습니다** — 계는 전체를 물량으로 합산해 따로 계산한 값입니다.\n양곡년도(전년 11월 1일~당년 10월 31일) 기준. 서류는 2011년부터 생체중(수분 포함) 기준으로 바뀌었습니다. (p.331 주)"
     },
     {
       "id": "grain_self_suff",
@@ -2169,7 +2173,8 @@
           ]
         }
       ],
-      "brief_weight": 1.5
+      "brief_weight": 1.5,
+      "tip": "사료용을 **포함한** 자급률입니다. 사료용을 뺀 것은 「식량자급률」이며, 그래서 곡물자급률이 더 낮게 나옵니다.\n**쌀은 2016년부터 원자료에 표시되지 않습니다**(사료용으로 공급되지 않아 제외) — 쌀 자급률은 식량자급률에서 보세요.\n양곡년도 기준. 서류는 2011년부터 생체중(수분 포함) 기준. (p.330 주)"
     },
     {
       "id": "food_crop_production",
@@ -2890,7 +2895,8 @@
         "food_self_suff",
         "cultivated_area"
       ],
-      "brief_weight": 1.5
+      "brief_weight": 1.5,
+      "tip": "**계는 식량작물 전체**(정곡 기준)입니다. 표시된 6개 주요품목 외에 기타 잡곡 등이 포함돼 있습니다.\n다만 **서류(감자·고구마)는 생서 기준**이라 정곡 기준인 계와 잣대가 달라, 6품목을 더하면 계보다 커집니다.\n보리쌀 = 겉보리+쌀보리+맥주보리, 서류 = 감자+고구마. 자료: 농작물생산조사(정곡 기준). (p.296)"
     },
     {
       "id": "food_crop_area",
@@ -3612,7 +3618,8 @@
         "cultivated_area",
         "food_self_suff"
       ],
-      "brief_weight": 1.5
+      "brief_weight": 1.5,
+      "tip": "**계는 식량작물 전체**입니다. 표시된 6개 주요품목 외에 기타 잡곡 등이 포함돼 있어 품목 합계보다 큽니다.\n보리쌀 = 겉보리+쌀보리+맥주보리, 서류 = 감자+고구마. (p.296)"
     },
     {
       "id": "rice_consumption_pc",
@@ -4328,7 +4335,8 @@
           ]
         }
       ],
-      "brief_weight": 1.5
+      "brief_weight": 1.5,
+      "tip": "국민 한 사람이 1년 동안 먹는 양곡의 무게(kg)입니다.\n양곡년도(전년 11월 1일~당년 10월 31일) 기준이며, 서류는 2011년부터 생체중(수분 포함) 기준으로 바뀌었습니다. (p.332 주)"
     },
     {
       "id": "ppi_agri",
@@ -4449,7 +4457,8 @@
         "cpi_food",
         "farm_terms_trade"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "금액(원)이 아니라 **2020년을 100으로 놓은 지수**입니다. 117이면 2020년보다 17% 비싸졌다는 뜻입니다.\n생산자물가는 농어민이 **파는** 단계의 가격입니다. (p.112)"
     },
     {
       "id": "cpi_food",
@@ -4569,7 +4578,8 @@
       "related_ids": [
         "ppi_agri"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "금액(원)이 아니라 **2020년을 100으로 놓은 지수**입니다. 123이면 2020년보다 23% 비싸졌다는 뜻입니다.\n소비자물가는 소비자가 **사는** 단계의 가격입니다. (p.112)"
     },
     {
       "id": "farm_terms_trade",
@@ -4690,7 +4700,8 @@
         "ppi_agri",
         "cpi_food"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "농가가 **파는 값**과 **사는 값**의 비율입니다(2020년=100).\n100보다 낮으면 2020년에 비해 팔아서 버는 것보다 사는 데 드는 부담이 커졌다는 뜻입니다. (p.112)"
     },
     {
       "id": "livestock_heads",
@@ -5354,7 +5365,8 @@
       "related_ids": [
         "meat_production"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "국내 생산량을 국내 수요량으로 나눈 값입니다. 가축이 먹는 **사료의 수입 여부는 반영되지 않습니다**(사료용 곡물은 「곡물자급률」에서 다룹니다).\n2020년부터 쇠고기·돼지고기 생산량이 축산물등급판정 통계연보 기준으로 바뀌어, 그 이전 연도와 단순 비교할 때 주의가 필요합니다. (p.378 주)"
     },
     {
       "id": "vegetable_production",
@@ -5648,7 +5660,8 @@
         "agri_import",
         "agri_trade_balance"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "관세청 **통관 기준**이며, 면세점 수출액은 제외됩니다. (p.136 주)"
     },
     {
       "id": "agri_import",
@@ -5750,7 +5763,8 @@
         "agri_import",
         "agri_trade_balance"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "수출액에서 수입액을 뺀 값입니다. **음수는 수입이 더 많다**는 뜻이며, 값이 더 내려가면 적자가 커진 것입니다."
     },
     {
       "id": "forest_output",
@@ -6166,7 +6180,8 @@
         "farm_population",
         "farm_households"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "tip": "농가 **경영주**(대표자)가 65세 이상인 비율입니다. 농가 구성원 전체의 고령화율이 아닙니다. (p.52)"
     },
     {
       "id": "nk_population",

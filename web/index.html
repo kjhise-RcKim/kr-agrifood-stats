@@ -81,6 +81,14 @@
   .detail{margin-top:26px;background:var(--panel);border:1px solid var(--line);
     border-radius:16px;padding:22px;}
   .detail h2{margin:0 0 3px;font-size:18px;}
+  .tipbtn{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;
+    margin-left:7px;border-radius:50%;background:var(--chip);color:var(--accent);border:1px solid var(--line);
+    font-size:12px;cursor:pointer;vertical-align:middle;font-weight:700;user-select:none;}
+  .tipbtn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .tipbox{margin:8px 0 12px;background:var(--panel2);border:1px solid var(--accent);
+    border-left-width:3px;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.8;color:var(--text);}
+  .tipbox .tth{font-size:11px;color:var(--accent);font-weight:600;margin-bottom:5px;}
+  .tipbox b{color:var(--accent2);}
   .detail .meta{color:var(--muted);font-size:12px;margin-bottom:12px;line-height:1.6;}
   .dlrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
   .dlrow button{background:var(--btn);color:var(--btntext);border:1px solid var(--line);
@@ -200,7 +208,8 @@
   <div class="allhint" id="allhint" style="display:none"></div>
   <div class="orig" id="orig"></div>
   <div class="detail" id="detail" style="display:none">
-    <h2 id="d-name"></h2>
+    <h2><span id="d-name"></span><span class="tipbtn" id="d-tipbtn" title="이 지표 읽는 법" style="display:none">i</span></h2>
+    <div class="tipbox" id="d-tipbox" style="display:none"></div>
     <div class="meta" id="d-desc"></div>
     <div class="dlrow" id="dlrow">
       <button id="dl-fav">☆ 즐겨찾기</button>
@@ -241,6 +250,17 @@
     <p>첫 화면 <b>🏠 대표지표</b> 탭은 분야별 대표 지표 <b>11개</b>만 추려 보여줍니다. 수록된 지표는 모두 <b>34개</b>이며, 맨 오른쪽 <b>📋 전체 지표</b> 탭이나 카드 아래 <b>「전체 34개 지표 보기」</b>를 누르면 한 번에 볼 수 있어요.</p>
     <p>지표 카드를 누르면 <b>시계열 그래프</b>와 <b>자동 분석</b>(추세·최고최저)이 나옵니다. 위쪽 <b>그룹 탭</b>으로 분야별로 보세요. 자급률·소비량 같은 지표는 계(전체)+품목별 선이 함께 나오고, 그래프에 마우스를 올리면 그 해의 값이 모두 표시됩니다.</p>
     <p class="mmuted">· 표 저장: 상세 화면의 <b>⬇ CSV</b>(엑셀), <b>⬇ 그래프 이미지</b> 버튼<br>· 화면: 오른쪽 위 <b>🌙</b>로 밝은/어두운 테마 전환 · 왼쪽 위 <b>제목</b>을 누르면 처음(홈)으로</p>
+
+    <h3>ⓘ 이 지표 읽는 법 — 잘못 읽기 쉬운 곳</h3>
+    <p>통계는 이름만 보고 짐작하면 틀리기 쉽습니다. 지표 이름 옆 <b>ⓘ</b> 표시가 있는 지표는 <b>주의할 점을 짧게 안내</b>합니다(15개 지표). 예를 들어—</p>
+    <ul>
+      <li><b>식량자급률 vs 곡물자급률</b> — 사료용(가축이 먹는 곡물)을 빼느냐 넣느냐의 차이. 그래서 곡물자급률이 더 낮습니다.</li>
+      <li><b>자급률은 더할 수 없습니다</b> — 품목별 자급률을 다 더해도 계가 되지 않습니다.</li>
+      <li><b>물가지수</b>는 금액(원)이 아니라 <b>2020년을 100으로 놓은 값</b>입니다.</li>
+      <li><b>식량작물 생산량</b>의 계는 6품목 합계와 다릅니다(기타 잡곡 포함, 서류는 잣대가 다름).</li>
+      <li><b>고령화율</b>은 농가 <b>경영주</b> 기준이지 농가 구성원 전체가 아닙니다.</li>
+    </ul>
+    <p class="mmuted">안내 문구는 <b>원문의 주석·자료 출처에서 확인된 내용만</b> 담았고, 근거 쪽수를 함께 적었습니다. ⓘ를 다시 누르면 접힙니다.</p>
 
     <h3>📌 주목할 변화 TOP 5 — 뭘 봐야 할지 모를 때</h3>
     <p>첫 화면 맨 위에 <b>지금 가장 눈에 띄는 변화 5가지</b>가 자동으로 뜹니다. 34개 지표를 모두 훑어 <b>가장 최근 두 시점</b>을 비교하고, ⑴그 지표의 <b>평소 변동폭보다 유난히 큰 변화</b>와 ⑵<b>역대 최고·최저를 새로 쓴 지표</b>를 우선해 고릅니다. 항목을 누르면 그 지표 그래프로, <b>p.XX</b>를 누르면 근거 원문 페이지로 갑니다.</p>
@@ -679,12 +699,32 @@ function fillInsight(ind){
   document.getElementById('d-insight').innerHTML=html;
 }
 function chartColors(){ return {AX:css('--axis'),GRID:css('--grid'),TOTAL:css('--total'),LEG:css('--total')}; }
+/* ⓘ 지표 읽는 법 — 오독을 막는 짧은 안내. 원문 주석·자료출처에서 확인된 내용만 담는다. */
+var tipOpen={};
+function tipHTML(t){
+  return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+}
+function showTip(ind){
+  var btn=document.getElementById('d-tipbtn'), box=document.getElementById('d-tipbox');
+  if(!ind.tip){ btn.style.display='none'; box.style.display='none'; return; }
+  btn.style.display='inline-flex';
+  /* 오독 방지가 목적이라 기본은 '펼침'. 닫으면 그 선택을 기억한다. */
+  var open = (ind.id in tipOpen) ? tipOpen[ind.id] : true;
+  tipOpen[ind.id]=open;
+  box.innerHTML='<div class="tth">ⓘ 이 지표 읽는 법</div>'+tipHTML(ind.tip);
+  box.style.display=open?'block':'none';
+  btn.onclick=function(){
+    tipOpen[ind.id]=!tipOpen[ind.id];
+    box.style.display=tipOpen[ind.id]?'block':'none';
+  };
+}
 function renderDetail(ind){
   compareMode=false;
   document.getElementById('detail').style.display='block';
   document.getElementById('dlrow').style.display='flex';
   document.getElementById('d-name').textContent=ind.name;
   document.getElementById('d-desc').textContent=ind.description||'';
+  showTip(ind);
   const s=ind.source||{};
   document.getElementById('d-src').innerHTML=
     '출처: '+(s.publication||'')+' · '+(s.section||'')+' (p.'+(s.page||'?')+')<br>제공: '+(s.org||'')+' · '+(s.license||'');
