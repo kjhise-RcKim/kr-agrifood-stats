@@ -69,6 +69,8 @@
   .gtag{position:absolute;top:14px;right:15px;font-size:10px;color:var(--accent);
     background:var(--chip);padding:2px 7px;border-radius:8px;}
   .empty{color:var(--muted);padding:16px 4px;font-size:14px;}
+  .allhint{margin-top:14px;font-size:12.5px;color:var(--muted);}
+  .allhint .alink{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
   .orig{margin-top:18px;}
   .orig-h{font-size:13px;color:var(--muted);margin-bottom:8px;}
   .orig-h b{color:var(--accent2);}
@@ -195,6 +197,7 @@
   <div class="favbar" id="favbar"></div>
   <div class="brief" id="brief" style="display:none"></div>
   <div class="cards" id="cards"></div>
+  <div class="allhint" id="allhint" style="display:none"></div>
   <div class="orig" id="orig"></div>
   <div class="detail" id="detail" style="display:none">
     <h2 id="d-name"></h2>
@@ -235,6 +238,7 @@
     <p class="mmuted">농림축산식품부 『농림축산식품 주요통계 2025』(581쪽)를 누구나 쉽게 보도록 만든 공개 도구입니다. 대시보드로 한눈에 보고, 검색·AI로 원문 어디든 찾아볼 수 있어요.</p>
 
     <h3>① 대시보드 — 지표를 그래프로</h3>
+    <p>첫 화면 <b>🏠 대표지표</b> 탭은 분야별 대표 지표 <b>11개</b>만 추려 보여줍니다. 수록된 지표는 모두 <b>34개</b>이며, 맨 오른쪽 <b>📋 전체 지표</b> 탭이나 카드 아래 <b>「전체 34개 지표 보기」</b>를 누르면 한 번에 볼 수 있어요.</p>
     <p>지표 카드를 누르면 <b>시계열 그래프</b>와 <b>자동 분석</b>(추세·최고최저)이 나옵니다. 위쪽 <b>그룹 탭</b>으로 분야별로 보세요. 자급률·소비량 같은 지표는 계(전체)+품목별 선이 함께 나오고, 그래프에 마우스를 올리면 그 해의 값이 모두 표시됩니다.</p>
     <p class="mmuted">· 표 저장: 상세 화면의 <b>⬇ CSV</b>(엑셀), <b>⬇ 그래프 이미지</b> 버튼<br>· 화면: 오른쪽 위 <b>🌙</b>로 밝은/어두운 테마 전환 · 왼쪽 위 <b>제목</b>을 누르면 처음(홈)으로</p>
 
@@ -315,7 +319,10 @@ function seriesPts(ind){
 }
 function lastTwo(ind){ const s=seriesPts(ind); return [s[s.length-2], s[s.length-1]]; }
 const FAV='⭐ 즐겨찾기';
-function groups(){ return ['전체', FAV, ...new Set(INDS.map(i=>i.group))]; }
+const ALL='📋 전체 지표';   /* 34개 전부 보여주는 탭 */
+function groups(){ return ['전체', FAV, ...new Set(INDS.map(i=>i.group)), ALL]; }
+/* 내부값 '전체'는 대표지표(요약) 화면. 화면에 보이는 이름만 '🏠 한눈에'로 표기 */
+function tabLabel(g){ return g==='전체' ? '🏠 대표지표' : g; }
 let curGroup='전체', curId=null, chart=null, query='', compareMode=false;
 let favs=[]; try{ favs=JSON.parse(localStorage.getItem('favs')||'[]'); }catch(e){ favs=[]; }
 function saveFavs(){ try{ localStorage.setItem('favs', JSON.stringify(favs)); }catch(e){} }
@@ -366,6 +373,7 @@ function go(qs){
 }
 function replaceURL(qs){ try{ history.replaceState(null,'',urlFor(qs)); }catch(e){} }
 function visibleIn(ind,g){
+  if(g===ALL) return true;
   if(g===FAV) return favs.indexOf(ind.id)>=0;
   if(g==='전체') return !!ind.is_headline;
   return ind.group===g;
@@ -421,6 +429,7 @@ function applyURL(){
       return;
     }
   } else if(vg){
+    if(vg==='all') vg=ALL;
     if(groups().indexOf(vg)>=0){
       query=''; if(qel) qel.value=''; curGroup=vg; curId=null; compareMode=false;
       renderTabs(); renderCards(); renderOrig(''); return;
@@ -448,8 +457,8 @@ function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
-    b.textContent=g;
-    b.onclick=()=>go(g==='전체'?'':'?g='+encodeURIComponent(g));
+    b.textContent=tabLabel(g);
+    b.onclick=()=>go(g==='전체'?'':'?g='+encodeURIComponent(g===ALL?'all':g));
     t.appendChild(b);
   });
 }
@@ -476,6 +485,7 @@ function renderCards(){
   let list;
   if(searching) list=matchList();
   else if(curGroup===FAV) list=INDS.filter(i=>favs.includes(i.id));
+  else if(curGroup===ALL) list=INDS.slice();
   else list=INDS.filter(i=>curGroup==='전체'? i.is_headline : i.group===curGroup);
   document.getElementById('qcount').textContent = searching ? (list.length+'개 지표') : '';
   document.getElementById('tabs').style.opacity = searching ? .4 : 1;
@@ -486,6 +496,15 @@ function renderCards(){
   }
   if(searching && !list.length){
     c.innerHTML='<div class="empty">일치하는 주요 지표가 없어요. 아래 원문 검색 결과나 AI 질문을 이용해보세요.</div>';
+  }
+  var hint=document.getElementById('allhint');
+  if(hint){
+    if(!searching && curGroup==='전체'){
+      hint.innerHTML='분야별 대표 지표 '+list.length+'개를 보여주고 있어요. '+
+        '<span class="alink">📋 전체 '+INDS.length+'개 지표 보기 →</span>';
+      hint.style.display='block';
+      var lk=hint.querySelector('.alink'); if(lk) lk.onclick=function(){ go('?g=all'); };
+    } else hint.style.display='none';
   }
   list.forEach(ind=>{
     const card=document.createElement('div');

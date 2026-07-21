@@ -3620,7 +3620,7 @@
       "group": "식량·자급률",
       "unit": "kg",
       "frequency": "연간",
-      "is_headline": false,
+      "is_headline": true,
       "description": "1인당 연간 양곡 소비량(계) + 품목별(쌀·보리쌀·밀·옥수수·콩·서류)",
       "keywords": [
         "소비량",
@@ -4698,7 +4698,7 @@
       "group": "축산",
       "unit": "천마리",
       "frequency": "연간",
-      "is_headline": true,
+      "is_headline": false,
       "description": "주요 축종별 사육마릿수(연도말)",
       "keywords": [
         "가축",
@@ -5242,7 +5242,7 @@
       "group": "축산",
       "unit": "%",
       "frequency": "연간",
-      "is_headline": false,
+      "is_headline": true,
       "description": "육류 자급률(생산÷수요)",
       "keywords": [
         "자급률",
