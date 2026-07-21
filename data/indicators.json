@@ -6,7 +6,7 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v6 (식량작물 생산량·재배면적 품목별 추가, 쌀 단독지표 흡수)",
+    "status": "v7 (딥링크·브리핑TOP5·연도비교 / brief_weight 도입)",
     "pending": [
       "meat_consumption_pc",
       "timber_self_suff",
@@ -147,7 +147,8 @@
       "related_ids": [
         "farm_income",
         "cultivated_area"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "cultivated_area",
@@ -268,7 +269,8 @@
       "related_ids": [
         "food_crop_area",
         "agri_output_value"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "farm_households",
@@ -388,7 +390,8 @@
       "related_ids": [
         "farm_population",
         "farmer_aging_rate"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "farm_population",
@@ -508,7 +511,8 @@
       "related_ids": [
         "farm_households",
         "farmer_aging_rate"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "agri_gdp_share",
@@ -623,7 +627,8 @@
       ],
       "related_ids": [
         "agri_output_value"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "farm_income",
@@ -743,7 +748,8 @@
       "related_ids": [
         "agri_output_value",
         "farm_population"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "food_self_suff",
@@ -1453,7 +1459,8 @@
             }
           ]
         }
-      ]
+      ],
+      "brief_weight": 1.5
     },
     {
       "id": "grain_self_suff",
@@ -2161,7 +2168,8 @@
             }
           ]
         }
-      ]
+      ],
+      "brief_weight": 1.5
     },
     {
       "id": "food_crop_production",
@@ -2881,7 +2889,8 @@
         "food_crop_area",
         "food_self_suff",
         "cultivated_area"
-      ]
+      ],
+      "brief_weight": 1.5
     },
     {
       "id": "food_crop_area",
@@ -3602,7 +3611,8 @@
         "food_crop_production",
         "cultivated_area",
         "food_self_suff"
-      ]
+      ],
+      "brief_weight": 1.5
     },
     {
       "id": "rice_consumption_pc",
@@ -4317,7 +4327,8 @@
             }
           ]
         }
-      ]
+      ],
+      "brief_weight": 1.5
     },
     {
       "id": "ppi_agri",
@@ -4437,7 +4448,8 @@
       "related_ids": [
         "cpi_food",
         "farm_terms_trade"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "cpi_food",
@@ -4556,7 +4568,8 @@
       ],
       "related_ids": [
         "ppi_agri"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "farm_terms_trade",
@@ -4676,7 +4689,8 @@
       "related_ids": [
         "ppi_agri",
         "cpi_food"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "livestock_heads",
@@ -5097,7 +5111,8 @@
       ],
       "related_ids": [
         "meat_production"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "meat_production",
@@ -5218,7 +5233,8 @@
       "related_ids": [
         "livestock_self_suff",
         "livestock_heads"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "livestock_self_suff",
@@ -5337,7 +5353,8 @@
       ],
       "related_ids": [
         "meat_production"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "vegetable_production",
@@ -5457,7 +5474,8 @@
       ],
       "related_ids": [
         "fruit_production"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "fruit_production",
@@ -5578,7 +5596,8 @@
       ],
       "related_ids": [
         "vegetable_production"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "agri_export",
@@ -5628,7 +5647,8 @@
         "agri_export",
         "agri_import",
         "agri_trade_balance"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "agri_import",
@@ -5678,7 +5698,8 @@
         "agri_export",
         "agri_import",
         "agri_trade_balance"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "agri_trade_balance",
@@ -5728,7 +5749,8 @@
         "agri_export",
         "agri_import",
         "agri_trade_balance"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "forest_output",
@@ -5841,7 +5863,8 @@
           "flag": "p"
         }
       ],
-      "related_ids": []
+      "related_ids": [],
+      "brief_weight": 1
     },
     {
       "id": "fishery_income",
@@ -5952,7 +5975,8 @@
       ],
       "related_ids": [
         "farm_income"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "food_industry_size",
@@ -6020,7 +6044,8 @@
           "value": 327543251
         }
       ],
-      "related_ids": []
+      "related_ids": [],
+      "brief_weight": 1
     },
     {
       "id": "farmer_aging_rate",
@@ -6140,7 +6165,8 @@
       "related_ids": [
         "farm_population",
         "farm_households"
-      ]
+      ],
+      "brief_weight": 1
     },
     {
       "id": "nk_population",
@@ -6272,7 +6298,8 @@
       "related_ids": [
         "nk_economy",
         "nk_agriculture"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "nk_economy",
@@ -6387,7 +6414,8 @@
       ],
       "related_ids": [
         "nk_population"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "nk_agriculture",
@@ -6509,7 +6537,8 @@
       ],
       "related_ids": [
         "nk_population"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "nk_trade",
@@ -6624,7 +6653,8 @@
       ],
       "related_ids": [
         "nk_economy"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "japan_agri",
@@ -6708,7 +6738,8 @@
       "related_ids": [
         "grain_self_suff",
         "food_self_suff"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "taiwan_agri",
@@ -6822,7 +6853,8 @@
       ],
       "related_ids": [
         "farm_population"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "china_agri",
@@ -6920,7 +6952,8 @@
       ],
       "related_ids": [
         "farm_population"
-      ]
+      ],
+      "brief_weight": 0
     },
     {
       "id": "intl_rice_compare",
