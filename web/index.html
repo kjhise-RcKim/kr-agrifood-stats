@@ -211,7 +211,7 @@
     <p class="mmuted">· 표 저장: 상세 화면의 <b>⬇ CSV</b>(엑셀), <b>⬇ 그래프 이미지</b> 버튼<br>· 화면: 오른쪽 위 <b>🌙</b>로 밝은/어두운 테마 전환 · 왼쪽 위 <b>제목</b>을 누르면 처음(홈)으로</p>
 
     <h3>🔗 링크로 콕 집어 공유하기</h3>
-    <p>지표를 열면 주소창이 그 지표 주소로 바뀝니다. 상세 화면의 <b>🔗 링크 복사</b> 버튼을 누른 뒤 카톡·메일에 붙여넣으면, 받는 사람 화면에 <b>그 지표가 바로 열립니다</b>. 탭·검색 결과·즐겨찾기 겹쳐보기도 같은 방식으로 공유돼요. 브라우저 <b>뒤로가기</b>로 직전에 보던 지표로 되돌아갈 수도 있습니다.</p>
+    <p>지표를 열면 주소창이 그 지표 주소로 바뀝니다(예: <code>…/?i=food_crop_production</code>). 상세 화면의 <b>🔗 링크 복사</b> 버튼을 누른 뒤 카톡·메일에 붙여넣으면, 받는 사람 화면에 <b>그 지표가 바로 열립니다</b>. 탭·검색 결과·즐겨찾기 겹쳐보기도 같은 방식으로 공유돼요. 브라우저 <b>뒤로가기</b>로 직전에 보던 지표로 되돌아갈 수도 있습니다.</p>
 
     <h3>⭐ 즐겨찾기 · 지표 겹쳐보기</h3>
     <p>지표 상세의 <b>☆ 즐겨찾기</b> 버튼으로 자주 보는 지표를 담아두면(이 브라우저에 저장), 상단 <b>⭐ 즐겨찾기</b> 탭에서 모아봅니다. 2개 이상이면 <b>「📊 즐겨찾기 겹쳐보기」</b> 버튼으로 여러 지표를 한 그래프에 겹쳐 비교해요. 단위가 달라도(천명 vs %) 각 지표의 <b>가장 이른 해를 100으로 맞춰</b> 상대 변화를 비교합니다(100→60이면 40% 감소).</p>
@@ -287,13 +287,20 @@ document.getElementById('help').onclick=e=>{ if(e.target.id==='help') e.currentT
 document.getElementById('pmClose').onclick=()=>document.getElementById('pageModal').style.display='none';
 document.getElementById('pageModal').onclick=e=>{ if(e.target.id==='pageModal') e.currentTarget.style.display='none'; };
 
-function goHome(){ go('#/'); try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }
+function goHome(){ go(''); try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }
 
-/* ── 링크(해시) 라우터 ──
-   #/            홈
-   #/i/<지표id>  지표 상세      #/g/<그룹명>  그룹 탭
-   #/q/<검색어>  검색           #/compare     즐겨찾기 겹쳐보기      */
-function go(h){ if(location.hash===h) applyHash(); else location.hash=h; }
+/* ── 링크(쿼리) 라우터 ──  ?는 서버까지 전달되는 정식 주소라 SNS 미리보기(OG)가 정상 동작함
+   (없음)              홈
+   ?i=<지표id>         지표 상세      ?g=<그룹명>   그룹 탭
+   ?q=<검색어>         검색           ?view=compare 즐겨찾기 겹쳐보기   */
+function urlFor(qs){ return location.pathname+(qs||''); }
+function go(qs){
+  var url=urlFor(qs);
+  if(location.pathname+location.search===url){ applyURL(); return; }
+  try{ history.pushState(null,'',url); }catch(e){}
+  applyURL();
+}
+function replaceURL(qs){ try{ history.replaceState(null,'',urlFor(qs)); }catch(e){} }
 function visibleIn(ind,g){
   if(g===FAV) return favs.indexOf(ind.id)>=0;
   if(g==='전체') return !!ind.is_headline;
@@ -303,7 +310,7 @@ function findInd(key){
   var k=String(key||'').replace(/\s/g,'');
   return INDS.find(x=>x.id===key) || INDS.find(x=>x.name.replace(/\s/g,'')===k) || null;
 }
-function shareURL(){ return location.origin+location.pathname+location.search+location.hash; }
+function shareURL(){ return location.origin+location.pathname+location.search; }
 function copyLink(btn){
   var url=shareURL(), old=btn.textContent;
   var done=function(ok){ btn.textContent = ok?'✅ 복사됨!':'복사 실패 — 주소창을 복사하세요';
@@ -317,28 +324,41 @@ function copyLink(btn){
     ta.select(); var ok=document.execCommand('copy'); ta.remove(); done(ok);
   }catch(e){ done(false); }
 }
-function applyHash(){
-  var raw=location.hash||'', h='';
-  try{ h=decodeURIComponent(raw).replace(/^#\/?/,''); }catch(e){ h=raw.replace(/^#\/?/,''); }
-  var qel=document.getElementById('q'), m;
-  if((m=h.match(/^i\/(.+)$/))){
-    var ind=findInd(m[1]);
+/* 예전에 공유된 #/i/… 주소를 ?i=… 로 자동 전환 (기존 링크 호환) */
+function migrateHash(){
+  var raw=location.hash||''; if(!raw) return false;
+  var h=''; try{ h=decodeURIComponent(raw).replace(/^#\/?/,''); }catch(e){ h=raw.replace(/^#\/?/,''); }
+  var m, qs=null;
+  if((m=h.match(/^i\/(.+)$/))) qs='?i='+encodeURIComponent(m[1]);
+  else if((m=h.match(/^g\/(.+)$/))) qs='?g='+encodeURIComponent(m[1]);
+  else if((m=h.match(/^q\/(.+)$/))) qs='?q='+encodeURIComponent(m[1]);
+  else if(h==='compare') qs='?view=compare';
+  else if(h==='' ) qs='';
+  if(qs===null) return false;
+  replaceURL(qs); return true;
+}
+function applyURL(){
+  var P; try{ P=new URLSearchParams(location.search); }catch(e){ P=null; }
+  var get=function(k){ return P? (P.get(k)||'') : ''; };
+  var qel=document.getElementById('q');
+  var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
+  if(vi){
+    var ind=findInd(vi);
     if(ind){
       query=''; if(qel) qel.value=''; compareMode=false; curId=ind.id;
       if(!visibleIn(ind,curGroup)) curGroup=ind.group;
       renderTabs(); renderCards(); renderDetail(ind); renderOrig('');
       return;
     }
-  } else if((m=h.match(/^g\/(.+)$/))){
-    var g=m[1];
-    if(groups().indexOf(g)>=0){
-      query=''; if(qel) qel.value=''; curGroup=g; curId=null; compareMode=false;
+  } else if(vg){
+    if(groups().indexOf(vg)>=0){
+      query=''; if(qel) qel.value=''; curGroup=vg; curId=null; compareMode=false;
       renderTabs(); renderCards(); renderOrig(''); return;
     }
-  } else if((m=h.match(/^q\/(.*)$/))){
-    query=m[1]; if(qel) qel.value=query; curId=null; compareMode=false;
+  } else if(vq){
+    query=vq; if(qel) qel.value=query; curId=null; compareMode=false;
     renderTabs(); renderCards(); renderOrig(query); return;
-  } else if(h==='compare'){
+  } else if(vv==='compare'){
     query=''; if(qel) qel.value=''; curGroup=FAV; compareMode=true;
     renderTabs(); renderCards(); renderCompare(); return;
   }
@@ -346,7 +366,7 @@ function applyHash(){
   query=''; if(qel) qel.value=''; curGroup='전체'; curId=null; compareMode=false;
   renderTabs(); renderCards(); renderOrig('');
 }
-window.addEventListener('hashchange', applyHash);
+window.addEventListener('popstate', applyURL);
 var _homeEl=document.getElementById('homeTitle');
 if(_homeEl){ _homeEl.style.cursor='pointer'; _homeEl.addEventListener('click',goHome); }
 
@@ -355,7 +375,7 @@ function renderTabs(){
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
     b.textContent=g;
-    b.onclick=()=>go(g==='전체'?'#/':'#/g/'+encodeURIComponent(g));
+    b.onclick=()=>go(g==='전체'?'':'?g='+encodeURIComponent(g));
     t.appendChild(b);
   });
 }
@@ -372,7 +392,7 @@ function renderFavbar(){
   const fb=document.getElementById('favbar'); fb.innerHTML='';
   if(!query && curGroup===FAV && favs.filter(id=>{const i=INDS.find(x=>x.id===id);return i&&!i.compare;}).length>=2){
     const b=document.createElement('button'); b.textContent='📊 즐겨찾기 겹쳐보기 (각 지표 첫해=100 지수)';
-    b.onclick=()=>{go('#/compare');document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'});};
+    b.onclick=()=>{go('?view=compare');document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'});};
     fb.appendChild(b);
   }
 }
@@ -418,7 +438,7 @@ function renderCards(){
       card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
         '<div class="val">'+val+'<small>'+ind.unit+'</small></div>'+delta;
     }
-    card.onclick=()=>go('#/i/'+encodeURIComponent(ind.id));
+    card.onclick=()=>go('?i='+encodeURIComponent(ind.id));
     c.appendChild(card);
   });
   if(!curId && !compareMode && list.length){curId=list[0].id;renderDetail(list[0]);renderCards();}
@@ -583,8 +603,8 @@ function renderDetail(ind){
   document.getElementById('dl-png').onclick=()=>downloadPNG(ind);
   var lkBtn=document.getElementById('dl-link');
   lkBtn.onclick=function(){
-    var h='#/i/'+encodeURIComponent(ind.id);
-    if(location.hash!==h){ try{ history.replaceState(null,'',location.pathname+location.search+h); }catch(e){} }
+    var qs='?i='+encodeURIComponent(ind.id);
+    if(location.search!==qs) replaceURL(qs);
     copyLink(lkBtn);
   };
   const {AX,GRID,TOTAL,LEG}=chartColors();
@@ -691,10 +711,9 @@ function downloadPNG(ind){
 
 document.getElementById('q').addEventListener('input', e=>{
   query=e.target.value; compareMode=false; renderTabs(); renderCards(); renderOrig(query);
-  var h = query.trim() ? '#/q/'+encodeURIComponent(query.trim()) : '#/';
-  try{ history.replaceState(null,'',location.pathname+location.search+h); }catch(err){}
+  replaceURL(query.trim() ? '?q='+encodeURIComponent(query.trim()) : '');
 });
-applyHash();
+migrateHash(); applyURL();
 
 const CHIPS=['밀의 2024년 자급률은?','농약 사용량 추세','1인당 쌀 소비량 추세','식량자급률은 왜 낮아?','한국과 일본 자급률 비교'];
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');}
