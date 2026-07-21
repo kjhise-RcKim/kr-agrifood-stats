@@ -682,6 +682,22 @@ function renderCards(){
       card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
         '<div class="val">'+ind.compare.length+'<small>개국</small></div>'+
         '<div class="delta" style="color:var(--muted)">최다 '+top.label+' '+fmt(top.value)+' '+ind.unit+'</div>';
+    } else if(!seriesPts(ind).length && (ind.breakdown||[]).length){
+      /* 계(합계)가 없고 품목별만 있는 지표 — 국가별 생산량, 작물별 소득 등.
+         합계를 만들면 없는 숫자를 지어내는 셈이라, 항목 수 + 최대 항목만 보여준다. */
+      let top=null, maxY=null;
+      ind.breakdown.forEach(b=>{
+        const v=b.series.filter(p=>p.value!==null&&p.value!==undefined);
+        if(!v.length) return;
+        const p=v[v.length-1];
+        if(maxY===null||p.year>maxY) maxY=p.year;
+        if(!top||p.value>top.value) top={label:b.label,value:p.value,flag:p.flag};
+      });
+      const corner = searching ? gtag
+        : '<div class="yr">'+(maxY!==null?maxY:'')+((top&&top.flag==='p')?' p':'')+'</div>';
+      card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
+        '<div class="val">'+ind.breakdown.length+'<small>'+(ind.item_label||'개 항목')+'</small></div>'+
+        (top?'<div class="delta" style="color:var(--muted)">최대 '+esc(top.label)+' '+fmt(top.value)+' '+ind.unit+'</div>':'');
     } else {
       const [prev,last]=lastTwo(ind);
       let delta='';
