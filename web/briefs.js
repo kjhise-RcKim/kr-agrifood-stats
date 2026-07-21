@@ -78,5 +78,89 @@ window.BRIEFS = [
         { label: '경영주 고령화율 (%)',      src: ['farmer_aging_rate'], color: '#ff6b6b', axis: 'y2' }
       ] }
   ]
+},
+{
+  id: 'rice', icon: '🍚', name: '쌀 수급 브리프', short: '쌀 수급',
+  desc: '쌀의 자급률·재배면적·생산량·1인당 소비량을 한 화면에 모았습니다.',
+  kpis: [
+    { label: '쌀 자급률 (식량자급률 기준)', src: ['food_self_suff', '쌀'],      unit: '%' },
+    { label: '쌀 재배면적',       src: ['food_crop_area', '쌀'],       unit: '천ha' },
+    { label: '쌀 생산량',         src: ['food_crop_production', '쌀'], unit: '천t' },
+    { label: '1인당 쌀 소비량',    src: ['rice_consumption_pc', '쌀'],  unit: 'kg' }
+  ],
+  charts: [
+    { title: '1인당 쌀 소비량과 쌀 자급률', cap: '왼쪽 축 kg · 오른쪽 축 %',
+      page: 332, ind: 'rice_consumption_pc', y1: 'kg', y2: '%',
+      series: [
+        { label: '1인당 쌀 소비량 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '쌀 자급률 (%)',       src: ['food_self_suff', '쌀'],      color: '#3fa7ff', axis: 'y2' }
+      ] },
+    { title: '쌀 재배면적과 생산량', cap: '왼쪽 축 천ha · 오른쪽 축 천t',
+      page: 296, ind: 'food_crop_area', y1: '천ha', y2: '천t',
+      series: [
+        { label: '재배면적 (천ha)', src: ['food_crop_area', '쌀'],       color: '#38d39f', fill: true, axis: 'y' },
+        { label: '생산량 (천t)',    src: ['food_crop_production', '쌀'], color: '#ff6b6b', axis: 'y2' }
+      ] },
+    { title: '식량작물 생산량 중 쌀', cap: '천t · 계는 식량작물 전체(정곡 기준)입니다',
+      page: 296, ind: 'food_crop_production', y1: '천t',
+      series: [
+        { label: '식량작물 계 (천t)', src: ['food_crop_production'],      color: '__TOTAL__', axis: 'y' },
+        { label: '쌀 (천t)',         src: ['food_crop_production', '쌀'], color: '#ffb84d', fill: true, axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'livestock', icon: '🐄', name: '축산 브리프', short: '축산',
+  desc: '육류 생산량·자급률과 가축 사육마릿수를 한 화면에 모았습니다.',
+  kpis: [
+    { label: '축산물(육류) 생산량', src: ['meat_production'],           unit: '천t' },
+    { label: '축산물(육류) 자급률', src: ['livestock_self_suff'],       unit: '%' },
+    { label: '돼지 사육마릿수',     src: ['livestock_heads', '돼지'],    unit: '천마리' },
+    { label: '닭 사육마릿수',       src: ['livestock_heads', '닭'],      unit: '천마리' }
+  ],
+  charts: [
+    { title: '육류 생산량과 자급률', cap: '왼쪽 축 천t · 오른쪽 축 % · 2020년부터 쇠고기·돼지고기 생산량 산출 기준이 바뀌었습니다',
+      page: 378, ind: 'meat_production', y1: '천t', y2: '%',
+      series: [
+        { label: '육류 생산량 (천t)', src: ['meat_production'],     color: '#ff6b6b', fill: true, axis: 'y' },
+        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#3fa7ff', axis: 'y2' }
+      ] },
+    { title: '가축 사육마릿수', cap: '왼쪽 축 천마리(한·육우·젖소·돼지) · 오른쪽 축 천마리(닭)',
+      page: 372, ind: 'livestock_heads', y1: '천마리', y2: '천마리 (닭)',
+      series: [
+        { label: '한·육우', src: ['livestock_heads', '한·육우'], color: '#ff6b6b', axis: 'y' },
+        { label: '젖소',   src: ['livestock_heads', '젖소'],   color: '#38d39f', axis: 'y' },
+        { label: '돼지',   src: ['livestock_heads', '돼지'],   color: '#ffb84d', axis: 'y' },
+        { label: '닭',     src: ['livestock_heads', '닭'],     color: '#3fa7ff', axis: 'y2' }
+      ] },
+    { title: '육류 자급률과 곡물자급률', cap: '% · 곡물자급률에는 가축이 먹는 사료용 곡물이 포함됩니다',
+      page: 378, ind: 'livestock_self_suff', y1: '%',
+      series: [
+        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#ff6b6b', fill: true, axis: 'y' },
+        { label: '곡물자급률 (%)',    src: ['grain_self_suff'],     color: '#3fa7ff', axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'trade', icon: '🌏', name: '무역 브리프', short: '무역',
+  desc: '농림축산물 수출액·수입액·무역수지를 한 화면에 모았습니다. 원자료에 실린 기간은 2020년 이후입니다.',
+  kpis: [
+    { label: '농림축산물 수출액', src: ['agri_export'],        unit: '백만$' },
+    { label: '농림축산물 수입액', src: ['agri_import'],        unit: '백만$' },
+    { label: '농림축산물 무역수지', src: ['agri_trade_balance'], unit: '백만$' }
+  ],
+  charts: [
+    { title: '농림축산물 수출액과 수입액', cap: '백만$ · 관세청 통관기준, 면세점 수출액 제외',
+      page: 136, ind: 'agri_export', y1: '백만$', type: 'bar',
+      series: [
+        { label: '수출액 (백만$)', src: ['agri_export'], color: '#38d39f', axis: 'y' },
+        { label: '수입액 (백만$)', src: ['agri_import'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '농림축산물 무역수지', cap: '백만$ · 수출액에서 수입액을 뺀 값입니다',
+      page: 136, ind: 'agri_trade_balance', y1: '백만$', type: 'bar',
+      series: [
+        { label: '무역수지 (백만$)', src: ['agri_trade_balance'], color: '#3fa7ff', axis: 'y' }
+      ] }
+  ]
 }
 ];

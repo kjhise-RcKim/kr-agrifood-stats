@@ -296,6 +296,9 @@
     <ul>
       <li><b>🌾 우리밀</b> — 밀 자급률·재배면적·생산량·1인당 소비량</li>
       <li><b>🛡️ 식량안보</b> — 식량/곡물 자급률, 경지면적, 양곡 소비량, 농가 구조</li>
+      <li><b>🍚 쌀 수급</b> — 쌀 자급률·재배면적·생산량·1인당 소비량</li>
+      <li><b>🐄 축산</b> — 육류 생산량·자급률, 가축 사육마릿수</li>
+      <li><b>🌏 무역</b> — 농림축산물 수출액·수입액·무역수지</li>
     </ul>
     <p>각 브리프는 <b>핵심 숫자</b>(첫해 → 최신)와 <b>그래프</b>로 이뤄집니다. 그래프는 단위가 다른 두 지표를 <b>좌·우 축에 나눠 겹쳐</b> 보여주므로, 예컨대 소비량(kg)과 자급률(%)의 움직임을 한눈에 견줄 수 있어요. 그래프마다 <b>📄 원문 p.XX</b>와 <b>📊 지표 자세히 보기</b>가 붙어 있습니다.</p>
     <p class="mmuted">해석이나 주장을 담지 않고 <b>원자료 값과 그래프만</b> 표시합니다. 판단은 보는 분의 몫입니다.</p>
@@ -1188,7 +1191,8 @@ function renderBriefPage(B){
                 title:{display:!!c.y1,text:c.y1||'',color:AX,font:{size:11}}} };
     if(c.y2) sc.y2={position:'right',ticks:{color:AX},grid:{display:false},
                     title:{display:true,text:c.y2,color:AX,font:{size:11}}};
-    briefCharts.push(new Chart(document.getElementById('bpc'+i),{type:'line',
+    if(c.type==='bar') dsets.forEach(function(d){ d.backgroundColor=d.borderColor; d.borderWidth=0; d.fill=false; });
+    briefCharts.push(new Chart(document.getElementById('bpc'+i),{type:c.type||'line',
       data:{labels:labels,datasets:dsets},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
         plugins:{legend:{labels:{color:C.LEG,boxWidth:12,font:{size:11}}}},scales:sc}}));
