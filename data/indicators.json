@@ -80,7 +80,7 @@
     {
       "id": "agri_output_value",
       "name": "농림업 생산액",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "십억원",
       "frequency": "연간",
       "is_headline": true,
@@ -153,7 +153,7 @@
     {
       "id": "cultivated_area",
       "name": "경지면적",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "천ha",
       "frequency": "연간",
       "is_headline": true,
@@ -275,7 +275,7 @@
     {
       "id": "farm_households",
       "name": "농가 호수",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "천호",
       "frequency": "연간",
       "is_headline": false,
@@ -396,7 +396,7 @@
     {
       "id": "farm_population",
       "name": "농가 인구",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "천명",
       "frequency": "연간",
       "is_headline": true,
@@ -517,7 +517,7 @@
     {
       "id": "agri_gdp_share",
       "name": "농림어업 GDP 비중",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "%",
       "frequency": "연간",
       "is_headline": false,
@@ -633,7 +633,7 @@
     {
       "id": "farm_income",
       "name": "농가소득(호당)",
-      "group": "농업 한눈에",
+      "group": "농업 총괄",
       "unit": "천원",
       "frequency": "연간",
       "is_headline": true,

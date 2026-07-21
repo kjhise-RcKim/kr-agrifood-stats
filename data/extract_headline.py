@@ -80,7 +80,7 @@ indicators = []
 
 # 4 경지면적 (p28 인쇄24) idx0 = 경지면적(천ha)
 indicators.append({
-    "id": "cultivated_area", "name": "경지면적", "group": "농업 한눈에", "unit": "천ha",
+    "id": "cultivated_area", "name": "경지면적", "group": "농업 총괄", "unit": "천ha",
     "frequency": "연간", "is_headline": True, "description": "전국 경지면적(논+밭)",
     "keywords": ["경지", "경지면적", "논", "밭", "농지"],
     "source": src("기본통계 > Ⅰ. 국토 및 경지 > 경지이용상황", 24, "국가데이터처 KOSIS"),
@@ -88,7 +88,7 @@ indicators.append({
 
 # 3 농가인구 (p66 인쇄62) idx0 = 농가인구(천명)
 indicators.append({
-    "id": "farm_population", "name": "농가 인구", "group": "농업 한눈에", "unit": "천명",
+    "id": "farm_population", "name": "농가 인구", "group": "농업 총괄", "unit": "천명",
     "frequency": "연간", "is_headline": True, "description": "농가에 속한 총 인구",
     "keywords": ["농가인구", "인구", "농촌인구"],
     "source": src("기본통계 > Ⅲ. 인구 및 가구 > 연령별·성별 농가인구", 62, "국가데이터처 농림어업조사"),
@@ -104,7 +104,7 @@ indicators.append({
 
 # 6 농가소득 (p156 인쇄152) idx0 = 농가소득(천원)
 indicators.append({
-    "id": "farm_income", "name": "농가소득(호당)", "group": "농업 한눈에", "unit": "천원",
+    "id": "farm_income", "name": "농가소득(호당)", "group": "농업 총괄", "unit": "천원",
     "frequency": "연간", "is_headline": True,
     "description": "농가 1호당 연간 소득(농업+농외+이전+비경상소득)",
     "keywords": ["농가소득", "소득", "농가경제", "농업소득", "농외소득"],
@@ -216,7 +216,7 @@ if len(tr) >= 3:
             "series": s, "related_ids": ["agri_export", "agri_import", "agri_trade_balance"]})
 
 groups = [
-    {"id": "overview", "name": "농업 한눈에", "order": 1},
+    {"id": "overview", "name": "농업 총괄", "order": 1},
     {"id": "food", "name": "식량·자급률", "order": 2},
     {"id": "price", "name": "물가·가격", "order": 3},
     {"id": "livestock", "name": "축산", "order": 4},
