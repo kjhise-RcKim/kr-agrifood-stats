@@ -162,5 +162,101 @@ window.BRIEFS = [
         { label: '무역수지 (백만$)', src: ['agri_trade_balance'], color: '#3fa7ff', axis: 'y' }
       ] }
   ]
+},
+{
+  id: 'othercrops', icon: '🌱', name: '잡곡·콩 브리프', short: '잡곡·콩',
+  desc: '쌀·밀을 뺀 나머지 식량작물(보리쌀·콩·옥수수·서류)의 수치를 한 화면에 모았습니다.',
+  kpis: [
+    { label: '콩 자급률',    src: ['food_self_suff', '콩'],    unit: '%' },
+    { label: '보리쌀 자급률', src: ['food_self_suff', '보리쌀'], unit: '%' },
+    { label: '옥수수 자급률', src: ['food_self_suff', '옥수수'], unit: '%' },
+    { label: '서류 자급률',   src: ['food_self_suff', '서류'],   unit: '%' }
+  ],
+  charts: [
+    { title: '품목별 자급률', cap: '% · 식량자급률(사료용 제외) 기준',
+      page: 331, ind: 'food_self_suff', y1: '%',
+      series: [
+        { label: '보리쌀', src: ['food_self_suff', '보리쌀'], color: '#ffb84d', axis: 'y' },
+        { label: '콩',     src: ['food_self_suff', '콩'],     color: '#38d39f', axis: 'y' },
+        { label: '옥수수', src: ['food_self_suff', '옥수수'], color: '#3fa7ff', axis: 'y' },
+        { label: '서류',   src: ['food_self_suff', '서류'],   color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '품목별 재배면적', cap: '천ha',
+      page: 296, ind: 'food_crop_area', y1: '천ha',
+      series: [
+        { label: '보리쌀', src: ['food_crop_area', '보리쌀'], color: '#ffb84d', axis: 'y' },
+        { label: '콩',     src: ['food_crop_area', '콩'],     color: '#38d39f', axis: 'y' },
+        { label: '옥수수', src: ['food_crop_area', '옥수수'], color: '#3fa7ff', axis: 'y' },
+        { label: '서류',   src: ['food_crop_area', '서류'],   color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '품목별 1인당 소비량', cap: 'kg · 양곡년도 기준',
+      page: 332, ind: 'rice_consumption_pc', y1: 'kg',
+      series: [
+        { label: '보리쌀', src: ['rice_consumption_pc', '보리쌀'], color: '#ffb84d', axis: 'y' },
+        { label: '콩',     src: ['rice_consumption_pc', '콩'],     color: '#38d39f', axis: 'y' },
+        { label: '옥수수', src: ['rice_consumption_pc', '옥수수'], color: '#3fa7ff', axis: 'y' },
+        { label: '서류',   src: ['rice_consumption_pc', '서류'],   color: '#ff6b6b', axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'farmecon', icon: '💰', name: '농가경제 브리프', short: '농가경제',
+  desc: '농가소득과 농가가 마주하는 가격 여건을 한 화면에 모았습니다.',
+  kpis: [
+    { label: '농가소득 (호당)',   src: ['farm_income'],       unit: '천원' },
+    { label: '농가 교역조건지수',  src: ['farm_terms_trade'],  unit: '지수' },
+    { label: '농림수산품 생산자물가', src: ['ppi_agri'],        unit: '지수' },
+    { label: '식료품 소비자물가',   src: ['cpi_food'],          unit: '지수' }
+  ],
+  charts: [
+    { title: '농가소득과 농가 교역조건지수', cap: '왼쪽 축 천원 · 오른쪽 축 지수(2020=100) · 교역조건은 2005년부터',
+      page: 152, ind: 'farm_income', y1: '천원', y2: '지수',
+      series: [
+        { label: '농가소득 (천원)',   src: ['farm_income'],      color: '#38d39f', fill: true, axis: 'y' },
+        { label: '농가 교역조건지수', src: ['farm_terms_trade'], color: '#ff6b6b', axis: 'y2' }
+      ] },
+    { title: '생산자물가와 소비자물가', cap: '지수(2020=100) · 생산자물가는 농어민이 파는 단계, 소비자물가는 사는 단계',
+      page: 112, ind: 'ppi_agri', y1: '지수',
+      series: [
+        { label: '농림수산품 생산자물가지수', src: ['ppi_agri'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '식료품 소비자물가지수',    src: ['cpi_food'], color: '#ffb84d', axis: 'y' }
+      ] },
+    { title: '농가소득과 어가소득', cap: '천원 · 호당 · 어가소득은 2003년부터',
+      page: 152, ind: 'farm_income', y1: '천원',
+      series: [
+        { label: '농가소득 (천원)', src: ['farm_income'],    color: '#38d39f', fill: true, axis: 'y' },
+        { label: '어가소득 (천원)', src: ['fishery_income'], color: '#3fa7ff', axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'ruralpop', icon: '👥', name: '농촌 인구구조 브리프', short: '농촌 인구',
+  desc: '농가 호수·인구와 고령화, 농림어업의 경제 비중을 한 화면에 모았습니다.',
+  kpis: [
+    { label: '농가 호수',        src: ['farm_households'],   unit: '천호' },
+    { label: '농가 인구',        src: ['farm_population'],   unit: '천명' },
+    { label: '경영주 고령화율',   src: ['farmer_aging_rate'], unit: '%' },
+    { label: '농림어업 GDP 비중', src: ['agri_gdp_share'],    unit: '%' }
+  ],
+  charts: [
+    { title: '농가 호수와 농가 인구', cap: '왼쪽 축 천호 · 오른쪽 축 천명',
+      page: 62, ind: 'farm_population', y1: '천호', y2: '천명',
+      series: [
+        { label: '농가 호수 (천호)', src: ['farm_households'], color: '#38d39f', fill: true, axis: 'y' },
+        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#3fa7ff', axis: 'y2' }
+      ] },
+    { title: '경영주 고령화율과 농림어업 GDP 비중', cap: '% · 고령화율은 농가 경영주(대표자) 기준',
+      page: 52, ind: 'farmer_aging_rate', y1: '%',
+      series: [
+        { label: '경영주 고령화율 (%)',   src: ['farmer_aging_rate'], color: '#ff6b6b', fill: true, axis: 'y' },
+        { label: '농림어업 GDP 비중 (%)', src: ['agri_gdp_share'],    color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '농가 인구와 경지면적', cap: '왼쪽 축 천명 · 오른쪽 축 천ha',
+      page: 24, ind: 'cultivated_area', y1: '천명', y2: '천ha',
+      series: [
+        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '경지면적 (천ha)',  src: ['cultivated_area'], color: '#38d39f', axis: 'y2' }
+      ] }
+  ]
 }
 ];
