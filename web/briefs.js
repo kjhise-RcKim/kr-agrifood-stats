@@ -258,5 +258,86 @@ window.BRIEFS = [
         { label: '경지면적 (천ha)',  src: ['cultivated_area'], color: '#38d39f', axis: 'y2' }
       ] }
   ]
+},
+{
+  id: 'worldgrain', icon: '🌍', name: '세계 곡물 생산 브리프', short: '세계 곡물',
+  desc: 'FAO 통계 기준 주요국의 밀·옥수수·콩 생산량을 한 화면에 모았습니다. 원문 표에 한국은 포함돼 있지 않습니다.',
+  kpis: [
+    { label: '미국 밀 생산량',    src: ['world_wheat_production', '미국'],     unit: '백만t' },
+    { label: '미국 옥수수 생산량', src: ['world_maize_production', '미국'],     unit: '백만t' },
+    { label: '미국 콩 생산량',    src: ['world_soybean_production', '미국'],   unit: '백만t' },
+    { label: '한국 밀 생산량',    src: ['food_crop_production', '밀'],         unit: '천t' }
+  ],
+  charts: [
+    { title: '주요국 밀 생산량', cap: '백만t · FAO통계 기준',
+      page: 320, ind: 'world_wheat_production', y1: '백만t',
+      series: [
+        { label: '캐나다',     src: ['world_wheat_production', '캐나다'],     color: '#ff6b6b', axis: 'y' },
+        { label: '미국',       src: ['world_wheat_production', '미국'],       color: '#3fa7ff', axis: 'y' },
+        { label: '프랑스',     src: ['world_wheat_production', '프랑스'],     color: '#38d39f', axis: 'y' },
+        { label: '아르헨티나', src: ['world_wheat_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
+        { label: '호주',       src: ['world_wheat_production', '호주'],       color: '#c78bff', axis: 'y' }
+      ] },
+    { title: '주요국 옥수수 생산량', cap: '백만t · FAO통계 기준',
+      page: 326, ind: 'world_maize_production', y1: '백만t',
+      series: [
+        { label: '미국',       src: ['world_maize_production', '미국'],       color: '#3fa7ff', axis: 'y' },
+        { label: '브라질',     src: ['world_maize_production', '브라질'],     color: '#38d39f', axis: 'y' },
+        { label: '아르헨티나', src: ['world_maize_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
+        { label: '인도',       src: ['world_maize_production', '인도'],       color: '#ff6b6b', axis: 'y' },
+        { label: '프랑스',     src: ['world_maize_production', '프랑스'],     color: '#c78bff', axis: 'y' }
+      ] },
+    { title: '주요국 콩(대두) 생산량', cap: '백만t · FAO통계 기준',
+      page: 327, ind: 'world_soybean_production', y1: '백만t',
+      series: [
+        { label: '미국',       src: ['world_soybean_production', '미국'],       color: '#3fa7ff', axis: 'y' },
+        { label: '아르헨티나', src: ['world_soybean_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
+        { label: '인도',       src: ['world_soybean_production', '인도'],       color: '#ff6b6b', axis: 'y' },
+        { label: '인도네시아', src: ['world_soybean_production', '인도네시아'], color: '#38d39f', axis: 'y' }
+      ] },
+    { title: '한국의 밀 생산량', cap: '천t · 위 그래프들과 단위가 다릅니다(백만t 아님)',
+      page: 296, ind: 'food_crop_production', y1: '천t',
+      series: [
+        { label: '한국 밀 생산량 (천t)', src: ['food_crop_production', '밀'], color: '#ffb84d', fill: true, axis: 'y' }
+      ] }
+  ]
+},
+{
+  id: 'nutrition', icon: '🍱', name: '국민 영양 브리프', short: '국민 영양',
+  desc: '국민 한 사람이 하루에 공급받는 열량과 그 공급원, 단백질·지방질 공급량을 한 화면에 모았습니다.',
+  kpis: [
+    { label: '1인 1일당 공급에너지', src: ['energy_supply_pc'],           unit: 'kcal' },
+    { label: '곡류에서 오는 열량',    src: ['energy_supply_pc', '곡류'],   unit: 'kcal' },
+    { label: '쌀에서 오는 열량',      src: ['energy_supply_pc', '쌀'],     unit: 'kcal' },
+    { label: '밀가루에서 오는 열량',   src: ['energy_supply_pc', '밀가루'], unit: 'kcal' }
+  ],
+  charts: [
+    { title: '1인 1일당 공급에너지와 곡류', cap: 'kcal · 계는 모든 식품군의 합이며 곡류는 그중 일부입니다',
+      page: 494, ind: 'energy_supply_pc', y1: 'kcal',
+      series: [
+        { label: '계 (kcal)',  src: ['energy_supply_pc'],         color: '__TOTAL__', axis: 'y' },
+        { label: '곡류 (kcal)', src: ['energy_supply_pc', '곡류'], color: '#ffb84d', fill: true, axis: 'y' }
+      ] },
+    { title: '곡류 안에서: 쌀과 밀가루', cap: 'kcal · 곡류에는 쌀·밀가루·보리·기타가 포함됩니다',
+      page: 494, ind: 'energy_supply_pc', y1: 'kcal',
+      series: [
+        { label: '쌀 (kcal)',   src: ['energy_supply_pc', '쌀'],    color: '__TOTAL__', axis: 'y' },
+        { label: '밀가루 (kcal)', src: ['energy_supply_pc', '밀가루'], color: '#ffb84d', fill: true, axis: 'y' },
+        { label: '보리 (kcal)',  src: ['energy_supply_pc', '보리'],  color: '#38d39f', axis: 'y' }
+      ] },
+    { title: '단백질과 지방질 공급량', cap: 'g · 1인 1일당 · 2015년부터 식품성분표 개정으로 기준이 바뀌었습니다',
+      page: 493, ind: 'nutrient_supply_pc', y1: 'g',
+      series: [
+        { label: '단백질 (g)', src: ['nutrient_supply_pc'],         color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '지방질 (g)', src: ['nutrient_supply_pc', '지방질'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '설탕류·두류·서류에서 오는 열량', cap: 'kcal · 1인 1일당',
+      page: 494, ind: 'energy_supply_pc', y1: 'kcal',
+      series: [
+        { label: '설탕류 (kcal)', src: ['energy_supply_pc', '설탕류'], color: '#ffb84d', axis: 'y' },
+        { label: '두류 (kcal)',   src: ['energy_supply_pc', '두류'],   color: '#38d39f', axis: 'y' },
+        { label: '서류 (kcal)',   src: ['energy_supply_pc', '서류'],   color: '#ff6b6b', axis: 'y' }
+      ] }
+  ]
 }
 ];

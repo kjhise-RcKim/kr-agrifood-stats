@@ -302,6 +302,8 @@
       <li><b>🌱 잡곡·콩</b> — 보리쌀·콩·옥수수·서류의 자급률·재배면적·소비량</li>
       <li><b>💰 농가경제</b> — 농가소득, 교역조건, 생산자·소비자물가</li>
       <li><b>👥 농촌 인구구조</b> — 농가 호수·인구, 고령화율, 농림어업 GDP 비중</li>
+      <li><b>🌍 세계 곡물 생산</b> — 주요국의 밀·옥수수·콩 생산량 (FAO통계)</li>
+      <li><b>🍱 국민 영양</b> — 1인 1일당 공급에너지와 공급원, 단백질·지방질</li>
     </ul>
     <p>각 브리프는 <b>핵심 숫자</b>(첫해 → 최신)와 <b>그래프</b>로 이뤄집니다. 그래프는 단위가 다른 두 지표를 <b>좌·우 축에 나눠 겹쳐</b> 보여주므로, 예컨대 소비량(kg)과 자급률(%)의 움직임을 한눈에 견줄 수 있어요. 그래프마다 <b>📄 원문 p.XX</b>와 <b>📊 지표 자세히 보기</b>가 붙어 있습니다.</p>
     <p class="mmuted">해석이나 주장을 담지 않고 <b>원자료 값과 그래프만</b> 표시합니다. 판단은 보는 분의 몫입니다.</p>
@@ -824,7 +826,7 @@ function renderDetail(ind){
   const pick=arr=>labels.map(y=>{const p=arr.find(x=>x.year===y);return p&&p.value!=null?p.value:null;});
   const datasets=[];
   if(ind.series){
-    datasets.push({label: ind.breakdown?'계(전체)':ind.name, data:pick(ind.series),
+    datasets.push({label: ind.series_label || (ind.breakdown?'계(전체)':ind.name), data:pick(ind.series),
       borderColor:TOTAL, backgroundColor: ind.breakdown?'transparent':'rgba(63,167,255,.14)',
       fill:!ind.breakdown, tension:.25, pointRadius: ind.breakdown?0:2,
       borderWidth: ind.breakdown?3:2, spanGaps:true});
