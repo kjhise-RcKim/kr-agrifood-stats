@@ -279,7 +279,10 @@ function applyTheme(t){
   else if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
 }
 (function initTheme(){ let t='dark'; try{ t=localStorage.getItem('theme')||'dark'; }catch(e){} applyTheme(t); })();
-document.getElementById('themeBtn').onclick=()=>applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
+document.getElementById('themeBtn').onclick=()=>{
+  applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
+  replaceURL(baseQS());   /* 주소의 t= 값도 함께 갱신 → 지금 보는 화면 그대로 공유됨 */
+};
 
 document.getElementById('helpBtn').onclick=()=>document.getElementById('help').style.display='flex';
 document.getElementById('helpClose').onclick=()=>document.getElementById('help').style.display='none';
@@ -293,7 +296,17 @@ function goHome(){ go(''); try{ window.scrollTo({top:0,behavior:'smooth'}); }cat
    (없음)              홈
    ?i=<지표id>         지표 상세      ?g=<그룹명>   그룹 탭
    ?q=<검색어>         검색           ?view=compare 즐겨찾기 겹쳐보기   */
-function urlFor(qs){ return location.pathname+(qs||''); }
+function curTheme(){ return document.body.getAttribute('data-theme')==='light' ? 'light' : 'dark'; }
+/* 지금 주소에서 t(테마)만 뺀 나머지 */
+function baseQS(){
+  var P; try{ P=new URLSearchParams(location.search); }catch(e){ return ''; }
+  P.delete('t'); var s=P.toString(); return s ? '?'+s : '';
+}
+/* 모든 링크에 현재 테마를 t=로 실어 보냄 → 받는 사람도 같은 배경으로 열림 */
+function urlFor(qs){
+  qs=qs||'';
+  return location.pathname + qs + (qs.charAt(0)==='?' ? '&' : '?') + 't=' + curTheme();
+}
 function go(qs){
   var url=urlFor(qs);
   if(location.pathname+location.search===url){ applyURL(); return; }
@@ -333,7 +346,7 @@ function migrateHash(){
   else if((m=h.match(/^g\/(.+)$/))) qs='?g='+encodeURIComponent(m[1]);
   else if((m=h.match(/^q\/(.+)$/))) qs='?q='+encodeURIComponent(m[1]);
   else if(h==='compare') qs='?view=compare';
-  else if(h==='' ) qs='';
+  else if(h==='') qs='';
   if(qs===null) return false;
   replaceURL(qs); return true;
 }
@@ -341,6 +354,8 @@ function applyURL(){
   var P; try{ P=new URLSearchParams(location.search); }catch(e){ P=null; }
   var get=function(k){ return P? (P.get(k)||'') : ''; };
   var qel=document.getElementById('q');
+  var vt=get('t');   /* 링크에 담겨온 테마(밝게/어둡게) 먼저 적용 */
+  if((vt==='light'||vt==='dark') && vt!==curTheme()) applyTheme(vt);
   var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
   if(vi){
     var ind=findInd(vi);
@@ -604,7 +619,7 @@ function renderDetail(ind){
   var lkBtn=document.getElementById('dl-link');
   lkBtn.onclick=function(){
     var qs='?i='+encodeURIComponent(ind.id);
-    if(location.search!==qs) replaceURL(qs);
+    if(location.pathname+location.search!==urlFor(qs)) replaceURL(qs);
     copyLink(lkBtn);
   };
   const {AX,GRID,TOTAL,LEG}=chartColors();
