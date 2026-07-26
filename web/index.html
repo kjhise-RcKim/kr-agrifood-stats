@@ -1368,12 +1368,21 @@ document.getElementById('briefBtn').onclick=function(){
 
 /* ══════════ 히어로 — 홈에서만 표시. 딥링크(?i=·?brief=·?q= 등)로 들어오면 안 나온다 ══════════ */
 var homeView=false, heroDone=false;
-/* ⬇ 배경 선으로 쓸 지표. 이 값만 바꾸면 다른 지표로 교체된다. */
-var HERO_IND='food_self_suff';
+/* ⬇ 배경 선으로 쓸 지표. 'id'(계) 또는 'id|품목' 형식. 이 값만 바꾸면 교체된다. */
+var HERO_IND='food_self_suff|밀';
+function heroResolve(){
+  var parts=String(HERO_IND).split('|'), f=INDS.find(function(i){return i.id===parts[0];});
+  if(!f) return null;
+  var pts, nm;
+  if(parts.length<2){ pts=(f.series||[]); nm=f.name; }
+  else{ var b=(f.breakdown||[]).find(function(x){return x.label===parts[1];});
+        pts=b?b.series:[]; nm=f.name+' '+parts[1]; }
+  pts=pts.filter(function(p){return p.value!==null&&p.value!==undefined;});
+  return { indId:f.id, name:nm, unit:f.unit||'', pts:pts };
+}
 function heroPathD(){
   /* 배경 선 = 실제 시계열. 장식이 아니라 자료다. */
-  var f=INDS.find(function(i){return i.id===HERO_IND;});
-  var pts=f? (f.series||[]).filter(function(p){return p.value!==null&&p.value!==undefined;}) : [];
+  var r=heroResolve(); var pts=r?r.pts:[];
   if(pts.length<2) return '';
   var W=900,H=240,PAD=26;
   var ys=pts.map(function(p){return p.year;}), vs=pts.map(function(p){return p.value;});
@@ -1413,14 +1422,11 @@ function renderHero(){
   /* 배경 선이 무슨 자료인지 작게 밝힌다 — 클릭하면 그 지표로 이동 */
   var lab=document.getElementById('herolab');
   if(lab && !lab.textContent){
-    var hi=INDS.find(function(i){return i.id===HERO_IND;});
-    if(hi){
-      var hp=(hi.series||[]).filter(function(p){return p.value!==null&&p.value!==undefined;});
-      if(hp.length>1){
-        lab.textContent='배경 선: '+hi.name+' '+hp[0].year+'→'+hp[hp.length-1].year+
-                        ' ('+fmt(hp[0].value)+' → '+fmt(hp[hp.length-1].value)+hi.unit+')';
-        lab.onclick=function(){ go('?i='+encodeURIComponent(HERO_IND)); };
-      }
+    var r=heroResolve(), hp=r?r.pts:[];
+    if(r && hp.length>1){
+      lab.textContent='배경 선: '+r.name+' '+hp[0].year+'→'+hp[hp.length-1].year+
+                      ' ('+fmt(hp[0].value)+' → '+fmt(hp[hp.length-1].value)+r.unit+')';
+      lab.onclick=function(){ go('?i='+encodeURIComponent(r.indId)); };
     }
   }
   if(!heroDone){
