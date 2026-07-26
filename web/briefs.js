@@ -492,5 +492,49 @@ window.BRIEFS = [
         { label: '배',     src: ['fruit_area', '배'],     color: '#3fa7ff', axis: 'y' }
       ] }
   ]
+},
+{
+  id: 'farmincome', icon: '💵', name: '농가소득 브리프', short: '농가소득',
+  desc: '농가 1호당 소득을 원천별·경지규모별·영농형태별로 나눠 한 화면에 모았습니다. 모두 천원(농가 평균) 기준입니다.',
+  kpis: [
+    { label: '농가소득 (호당)',   src: ['farm_income_source'],              unit: '천원' },
+    { label: '농업소득',          src: ['farm_income_source', '농업소득'],   unit: '천원' },
+    { label: '이전소득 (보조금 등)', src: ['farm_income_source', '이전소득'],   unit: '천원' },
+    { label: '농외소득',          src: ['farm_income_source', '농외소득'],   unit: '천원' }
+  ],
+  charts: [
+    { title: '농가소득의 원천별 구성', cap: '천원 · 농가소득 = 농업소득 + 농외소득 + 이전소득 + 비경상소득',
+      page: 152, ind: 'farm_income_source', y1: '천원',
+      series: [
+        { label: '농가소득(계)', src: ['farm_income_source'],              color: '__TOTAL__', axis: 'y' },
+        { label: '농업소득',     src: ['farm_income_source', '농업소득'],   color: '#38d39f', axis: 'y' },
+        { label: '농외소득',     src: ['farm_income_source', '농외소득'],   color: '#3fa7ff', axis: 'y' },
+        { label: '이전소득',     src: ['farm_income_source', '이전소득'],   color: '#ffb84d', axis: 'y' }
+      ] },
+    { title: '농업소득과 이전소득', cap: '천원 · 농사로 번 돈과 보조금·연금 등',
+      page: 152, ind: 'farm_income_source', y1: '천원',
+      series: [
+        { label: '농업소득', src: ['farm_income_source', '농업소득'], color: '#38d39f', fill: true, axis: 'y' },
+        { label: '이전소득', src: ['farm_income_source', '이전소득'], color: '#ffb84d', axis: 'y' }
+      ] },
+    { title: '영농형태별 농가소득', cap: '천원 · 호당 · 1995년부터',
+      page: 160, ind: 'farm_income_by_type', y1: '천원',
+      series: [
+        { label: '과수', src: ['farm_income_by_type', '과수'], color: '#ff6b6b', axis: 'y' },
+        { label: '축산', src: ['farm_income_by_type', '축산'], color: '#ffb84d', axis: 'y' },
+        { label: '채소', src: ['farm_income_by_type', '채소'], color: '#38d39f', axis: 'y' },
+        { label: '논벼', src: ['farm_income_by_type', '논벼'], color: '#3fa7ff', axis: 'y' },
+        { label: '전체 평균', src: ['farm_income_by_type'],    color: '__TOTAL__', axis: 'y' }
+      ] },
+    { title: '경지규모별 농가소득', cap: '천원 · 호당 · 규모가 큰 농가일수록 소득이 큽니다',
+      page: 156, ind: 'farm_income_by_size', y1: '천원',
+      series: [
+        { label: '10.0ha 이상', src: ['farm_income_by_size', '10.0ha 이상'], color: '#ff6b6b', axis: 'y' },
+        { label: '3.0~5.0ha',  src: ['farm_income_by_size', '3.0~5.0ha'],  color: '#ffb84d', axis: 'y' },
+        { label: '1.0~1.5ha',  src: ['farm_income_by_size', '1.0~1.5ha'],  color: '#38d39f', axis: 'y' },
+        { label: '0.5ha 미만',  src: ['farm_income_by_size', '0.5ha 미만'],  color: '#3fa7ff', axis: 'y' },
+        { label: '전체 평균',    src: ['farm_income_by_size'],               color: '__TOTAL__', axis: 'y' }
+      ] }
+  ]
 }
 ];

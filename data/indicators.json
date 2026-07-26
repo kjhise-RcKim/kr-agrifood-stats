@@ -6,7 +6,7 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v15 (채소·과일 3단계: 채소 생산량·재배면적 품목별 — 채소·과일 완성)",
+    "status": "v17 (농가소득 원천·경지규모·영농형태별 추가)",
     "pending": [
       "meat_consumption_pc",
       "timber_self_suff",
@@ -748,8 +748,11 @@
         }
       ],
       "related_ids": [
-        "agri_output_value",
-        "farm_population"
+        "farm_income_by_size",
+        "farm_income_by_type",
+        "farm_population",
+        "farm_income_source",
+        "agri_output_value"
       ],
       "brief_weight": 1,
       "tip": "농가 **1호당** 1년 소득입니다. 농사로 번 돈(농업소득)만이 아니라 농업 외 수입과 이전소득(보조금·연금 등)이 함께 들어갑니다. (p.152 주)"
@@ -16302,6 +16305,2245 @@
         "vegetable_consumption_pc"
       ],
       "tip": "계는 전국 채소류 전체입니다. 표시된 5개 품목 외 기타가 포함돼 있어 품목 합계보다 큽니다. 고추는 생산량·재배면적에서 **건고추 기준**입니다(소비량은 고추 기준). (p.340~341)"
+    },
+    {
+      "id": "farm_income_source",
+      "name": "원천별 농가소득",
+      "group": "농가경제",
+      "unit": "천원",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "농가소득의 원천별 구성. 계(농가소득) + 농업소득·농외소득·이전소득·비경상소득",
+      "keywords": [
+        "농가소득",
+        "농업소득",
+        "농외소득",
+        "이전소득",
+        "보조금"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 Ⅶ.농가경제 1.원천별 농가소득",
+        "page": 152,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 256
+        },
+        {
+          "year": 1975,
+          "value": 873
+        },
+        {
+          "year": 1980,
+          "value": 2693
+        },
+        {
+          "year": 1985,
+          "value": 5736
+        },
+        {
+          "year": 1990,
+          "value": 11026
+        },
+        {
+          "year": 1995,
+          "value": 21803
+        },
+        {
+          "year": 2000,
+          "value": 23072
+        },
+        {
+          "year": 2005,
+          "value": 30503
+        },
+        {
+          "year": 2010,
+          "value": 32121
+        },
+        {
+          "year": 2011,
+          "value": 30148
+        },
+        {
+          "year": 2012,
+          "value": 31031
+        },
+        {
+          "year": 2013,
+          "value": 34524
+        },
+        {
+          "year": 2014,
+          "value": 34950
+        },
+        {
+          "year": 2015,
+          "value": 37215
+        },
+        {
+          "year": 2016,
+          "value": 37197
+        },
+        {
+          "year": 2017,
+          "value": 38239
+        },
+        {
+          "year": 2018,
+          "value": 42066
+        },
+        {
+          "year": 2019,
+          "value": 41182
+        },
+        {
+          "year": 2020,
+          "value": 45029
+        },
+        {
+          "year": 2021,
+          "value": 47759
+        },
+        {
+          "year": 2022,
+          "value": 46153
+        },
+        {
+          "year": 2023,
+          "value": 50828
+        },
+        {
+          "year": 2024,
+          "value": 50597
+        }
+      ],
+      "series_label": "농가소득(계)",
+      "breakdown": [
+        {
+          "label": "농업소득",
+          "series": [
+            {
+              "year": 1970,
+              "value": 194
+            },
+            {
+              "year": 1975,
+              "value": 715
+            },
+            {
+              "year": 1980,
+              "value": 1755
+            },
+            {
+              "year": 1985,
+              "value": 3699
+            },
+            {
+              "year": 1990,
+              "value": 6264
+            },
+            {
+              "year": 1995,
+              "value": 10469
+            },
+            {
+              "year": 2000,
+              "value": 10897
+            },
+            {
+              "year": 2005,
+              "value": 11815
+            },
+            {
+              "year": 2010,
+              "value": 10098
+            },
+            {
+              "year": 2011,
+              "value": 8753
+            },
+            {
+              "year": 2012,
+              "value": 9127
+            },
+            {
+              "year": 2013,
+              "value": 10035
+            },
+            {
+              "year": 2014,
+              "value": 10303
+            },
+            {
+              "year": 2015,
+              "value": 11257
+            },
+            {
+              "year": 2016,
+              "value": 10068
+            },
+            {
+              "year": 2017,
+              "value": 10047
+            },
+            {
+              "year": 2018,
+              "value": 12920
+            },
+            {
+              "year": 2019,
+              "value": 10261
+            },
+            {
+              "year": 2020,
+              "value": 11820
+            },
+            {
+              "year": 2021,
+              "value": 12961
+            },
+            {
+              "year": 2022,
+              "value": 9485
+            },
+            {
+              "year": 2023,
+              "value": 11143
+            },
+            {
+              "year": 2024,
+              "value": 9576
+            }
+          ]
+        },
+        {
+          "label": "농외소득",
+          "series": [
+            {
+              "year": 1970,
+              "value": 62
+            },
+            {
+              "year": 1975,
+              "value": 158
+            },
+            {
+              "year": 1980,
+              "value": 938
+            },
+            {
+              "year": 1985,
+              "value": 1060
+            },
+            {
+              "year": 1990,
+              "value": 2841
+            },
+            {
+              "year": 1995,
+              "value": 6931
+            },
+            {
+              "year": 2000,
+              "value": 7432
+            },
+            {
+              "year": 2005,
+              "value": 9884
+            },
+            {
+              "year": 2010,
+              "value": 12946
+            },
+            {
+              "year": 2011,
+              "value": 12949
+            },
+            {
+              "year": 2012,
+              "value": 13585
+            },
+            {
+              "year": 2013,
+              "value": 15705
+            },
+            {
+              "year": 2014,
+              "value": 14799
+            },
+            {
+              "year": 2015,
+              "value": 14939
+            },
+            {
+              "year": 2016,
+              "value": 15252
+            },
+            {
+              "year": 2017,
+              "value": 16269
+            },
+            {
+              "year": 2018,
+              "value": 16952
+            },
+            {
+              "year": 2019,
+              "value": 17327
+            },
+            {
+              "year": 2020,
+              "value": 16608
+            },
+            {
+              "year": 2021,
+              "value": 17884
+            },
+            {
+              "year": 2022,
+              "value": 19202
+            },
+            {
+              "year": 2023,
+              "value": 19999
+            },
+            {
+              "year": 2024,
+              "value": 20147
+            }
+          ]
+        },
+        {
+          "label": "이전소득",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": 977
+            },
+            {
+              "year": 1990,
+              "value": 1921
+            },
+            {
+              "year": 1995,
+              "value": 4403
+            },
+            {
+              "year": 2000,
+              "value": 4743
+            },
+            {
+              "year": 2005,
+              "value": 4078
+            },
+            {
+              "year": 2010,
+              "value": 5610
+            },
+            {
+              "year": 2011,
+              "value": 5453
+            },
+            {
+              "year": 2012,
+              "value": 5614
+            },
+            {
+              "year": 2013,
+              "value": 5844
+            },
+            {
+              "year": 2014,
+              "value": 6819
+            },
+            {
+              "year": 2015,
+              "value": 7906
+            },
+            {
+              "year": 2016,
+              "value": 8783
+            },
+            {
+              "year": 2017,
+              "value": 8902
+            },
+            {
+              "year": 2018,
+              "value": 9891
+            },
+            {
+              "year": 2019,
+              "value": 11230
+            },
+            {
+              "year": 2020,
+              "value": 14263
+            },
+            {
+              "year": 2021,
+              "value": 14809
+            },
+            {
+              "year": 2022,
+              "value": 15245
+            },
+            {
+              "year": 2023,
+              "value": 17188
+            },
+            {
+              "year": 2024,
+              "value": 18240
+            }
+          ]
+        },
+        {
+          "label": "비경상소득",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": null
+            },
+            {
+              "year": 2005,
+              "value": 4725
+            },
+            {
+              "year": 2010,
+              "value": 3467
+            },
+            {
+              "year": 2011,
+              "value": 2993
+            },
+            {
+              "year": 2012,
+              "value": 2705
+            },
+            {
+              "year": 2013,
+              "value": 2940
+            },
+            {
+              "year": 2014,
+              "value": 3029
+            },
+            {
+              "year": 2015,
+              "value": 3114
+            },
+            {
+              "year": 2016,
+              "value": 3095
+            },
+            {
+              "year": 2017,
+              "value": 3022
+            },
+            {
+              "year": 2018,
+              "value": 2302
+            },
+            {
+              "year": 2019,
+              "value": 2364
+            },
+            {
+              "year": 2020,
+              "value": 2337
+            },
+            {
+              "year": 2021,
+              "value": 2105
+            },
+            {
+              "year": 2022,
+              "value": 2221
+            },
+            {
+              "year": 2023,
+              "value": 2497
+            },
+            {
+              "year": 2024,
+              "value": 2634
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "farm_income",
+        "farm_income_by_size",
+        "farm_income_by_type"
+      ],
+      "tip": "농가 1호당 연간 소득을 **원천별**로 나눈 것입니다(천원). 농가소득 = 농업소득 + 농외소득 + 이전소득 + 비경상소득.\n**농업소득**은 농사로 번 돈, **농외소득**은 겸업·사업외 수입, **이전소득**은 보조금·연금 등, **비경상소득**은 경조수입 등입니다. 이전소득·비경상소득은 각각 1985·2005년부터 집계돼 그 이전은 결측입니다. (p.152)"
+    },
+    {
+      "id": "farm_income_by_size",
+      "name": "경지규모별 농가소득",
+      "group": "농가경제",
+      "unit": "천원",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "경지규모별 농가 1호당 소득. 계(농가소득 평균) + 규모 구간별(0.5ha 미만~10ha 이상)",
+      "keywords": [
+        "농가소득",
+        "경지규모",
+        "규모",
+        "대농",
+        "소농"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 Ⅶ.농가경제 3.경지규모별 농가소득",
+        "page": 156,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 256
+        },
+        {
+          "year": 1975,
+          "value": 873
+        },
+        {
+          "year": 1980,
+          "value": 2693
+        },
+        {
+          "year": 1985,
+          "value": 5736
+        },
+        {
+          "year": 1990,
+          "value": 11026
+        },
+        {
+          "year": 1995,
+          "value": 21803
+        },
+        {
+          "year": 2000,
+          "value": 23072
+        },
+        {
+          "year": 2005,
+          "value": 30503
+        },
+        {
+          "year": 2010,
+          "value": 32121
+        },
+        {
+          "year": 2011,
+          "value": 30148
+        },
+        {
+          "year": 2012,
+          "value": 31031
+        },
+        {
+          "year": 2013,
+          "value": 34524
+        },
+        {
+          "year": 2014,
+          "value": 34950
+        },
+        {
+          "year": 2015,
+          "value": 37215
+        },
+        {
+          "year": 2016,
+          "value": 37197
+        },
+        {
+          "year": 2017,
+          "value": 38239
+        },
+        {
+          "year": 2018,
+          "value": 42066
+        },
+        {
+          "year": 2019,
+          "value": 41182
+        },
+        {
+          "year": 2020,
+          "value": 45029
+        },
+        {
+          "year": 2021,
+          "value": 47759
+        },
+        {
+          "year": 2022,
+          "value": 46153
+        },
+        {
+          "year": 2023,
+          "value": 50828
+        },
+        {
+          "year": 2024,
+          "value": 50597
+        }
+      ],
+      "series_label": "전체 평균",
+      "breakdown": [
+        {
+          "label": "0.5ha 미만",
+          "series": [
+            {
+              "year": 1970,
+              "value": 163
+            },
+            {
+              "year": 1975,
+              "value": 533
+            },
+            {
+              "year": 1980,
+              "value": 1983
+            },
+            {
+              "year": 1985,
+              "value": 4078
+            },
+            {
+              "year": 1990,
+              "value": 8224
+            },
+            {
+              "year": 1995,
+              "value": 20359
+            },
+            {
+              "year": 2000,
+              "value": 17566
+            },
+            {
+              "year": 2005,
+              "value": 25045
+            },
+            {
+              "year": 2010,
+              "value": 28194
+            },
+            {
+              "year": 2011,
+              "value": 28172
+            },
+            {
+              "year": 2012,
+              "value": 28106
+            },
+            {
+              "year": 2013,
+              "value": 32220
+            },
+            {
+              "year": 2014,
+              "value": 31041
+            },
+            {
+              "year": 2015,
+              "value": 32860
+            },
+            {
+              "year": 2016,
+              "value": 34434
+            },
+            {
+              "year": 2017,
+              "value": 34319
+            },
+            {
+              "year": 2018,
+              "value": 35757
+            },
+            {
+              "year": 2019,
+              "value": 35053
+            },
+            {
+              "year": 2020,
+              "value": 36378
+            },
+            {
+              "year": 2021,
+              "value": 40564
+            },
+            {
+              "year": 2022,
+              "value": 40425
+            },
+            {
+              "year": 2023,
+              "value": 42537
+            },
+            {
+              "year": 2024,
+              "value": 43992
+            }
+          ]
+        },
+        {
+          "label": "0.5~1.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": 212
+            },
+            {
+              "year": 1975,
+              "value": 776
+            },
+            {
+              "year": 1980,
+              "value": 2276
+            },
+            {
+              "year": 1985,
+              "value": 4902
+            },
+            {
+              "year": 1990,
+              "value": 9879
+            },
+            {
+              "year": 1995,
+              "value": 18521
+            },
+            {
+              "year": 2000,
+              "value": 19121
+            },
+            {
+              "year": 2005,
+              "value": 25628
+            },
+            {
+              "year": 2010,
+              "value": 30691
+            },
+            {
+              "year": 2011,
+              "value": 24383
+            },
+            {
+              "year": 2012,
+              "value": 26143
+            },
+            {
+              "year": 2013,
+              "value": 27992
+            },
+            {
+              "year": 2014,
+              "value": 32359
+            },
+            {
+              "year": 2015,
+              "value": 32420
+            },
+            {
+              "year": 2016,
+              "value": 33531
+            },
+            {
+              "year": 2017,
+              "value": 33731
+            },
+            {
+              "year": 2018,
+              "value": 35933
+            },
+            {
+              "year": 2019,
+              "value": 36198
+            },
+            {
+              "year": 2020,
+              "value": 39873
+            },
+            {
+              "year": 2021,
+              "value": 42698
+            },
+            {
+              "year": 2022,
+              "value": 43247
+            },
+            {
+              "year": 2023,
+              "value": 50132
+            },
+            {
+              "year": 2024,
+              "value": 48807
+            }
+          ]
+        },
+        {
+          "label": "1.0~1.5ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": 289
+            },
+            {
+              "year": 1975,
+              "value": 975
+            },
+            {
+              "year": 1980,
+              "value": 2862
+            },
+            {
+              "year": 1985,
+              "value": 5780
+            },
+            {
+              "year": 1990,
+              "value": 11120
+            },
+            {
+              "year": 1995,
+              "value": 23142
+            },
+            {
+              "year": 2000,
+              "value": 22703
+            },
+            {
+              "year": 2005,
+              "value": 28614
+            },
+            {
+              "year": 2010,
+              "value": 28864
+            },
+            {
+              "year": 2011,
+              "value": 29965
+            },
+            {
+              "year": 2012,
+              "value": 28838
+            },
+            {
+              "year": 2013,
+              "value": 34830
+            },
+            {
+              "year": 2014,
+              "value": 35612
+            },
+            {
+              "year": 2015,
+              "value": 34313
+            },
+            {
+              "year": 2016,
+              "value": 35459
+            },
+            {
+              "year": 2017,
+              "value": 34216
+            },
+            {
+              "year": 2018,
+              "value": 37540
+            },
+            {
+              "year": 2019,
+              "value": 37180
+            },
+            {
+              "year": 2020,
+              "value": 40965
+            },
+            {
+              "year": 2021,
+              "value": 47316
+            },
+            {
+              "year": 2022,
+              "value": 44117
+            },
+            {
+              "year": 2023,
+              "value": 49108
+            },
+            {
+              "year": 2024,
+              "value": 47162
+            }
+          ]
+        },
+        {
+          "label": "1.5~2.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": 383
+            },
+            {
+              "year": 1975,
+              "value": 1254
+            },
+            {
+              "year": 1980,
+              "value": 3612
+            },
+            {
+              "year": 1985,
+              "value": 6982
+            },
+            {
+              "year": 1990,
+              "value": 12582
+            },
+            {
+              "year": 1995,
+              "value": 23178
+            },
+            {
+              "year": 2000,
+              "value": 26607
+            },
+            {
+              "year": 2005,
+              "value": 30253
+            },
+            {
+              "year": 2010,
+              "value": 28362
+            },
+            {
+              "year": 2011,
+              "value": 29124
+            },
+            {
+              "year": 2012,
+              "value": 30327
+            },
+            {
+              "year": 2013,
+              "value": 37568
+            },
+            {
+              "year": 2014,
+              "value": 33166
+            },
+            {
+              "year": 2015,
+              "value": 34859
+            },
+            {
+              "year": 2016,
+              "value": 31152
+            },
+            {
+              "year": 2017,
+              "value": 35857
+            },
+            {
+              "year": 2018,
+              "value": 47548
+            },
+            {
+              "year": 2019,
+              "value": 43573
+            },
+            {
+              "year": 2020,
+              "value": 48753
+            },
+            {
+              "year": 2021,
+              "value": 49493
+            },
+            {
+              "year": 2022,
+              "value": 50707
+            },
+            {
+              "year": 2023,
+              "value": 56345
+            },
+            {
+              "year": 2024,
+              "value": 60806
+            }
+          ]
+        },
+        {
+          "label": "2.0~3.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": 477
+            },
+            {
+              "year": 1975,
+              "value": 1735
+            },
+            {
+              "year": 1980,
+              "value": 4885
+            },
+            {
+              "year": 1985,
+              "value": 8622
+            },
+            {
+              "year": 1990,
+              "value": 15053
+            },
+            {
+              "year": 1995,
+              "value": 29499
+            },
+            {
+              "year": 2000,
+              "value": 29451
+            },
+            {
+              "year": 2005,
+              "value": 33181
+            },
+            {
+              "year": 2010,
+              "value": 31632
+            },
+            {
+              "year": 2011,
+              "value": 31917
+            },
+            {
+              "year": 2012,
+              "value": 32011
+            },
+            {
+              "year": 2013,
+              "value": 36987
+            },
+            {
+              "year": 2014,
+              "value": 34687
+            },
+            {
+              "year": 2015,
+              "value": 42614
+            },
+            {
+              "year": 2016,
+              "value": 41227
+            },
+            {
+              "year": 2017,
+              "value": 40811
+            },
+            {
+              "year": 2018,
+              "value": 48660
+            },
+            {
+              "year": 2019,
+              "value": 47187
+            },
+            {
+              "year": 2020,
+              "value": 52235
+            },
+            {
+              "year": 2021,
+              "value": 53170
+            },
+            {
+              "year": 2022,
+              "value": 43313
+            },
+            {
+              "year": 2023,
+              "value": 53906
+            },
+            {
+              "year": 2024,
+              "value": 51662
+            }
+          ]
+        },
+        {
+          "label": "3.0~5.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": 36022
+            },
+            {
+              "year": 2005,
+              "value": 37427
+            },
+            {
+              "year": 2010,
+              "value": 41946
+            },
+            {
+              "year": 2011,
+              "value": 36999
+            },
+            {
+              "year": 2012,
+              "value": 41080
+            },
+            {
+              "year": 2013,
+              "value": 41627
+            },
+            {
+              "year": 2014,
+              "value": 43103
+            },
+            {
+              "year": 2015,
+              "value": 45516
+            },
+            {
+              "year": 2016,
+              "value": 46467
+            },
+            {
+              "year": 2017,
+              "value": 48246
+            },
+            {
+              "year": 2018,
+              "value": 60345
+            },
+            {
+              "year": 2019,
+              "value": 53389
+            },
+            {
+              "year": 2020,
+              "value": 64685
+            },
+            {
+              "year": 2021,
+              "value": 66524
+            },
+            {
+              "year": 2022,
+              "value": 63506
+            },
+            {
+              "year": 2023,
+              "value": 63088
+            },
+            {
+              "year": 2024,
+              "value": 63407
+            }
+          ]
+        },
+        {
+          "label": "5.0~7.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": 44713
+            },
+            {
+              "year": 2005,
+              "value": 40007
+            },
+            {
+              "year": 2010,
+              "value": 39196
+            },
+            {
+              "year": 2011,
+              "value": 36078
+            },
+            {
+              "year": 2012,
+              "value": 44374
+            },
+            {
+              "year": 2013,
+              "value": 56577
+            },
+            {
+              "year": 2014,
+              "value": 49697
+            },
+            {
+              "year": 2015,
+              "value": 62117
+            },
+            {
+              "year": 2016,
+              "value": 53350
+            },
+            {
+              "year": 2017,
+              "value": 65746
+            },
+            {
+              "year": 2018,
+              "value": 61071
+            },
+            {
+              "year": 2019,
+              "value": 68243
+            },
+            {
+              "year": 2020,
+              "value": 75156
+            },
+            {
+              "year": 2021,
+              "value": 77479
+            },
+            {
+              "year": 2022,
+              "value": 64296
+            },
+            {
+              "year": 2023,
+              "value": 84969
+            },
+            {
+              "year": 2024,
+              "value": 77362
+            }
+          ]
+        },
+        {
+          "label": "7.0~10.0ha",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": null
+            },
+            {
+              "year": 2005,
+              "value": 51158
+            },
+            {
+              "year": 2010,
+              "value": 64054
+            },
+            {
+              "year": 2011,
+              "value": 61918
+            },
+            {
+              "year": 2012,
+              "value": 60514
+            },
+            {
+              "year": 2013,
+              "value": 45006
+            },
+            {
+              "year": 2014,
+              "value": 60881
+            },
+            {
+              "year": 2015,
+              "value": 76910
+            },
+            {
+              "year": 2016,
+              "value": 72188
+            },
+            {
+              "year": 2017,
+              "value": 78000
+            },
+            {
+              "year": 2018,
+              "value": 90157
+            },
+            {
+              "year": 2019,
+              "value": 77562
+            },
+            {
+              "year": 2020,
+              "value": 74806
+            },
+            {
+              "year": 2021,
+              "value": 87824
+            },
+            {
+              "year": 2022,
+              "value": 73067
+            },
+            {
+              "year": 2023,
+              "value": 104723
+            },
+            {
+              "year": 2024,
+              "value": 91689
+            }
+          ]
+        },
+        {
+          "label": "10.0ha 이상",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": null
+            },
+            {
+              "year": 2005,
+              "value": 44235
+            },
+            {
+              "year": 2010,
+              "value": 77355
+            },
+            {
+              "year": 2011,
+              "value": 68412
+            },
+            {
+              "year": 2012,
+              "value": 54436
+            },
+            {
+              "year": 2013,
+              "value": 53129
+            },
+            {
+              "year": 2014,
+              "value": 62826
+            },
+            {
+              "year": 2015,
+              "value": 82835
+            },
+            {
+              "year": 2016,
+              "value": 80547
+            },
+            {
+              "year": 2017,
+              "value": 94291
+            },
+            {
+              "year": 2018,
+              "value": 130759
+            },
+            {
+              "year": 2019,
+              "value": 112603
+            },
+            {
+              "year": 2020,
+              "value": 107434
+            },
+            {
+              "year": 2021,
+              "value": 90996
+            },
+            {
+              "year": 2022,
+              "value": 124249
+            },
+            {
+              "year": 2023,
+              "value": 105242
+            },
+            {
+              "year": 2024,
+              "value": 98079
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "farm_income",
+        "farm_income_source",
+        "farm_income_by_type"
+      ],
+      "tip": "경지규모(농가가 부치는 땅의 넓이)별 농가 1호당 연간 소득입니다(천원). 계는 전체 농가 평균입니다. 3.0ha 이상 큰 규모 구간은 표본이 적어 초기 연도에는 집계되지 않아 결측입니다. (p.156~157)"
+    },
+    {
+      "id": "farm_income_by_type",
+      "name": "영농형태별 농가소득",
+      "group": "농가경제",
+      "unit": "천원",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "영농형태별 농가 1호당 소득. 계(전체 평균) + 형태별(논벼·과수·채소·특작·화훼·전작·축산·기타)",
+      "keywords": [
+        "농가소득",
+        "영농형태",
+        "논벼",
+        "과수",
+        "채소",
+        "축산"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "기본통계 Ⅶ.농가경제 5.영농형태별 농가소득",
+        "page": 160,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1995,
+          "value": 21803
+        },
+        {
+          "year": 2000,
+          "value": 23072
+        },
+        {
+          "year": 2005,
+          "value": 30503
+        },
+        {
+          "year": 2010,
+          "value": 32121
+        },
+        {
+          "year": 2011,
+          "value": 30148
+        },
+        {
+          "year": 2012,
+          "value": 31031
+        },
+        {
+          "year": 2013,
+          "value": 34524
+        },
+        {
+          "year": 2014,
+          "value": 34950
+        },
+        {
+          "year": 2015,
+          "value": 37215
+        },
+        {
+          "year": 2016,
+          "value": 37197
+        },
+        {
+          "year": 2017,
+          "value": 38239
+        },
+        {
+          "year": 2018,
+          "value": 42066
+        },
+        {
+          "year": 2019,
+          "value": 41182
+        },
+        {
+          "year": 2020,
+          "value": 45029
+        },
+        {
+          "year": 2021,
+          "value": 47759
+        },
+        {
+          "year": 2022,
+          "value": 46153
+        },
+        {
+          "year": 2023,
+          "value": 50828
+        },
+        {
+          "year": 2024,
+          "value": 50597
+        }
+      ],
+      "series_label": "전체 평균",
+      "breakdown": [
+        {
+          "label": "논벼",
+          "series": [
+            {
+              "year": 1995,
+              "value": 17702
+            },
+            {
+              "year": 2000,
+              "value": 19598
+            },
+            {
+              "year": 2005,
+              "value": 22648
+            },
+            {
+              "year": 2010,
+              "value": 20628
+            },
+            {
+              "year": 2011,
+              "value": 19707
+            },
+            {
+              "year": 2012,
+              "value": 19609
+            },
+            {
+              "year": 2013,
+              "value": 23325
+            },
+            {
+              "year": 2014,
+              "value": 22500
+            },
+            {
+              "year": 2015,
+              "value": 25588
+            },
+            {
+              "year": 2016,
+              "value": 22117
+            },
+            {
+              "year": 2017,
+              "value": 27314
+            },
+            {
+              "year": 2018,
+              "value": 32787
+            },
+            {
+              "year": 2019,
+              "value": 30246
+            },
+            {
+              "year": 2020,
+              "value": 35275
+            },
+            {
+              "year": 2021,
+              "value": 36532
+            },
+            {
+              "year": 2022,
+              "value": 31567
+            },
+            {
+              "year": 2023,
+              "value": 37967
+            },
+            {
+              "year": 2024,
+              "value": 36613
+            }
+          ]
+        },
+        {
+          "label": "과수",
+          "series": [
+            {
+              "year": 1995,
+              "value": 30506
+            },
+            {
+              "year": 2000,
+              "value": 28609
+            },
+            {
+              "year": 2005,
+              "value": 32810
+            },
+            {
+              "year": 2010,
+              "value": 34991
+            },
+            {
+              "year": 2011,
+              "value": 29505
+            },
+            {
+              "year": 2012,
+              "value": 32261
+            },
+            {
+              "year": 2013,
+              "value": 34352
+            },
+            {
+              "year": 2014,
+              "value": 34662
+            },
+            {
+              "year": 2015,
+              "value": 34039
+            },
+            {
+              "year": 2016,
+              "value": 34434
+            },
+            {
+              "year": 2017,
+              "value": 34167
+            },
+            {
+              "year": 2018,
+              "value": 38016
+            },
+            {
+              "year": 2019,
+              "value": 35273
+            },
+            {
+              "year": 2020,
+              "value": 40545
+            },
+            {
+              "year": 2021,
+              "value": 43946
+            },
+            {
+              "year": 2022,
+              "value": 45672
+            },
+            {
+              "year": 2023,
+              "value": 57487
+            },
+            {
+              "year": 2024,
+              "value": 57353
+            }
+          ]
+        },
+        {
+          "label": "채소",
+          "series": [
+            {
+              "year": 1995,
+              "value": 22411
+            },
+            {
+              "year": 2000,
+              "value": 19950
+            },
+            {
+              "year": 2005,
+              "value": 26314
+            },
+            {
+              "year": 2010,
+              "value": 28625
+            },
+            {
+              "year": 2011,
+              "value": 26386
+            },
+            {
+              "year": 2012,
+              "value": 26922
+            },
+            {
+              "year": 2013,
+              "value": 29125
+            },
+            {
+              "year": 2014,
+              "value": 25718
+            },
+            {
+              "year": 2015,
+              "value": 27001
+            },
+            {
+              "year": 2016,
+              "value": 29280
+            },
+            {
+              "year": 2017,
+              "value": 29924
+            },
+            {
+              "year": 2018,
+              "value": 30773
+            },
+            {
+              "year": 2019,
+              "value": 28844
+            },
+            {
+              "year": 2020,
+              "value": 33893
+            },
+            {
+              "year": 2021,
+              "value": 36927
+            },
+            {
+              "year": 2022,
+              "value": 36239
+            },
+            {
+              "year": 2023,
+              "value": 40506
+            },
+            {
+              "year": 2024,
+              "value": 43092
+            }
+          ]
+        },
+        {
+          "label": "특작",
+          "series": [
+            {
+              "year": 1995,
+              "value": 23252
+            },
+            {
+              "year": 2000,
+              "value": 32572
+            },
+            {
+              "year": 2005,
+              "value": 41168
+            },
+            {
+              "year": 2010,
+              "value": 39127
+            },
+            {
+              "year": 2011,
+              "value": 21280
+            },
+            {
+              "year": 2012,
+              "value": 24064
+            },
+            {
+              "year": 2013,
+              "value": 21081
+            },
+            {
+              "year": 2014,
+              "value": 19265
+            },
+            {
+              "year": 2015,
+              "value": 15281
+            },
+            {
+              "year": 2016,
+              "value": 22049
+            },
+            {
+              "year": 2017,
+              "value": 24235
+            },
+            {
+              "year": 2018,
+              "value": 26462
+            },
+            {
+              "year": 2019,
+              "value": 27163
+            },
+            {
+              "year": 2020,
+              "value": 47355
+            },
+            {
+              "year": 2021,
+              "value": 30317
+            },
+            {
+              "year": 2022,
+              "value": 27091
+            },
+            {
+              "year": 2023,
+              "value": 42094
+            },
+            {
+              "year": 2024,
+              "value": 23378
+            }
+          ]
+        },
+        {
+          "label": "화훼",
+          "series": [
+            {
+              "year": 1995,
+              "value": 27166
+            },
+            {
+              "year": 2000,
+              "value": 19588
+            },
+            {
+              "year": 2005,
+              "value": 38951
+            },
+            {
+              "year": 2010,
+              "value": 27408
+            },
+            {
+              "year": 2011,
+              "value": 24759
+            },
+            {
+              "year": 2012,
+              "value": 32231
+            },
+            {
+              "year": 2013,
+              "value": 21878
+            },
+            {
+              "year": 2014,
+              "value": 27983
+            },
+            {
+              "year": 2015,
+              "value": 26981
+            },
+            {
+              "year": 2016,
+              "value": 32025
+            },
+            {
+              "year": 2017,
+              "value": 28771
+            },
+            {
+              "year": 2018,
+              "value": 33644
+            },
+            {
+              "year": 2019,
+              "value": 31866
+            },
+            {
+              "year": 2020,
+              "value": 32952
+            },
+            {
+              "year": 2021,
+              "value": 53708
+            },
+            {
+              "year": 2022,
+              "value": 36368
+            },
+            {
+              "year": 2023,
+              "value": 57118
+            },
+            {
+              "year": 2024,
+              "value": 36583
+            }
+          ]
+        },
+        {
+          "label": "전작",
+          "series": [
+            {
+              "year": 1995,
+              "value": 15504
+            },
+            {
+              "year": 2000,
+              "value": 18920
+            },
+            {
+              "year": 2005,
+              "value": 19432
+            },
+            {
+              "year": 2010,
+              "value": 27252
+            },
+            {
+              "year": 2011,
+              "value": 18429
+            },
+            {
+              "year": 2012,
+              "value": 16374
+            },
+            {
+              "year": 2013,
+              "value": 20122
+            },
+            {
+              "year": 2014,
+              "value": 23528
+            },
+            {
+              "year": 2015,
+              "value": 23576
+            },
+            {
+              "year": 2016,
+              "value": 26882
+            },
+            {
+              "year": 2017,
+              "value": 23484
+            },
+            {
+              "year": 2018,
+              "value": 28943
+            },
+            {
+              "year": 2019,
+              "value": 28024
+            },
+            {
+              "year": 2020,
+              "value": 23469
+            },
+            {
+              "year": 2021,
+              "value": 29626
+            },
+            {
+              "year": 2022,
+              "value": 28482
+            },
+            {
+              "year": 2023,
+              "value": 34924
+            },
+            {
+              "year": 2024,
+              "value": 31634
+            }
+          ]
+        },
+        {
+          "label": "축산",
+          "series": [
+            {
+              "year": 1995,
+              "value": 33683
+            },
+            {
+              "year": 2000,
+              "value": 29816
+            },
+            {
+              "year": 2005,
+              "value": 44061
+            },
+            {
+              "year": 2010,
+              "value": 42179
+            },
+            {
+              "year": 2011,
+              "value": 47939
+            },
+            {
+              "year": 2012,
+              "value": 46660
+            },
+            {
+              "year": 2013,
+              "value": 52721
+            },
+            {
+              "year": 2014,
+              "value": 72338
+            },
+            {
+              "year": 2015,
+              "value": 79649
+            },
+            {
+              "year": 2016,
+              "value": 77434
+            },
+            {
+              "year": 2017,
+              "value": 71517
+            },
+            {
+              "year": 2018,
+              "value": 78243
+            },
+            {
+              "year": 2019,
+              "value": 75466
+            },
+            {
+              "year": 2020,
+              "value": 81124
+            },
+            {
+              "year": 2021,
+              "value": 91838
+            },
+            {
+              "year": 2022,
+              "value": 63032
+            },
+            {
+              "year": 2023,
+              "value": 67314
+            },
+            {
+              "year": 2024,
+              "value": 53896
+            }
+          ]
+        },
+        {
+          "label": "기타",
+          "series": [
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": null
+            },
+            {
+              "year": 2005,
+              "value": 19079
+            },
+            {
+              "year": 2010,
+              "value": 40772
+            },
+            {
+              "year": 2011,
+              "value": 47808
+            },
+            {
+              "year": 2012,
+              "value": 52046
+            },
+            {
+              "year": 2013,
+              "value": 46113
+            },
+            {
+              "year": 2014,
+              "value": 57136
+            },
+            {
+              "year": 2015,
+              "value": 72133
+            },
+            {
+              "year": 2016,
+              "value": 46874
+            },
+            {
+              "year": 2017,
+              "value": 38647
+            },
+            {
+              "year": 2018,
+              "value": 66185
+            },
+            {
+              "year": 2019,
+              "value": 37388
+            },
+            {
+              "year": 2020,
+              "value": 53916
+            },
+            {
+              "year": 2021,
+              "value": 41263
+            },
+            {
+              "year": 2022,
+              "value": 66299
+            },
+            {
+              "year": 2023,
+              "value": 69094
+            },
+            {
+              "year": 2024,
+              "value": 64108
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "farm_income",
+        "farm_income_source",
+        "farm_income_by_size"
+      ],
+      "tip": "주로 어떤 농사를 짓는지(영농형태)별 농가 1호당 연간 소득입니다(천원). 계는 전체 농가 평균이며, 원자료에 1995년부터 집계돼 그 이전은 없습니다. (p.160~161)"
     }
   ]
 }
