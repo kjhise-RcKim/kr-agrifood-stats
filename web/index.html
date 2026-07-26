@@ -239,6 +239,9 @@
   #cmpList label:hover{background:var(--panel2);}
   #cmpList .g{font-size:10.5px;color:var(--muted);margin:8px 4px 2px;font-weight:600;}
   #cmpList .u{color:var(--muted);font-size:11px;margin-left:auto;}
+  #cmpList .in{font-size:12px;font-weight:600;color:var(--text);margin:8px 4px 2px;}
+  #cmpList .in .u{margin-left:6px;font-weight:400;}
+  #cmpList label.sub{padding-left:16px;}
   .dtbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px;}
   .dtbl th{position:sticky;top:0;background:var(--panel2);color:var(--muted);font-weight:600;
     text-align:right;padding:7px 9px;border-bottom:1px solid var(--line);font-size:11.5px;}
@@ -407,7 +410,7 @@
     <ul>
       <li><b>🔗 링크 복사</b> — 보고 있는 지표·브리프·검색 결과를 링크로 공유. 받는 사람 화면에 <b>그대로 열립니다</b>(밝게/어둡게 배경까지).</li>
       <li><b>📊 연도 비교</b> — 두 해를 고르면 지표들이 <b>변화가 큰 순서로</b> 정렬됩니다. CSV로 내려받을 수 있어요.</li>
-      <li><b>⚖️ 지표 비교</b> — 원하는 <b>지표를 직접 2개 이상 골라</b> 한 그래프에 겹쳐 봅니다. 단위가 같으면 실제 값, 다르면 첫해=100 지수로 자동 전환돼요. 링크로 공유도 됩니다.</li>
+      <li><b>⚖️ 지표 비교</b> — 원하는 <b>지표(또는 그 안의 품목·구간)를 2개 이상 골라</b> 한 그래프에 겹쳐 봅니다. 예: 영농형태별 <b>논벼 vs 축산</b> 소득, 경지규모별 <b>10ha이상 vs 0.5ha미만</b>. 단위가 같으면 실제 값, 다르면 첫해=100 지수로 자동 전환돼요. 링크로 공유도 됩니다.</li>
       <li><b>⭐ 즐겨찾기</b> — 자주 보는 지표를 담아두면(이 브라우저에 저장) 모아볼 수 있고, 2개 이상이면 <b>겹쳐보기</b>로 한 그래프에 비교합니다(첫해=100 지수).</li>
     </ul>
 
@@ -1449,57 +1452,89 @@ function renderHero(){
 /* ══════════ ⚖️ 지표 비교 — 사용자가 2개 이상 지표를 골라 한 그래프에 겹쳐보기 ══════════
    단위가 같으면 실제 값, 다르면 첫해=100 지수. (브리프의 큐레이션 비교와 별개의 자유 비교) */
 var cmpSel = [], cmpMode = 'auto', cmpChart = null, _beforeCmp = '';
-function cmpEligible(){ return INDS.filter(function(i){ return !i.compare && seriesPts(i).length >= 2; }); }
+/* 비교 대상 = 지표의 '계' 시계열 + 각 품목 시계열. key='id'(계) 또는 'id|품목' */
+function ptsOfBreakdown(ind, label){
+  var b = (ind.breakdown||[]).find(function(x){return x.label===label;});
+  return b ? b.series.filter(function(p){return p.value!==null&&p.value!==undefined;}) : [];
+}
+function cmpResolve(key){
+  var parts = String(key).split('|'), ind = INDS.find(function(i){return i.id===parts[0];});
+  if(!ind) return null;
+  if(parts.length < 2){
+    var pts = seriesPts(ind); if(pts.length < 2) return null;
+    return { key:key, ind:ind, item:null, unit:ind.unit||'', pts:pts,
+             name: ind.name + (ind.breakdown&&ind.breakdown.length ? ' · 계' : '') };
+  }
+  var bp = ptsOfBreakdown(ind, parts[1]); if(bp.length < 2) return null;
+  return { key:key, ind:ind, item:parts[1], unit:ind.unit||'', pts:bp, name: ind.name + ' · ' + parts[1] };
+}
 function renderCmpList(){
   var box = document.getElementById('cmpList'); if(!box) return;
   var q = (document.getElementById('cmpSearch').value || '').trim().toLowerCase();
   var byG = {};
-  cmpEligible().forEach(function(i){
-    if(q && i.name.toLowerCase().indexOf(q) < 0 && (i.group||'').toLowerCase().indexOf(q) < 0) return;
-    (byG[i.group] = byG[i.group] || []).push(i);
+  INDS.forEach(function(i){
+    if(i.compare) return;
+    var opts = [];
+    if(seriesPts(i).length >= 2) opts.push({ key:i.id, label: (i.breakdown&&i.breakdown.length)?'계(전체)':i.name });
+    (i.breakdown||[]).forEach(function(b){
+      if(b.series.filter(function(p){return p.value!=null;}).length >= 2) opts.push({ key:i.id+'|'+b.label, label:'· '+b.label });
+    });
+    if(!opts.length) return;
+    // 검색: 지표명·그룹·품목명 매칭
+    if(q){
+      var hay = (i.name+' '+(i.group||'')+' '+opts.map(function(o){return o.label;}).join(' ')).toLowerCase();
+      if(hay.indexOf(q) < 0) return;
+    }
+    (byG[i.group] = byG[i.group] || []).push({ ind:i, opts:opts });
   });
   var h = '';
   Object.keys(byG).forEach(function(g){
     h += '<div class="g">' + esc(g) + '</div>';
-    byG[g].forEach(function(i){
-      var on = cmpSel.indexOf(i.id) >= 0;
-      h += '<label><input type="checkbox" data-id="' + esc(i.id) + '"' + (on?' checked':'') + '>' +
-           '<span>' + esc(i.name) + '</span><span class="u">' + esc(i.unit||'') + '</span></label>';
+    byG[g].forEach(function(row){
+      var multi = row.opts.length > 1;
+      if(multi) h += '<div class="in">' + esc(row.ind.name) + ' <span class="u">'+esc(row.ind.unit||'')+'</span></div>';
+      row.opts.forEach(function(o){
+        var on = cmpSel.indexOf(o.key) >= 0;
+        h += '<label'+(multi?' class="sub"':'')+'><input type="checkbox" data-k="' + esc(o.key) + '"' + (on?' checked':'') + '>' +
+             '<span>' + esc(o.label) + '</span>' + (multi?'':'<span class="u">'+esc(row.ind.unit||'')+'</span>') + '</label>';
+      });
     });
   });
   box.innerHTML = h || '<div class="empty" style="padding:10px">일치하는 지표가 없어요.</div>';
   box.querySelectorAll('input[type=checkbox]').forEach(function(el){
     el.onchange = function(){
-      var id = el.getAttribute('data-id');
-      var k = cmpSel.indexOf(id);
-      if(el.checked){ if(k < 0) cmpSel.push(id); } else if(k >= 0){ cmpSel.splice(k,1); }
+      var k = el.getAttribute('data-k'), i = cmpSel.indexOf(k);
+      if(el.checked){ if(i < 0) cmpSel.push(k); } else if(i >= 0){ cmpSel.splice(i,1); }
       renderCmpChart(); updateCmpURL();
     };
   });
 }
+function sameSeries(a, b){
+  if(a.length !== b.length) return false;
+  for(var i=0;i<a.length;i++){ if(a[i].year!==b[i].year || a[i].value!==b[i].value) return false; }
+  return true;
+}
 function renderCmpChart(){
-  var sel = cmpSel.map(function(id){ return INDS.find(function(i){return i.id===id;}); }).filter(Boolean);
+  var sel = cmpSel.map(cmpResolve).filter(Boolean);
   document.getElementById('cmpCount').textContent = '선택 ' + sel.length + '개';
   var note = document.getElementById('cmpNote');
   if(cmpChart){ try{cmpChart.destroy();}catch(e){} cmpChart = null; }
-  if(sel.length < 2){ note.textContent = '지표를 2개 이상 고르면 그래프가 나타납니다.'; return; }
-  var units = {}; sel.forEach(function(i){ units[i.unit||''] = 1; });
+  if(sel.length < 2){ note.textContent = '비교할 항목을 2개 이상 고르면 그래프가 나타납니다. (품목·구간도 고를 수 있어요)'; return; }
+  var units = {}; sel.forEach(function(m){ units[m.unit] = 1; });
   var sameUnit = Object.keys(units).length === 1;
   var mode = cmpMode === 'auto' ? (sameUnit ? 'raw' : 'index') : cmpMode;
   var C = chartColors(), AX = C.AX, GRID = C.GRID, LEG = C.LEG;
-  var yset = {}, smap = [];
-  sel.forEach(function(i){ var pts = seriesPts(i); if(pts.length){ smap.push({i:i, pts:pts}); pts.forEach(function(p){ yset[p.year]=1; }); } });
+  var yset = {}; sel.forEach(function(m){ m.pts.forEach(function(p){ yset[p.year]=1; }); });
   var labels = Object.keys(yset).map(Number).sort(function(a,b){return a-b;});
-  var dsets = smap.map(function(m, idx){
+  var dsets = sel.map(function(m, idx){
     var base = m.pts[0].value, col = PALETTE[idx % PALETTE.length];
     var data = labels.map(function(y){
       var p = m.pts.find(function(x){return x.year===y;});
       if(!p || p.value == null) return null;
       return mode === 'index' ? (base ? Math.round(p.value/base*1000)/10 : null) : p.value;
     });
-    var lab = m.i.name + (mode === 'raw' ? ' ('+(m.i.unit||'')+')' : '');
-    return { label: lab, data: data, borderColor: col, backgroundColor:'transparent',
-             tension:.25, pointRadius:1, borderWidth:2, spanGaps:true };
+    return { label: m.name + (mode==='raw' ? ' ('+m.unit+')' : ''), data: data, borderColor: col,
+             backgroundColor:'transparent', tension:.25, pointRadius:1, borderWidth:2, spanGaps:true };
   });
   cmpChart = new Chart(document.getElementById('cmpChart'), { type:'line',
     data:{ labels: labels, datasets: dsets },
@@ -1508,13 +1543,18 @@ function renderCmpChart(){
         tooltip:{ callbacks:{ label:function(c){ return ' '+c.dataset.label+': '+fmt(c.parsed.y)+(mode==='index'?' (지수)':''); } } } },
       scales:{ x:{ ticks:{color:AX,maxTicksLimit:12}, grid:{color:GRID} },
         y:{ ticks:{color:AX}, grid:{color:GRID} } } } });
-  note.innerHTML = mode === 'index'
-    ? '단위가 서로 달라 <b>각 지표의 가장 이른 해를 100</b>으로 맞춰 상대 변화를 비교합니다(100→60이면 40% 감소).'
+  // 값이 완전히 같은 항목이 섞이면 선이 포개져 하나로 보임 → 안내
+  var dup = false;
+  for(var a=0;a<sel.length&&!dup;a++) for(var b2=a+1;b2<sel.length;b2++) if(sameSeries(sel[a].pts, sel[b2].pts)){ dup=true; break; }
+  var msg = mode === 'index'
+    ? '단위가 서로 달라 <b>각 항목의 가장 이른 해를 100</b>으로 맞춰 상대 변화를 비교합니다(100→60이면 40% 감소).'
     : '같은 단위(<b>'+esc(Object.keys(units)[0])+'</b>)라 실제 값을 그대로 표시합니다.';
+  if(dup) msg += '<br><b style="color:var(--star)">⚠ 값이 완전히 같은 항목이 있어 선이 겹쳐 하나로 보입니다.</b> (예: 농가경제 세 지표의 <b>계</b>는 모두 같은 농가소득 평균 — 품목·구간을 골라 비교하세요.)';
+  note.innerHTML = msg;
 }
 function updateCmpURL(){ replaceURL(cmpSel.length ? '?view=cmp&ids='+encodeURIComponent(cmpSel.join(',')) : '?view=cmp'); }
 function openCmp(ids){
-  cmpSel = (ids||[]).filter(function(id){ return INDS.some(function(i){return i.id===id;}); });
+  cmpSel = (ids||[]).filter(function(k){ return cmpResolve(k); });
   document.getElementById('cmpSearch').value = '';
   document.getElementById('cmpModeSel').value = cmpMode;
   document.getElementById('cmpModal').style.display = 'flex';
