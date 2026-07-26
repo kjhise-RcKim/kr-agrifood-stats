@@ -1370,6 +1370,8 @@ document.getElementById('briefBtn').onclick=function(){
 var homeView=false, heroDone=false;
 /* ⬇ 배경 선으로 쓸 지표. 'id'(계) 또는 'id|품목' 형식. 이 값만 바꾸면 교체된다. */
 var HERO_IND='food_self_suff|밀';
+/* 라벨에 보여줄 이름(선택). 비우면 지표명이 자동으로 쓰인다. */
+var HERO_LABEL='밀 자급률';
 function heroResolve(){
   var parts=String(HERO_IND).split('|'), f=INDS.find(function(i){return i.id===parts[0];});
   if(!f) return null;
@@ -1424,7 +1426,7 @@ function renderHero(){
   if(lab && !lab.textContent){
     var r=heroResolve(), hp=r?r.pts:[];
     if(r && hp.length>1){
-      lab.textContent='배경 선: '+r.name+' '+hp[0].year+'→'+hp[hp.length-1].year+
+      lab.textContent='배경 선: '+(HERO_LABEL||r.name)+' '+hp[0].year+'→'+hp[hp.length-1].year+
                       ' ('+fmt(hp[0].value)+' → '+fmt(hp[hp.length-1].value)+r.unit+')';
       lab.onclick=function(){ go('?i='+encodeURIComponent(r.indId)); };
     }
