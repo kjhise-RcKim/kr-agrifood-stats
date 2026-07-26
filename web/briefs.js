@@ -439,5 +439,58 @@ window.BRIEFS = [
         { label: '일본 (kg)', src: ['japan_consumption_pc', '밀'],  color: '#3fa7ff', axis: 'y' }
       ] }
   ]
+},
+{
+  id: 'vegfruit', icon: '🥬', name: '채소·과일 브리프', short: '채소·과일',
+  desc: '주요 채소·과실 품목의 재배면적·생산량·1인당 소비량을 한 화면에 모았습니다. 계에는 표시된 품목 외 기타가 포함됩니다.',
+  kpis: [
+    { label: '채소류 재배면적',   src: ['vegetable_area'],           unit: '천ha' },
+    { label: '과실류 재배면적',   src: ['fruit_area'],              unit: '천ha' },
+    { label: '1인당 채소 소비량', src: ['vegetable_consumption_pc'], unit: 'kg' },
+    { label: '1인당 과실 소비량', src: ['fruit_consumption_pc'],     unit: 'kg' }
+  ],
+  charts: [
+    { title: '1인당 소비량: 채소류와 과실류', cap: 'kg · 계 기준',
+      page: 343, ind: 'vegetable_consumption_pc', y1: 'kg',
+      series: [
+        { label: '채소류 (kg)', src: ['vegetable_consumption_pc'], color: '#38d39f', fill: true, axis: 'y' },
+        { label: '과실류 (kg)', src: ['fruit_consumption_pc'],     color: '#ffb84d', axis: 'y' }
+      ] },
+    { title: '주요 채소 1인당 소비량', cap: 'kg · 고추는 고추(신선) 기준',
+      page: 343, ind: 'vegetable_consumption_pc', y1: 'kg',
+      series: [
+        { label: '배추', src: ['vegetable_consumption_pc', '배추'], color: '#38d39f', axis: 'y' },
+        { label: '양파', src: ['vegetable_consumption_pc', '양파'], color: '#3fa7ff', axis: 'y' },
+        { label: '무',   src: ['vegetable_consumption_pc', '무'],   color: '#ffb84d', axis: 'y' },
+        { label: '마늘', src: ['vegetable_consumption_pc', '마늘'], color: '#ff6b6b', axis: 'y' }
+      ] },
+    { title: '주요 과실 1인당 소비량', cap: 'kg',
+      page: 350, ind: 'fruit_consumption_pc', y1: 'kg',
+      series: [
+        { label: '감귤',   src: ['fruit_consumption_pc', '감귤'],   color: '#ffb84d', axis: 'y' },
+        { label: '사과',   src: ['fruit_consumption_pc', '사과'],   color: '#ff6b6b', axis: 'y' },
+        { label: '포도',   src: ['fruit_consumption_pc', '포도'],   color: '#c78bff', axis: 'y' },
+        { label: '복숭아', src: ['fruit_consumption_pc', '복숭아'], color: '#38d39f', axis: 'y' },
+        { label: '배',     src: ['fruit_consumption_pc', '배'],     color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '주요 채소 재배면적', cap: '천ha · 고추는 건고추 기준',
+      page: 340, ind: 'vegetable_area', y1: '천ha',
+      series: [
+        { label: '배추',   src: ['vegetable_area', '배추'],   color: '#38d39f', axis: 'y' },
+        { label: '건고추', src: ['vegetable_area', '건고추'], color: '#ff6b6b', axis: 'y' },
+        { label: '마늘',   src: ['vegetable_area', '마늘'],   color: '#ffb84d', axis: 'y' },
+        { label: '양파',   src: ['vegetable_area', '양파'],   color: '#3fa7ff', axis: 'y' },
+        { label: '무',     src: ['vegetable_area', '무'],     color: '#c78bff', axis: 'y' }
+      ] },
+    { title: '주요 과실 재배면적', cap: '천ha',
+      page: 348, ind: 'fruit_area', y1: '천ha',
+      series: [
+        { label: '사과',   src: ['fruit_area', '사과'],   color: '#ff6b6b', axis: 'y' },
+        { label: '감귤',   src: ['fruit_area', '감귤'],   color: '#ffb84d', axis: 'y' },
+        { label: '포도',   src: ['fruit_area', '포도'],   color: '#c78bff', axis: 'y' },
+        { label: '복숭아', src: ['fruit_area', '복숭아'], color: '#38d39f', axis: 'y' },
+        { label: '배',     src: ['fruit_area', '배'],     color: '#3fa7ff', axis: 'y' }
+      ] }
+  ]
 }
 ];
