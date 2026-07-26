@@ -129,7 +129,7 @@ window.BRIEFS = [
 },
 {
   id: 'livestock', icon: '🐄', name: '축산 브리프', short: '축산',
-  desc: '육류 생산량·자급률과 가축 사육마릿수를 한 화면에 모았습니다.',
+  desc: '육류 생산량·자급률·수입량, 1인당 소비량, 가축 사육마릿수를 한 화면에 모았습니다.',
   kpis: [
     { label: '축산물(육류) 생산량', src: ['meat_production'],           unit: '천t' },
     { label: '축산물(육류) 자급률', src: ['livestock_self_suff'],       unit: '%' },
@@ -156,6 +156,28 @@ window.BRIEFS = [
       series: [
         { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#ff6b6b', fill: true, axis: 'y' },
         { label: '곡물자급률 (%)',    src: ['grain_self_suff'],     color: '#3fa7ff', axis: 'y' }
+      ] },
+    { title: '1인당 육류 소비량', cap: 'kg · 계 = 쇠고기+돼지고기+닭고기',
+      page: 379, ind: 'meat_consumption_pc', y1: 'kg',
+      series: [
+        { label: '육류 계', src: ['meat_consumption_pc'],           color: '__TOTAL__', axis: 'y' },
+        { label: '돼지고기', src: ['meat_consumption_pc', '돼지고기'], color: '#ff6b6b', fill: true, axis: 'y' },
+        { label: '쇠고기',   src: ['meat_consumption_pc', '쇠고기'],   color: '#ffb84d', axis: 'y' },
+        { label: '닭고기',   src: ['meat_consumption_pc', '닭고기'],   color: '#38d39f', axis: 'y' }
+      ] },
+    { title: '육류 생산량과 수입량 (축종별)', cap: '천t · 쇠고기는 수입이 생산보다 많습니다',
+      page: 378, ind: 'meat_import', y1: '천t',
+      series: [
+        { label: '돼지 생산', src: ['meat_production', '돼지고기'], color: '#ff6b6b', axis: 'y' },
+        { label: '돼지 수입', src: ['meat_import', '돼지고기'],     color: '#ffb84d', axis: 'y' },
+        { label: '쇠고기 생산', src: ['meat_production', '쇠고기'], color: '#3fa7ff', axis: 'y' },
+        { label: '쇠고기 수입', src: ['meat_import', '쇠고기'],     color: '#c78bff', axis: 'y' }
+      ] },
+    { title: '1인당 우유·계란 소비량', cap: '왼쪽 축 우유 kg · 오른쪽 축 계란 개',
+      page: 379, ind: 'milk_consumption_pc', y1: '우유 kg', y2: '계란 개',
+      series: [
+        { label: '우유 (kg)', src: ['milk_consumption_pc'], color: '#3fa7ff', fill: true, axis: 'y' },
+        { label: '계란 (개)', src: ['egg_consumption_pc'],  color: '#ffb84d', axis: 'y2' }
       ] }
   ]
 },

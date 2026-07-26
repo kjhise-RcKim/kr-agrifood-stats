@@ -6,7 +6,7 @@
     "license": "공공누리 제1유형(출처표시)",
     "source_pdf": "2025 농림축산식품 주요통계.pdf",
     "generated_at": "2026-07-16",
-    "status": "v17 (농가소득 원천·경지규모·영농형태별 추가)",
+    "status": "v19 (육류 축종별 생산·수입량 추가)",
     "pending": [
       "meat_consumption_pc",
       "timber_self_suff",
@@ -5136,7 +5136,7 @@
       "unit": "천t",
       "frequency": "연간",
       "is_headline": false,
-      "description": "육류 국내 생산량(계)",
+      "description": "육류 생산량. 계 + 축종별(쇠고기·돼지고기·닭고기)",
       "keywords": [
         "축산물",
         "육류",
@@ -5246,10 +5246,306 @@
         }
       ],
       "related_ids": [
-        "livestock_self_suff",
-        "livestock_heads"
+        "meat_consumption_pc",
+        "meat_import",
+        "livestock_heads",
+        "livestock_self_suff"
       ],
-      "brief_weight": 1
+      "brief_weight": 1,
+      "breakdown": [
+        {
+          "label": "쇠고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 37
+            },
+            {
+              "year": 1975,
+              "value": 70
+            },
+            {
+              "year": 1980,
+              "value": 93
+            },
+            {
+              "year": 1985,
+              "value": 118
+            },
+            {
+              "year": 1990,
+              "value": 95
+            },
+            {
+              "year": 1995,
+              "value": 155
+            },
+            {
+              "year": 2000,
+              "value": 214
+            },
+            {
+              "year": 2005,
+              "value": 152
+            },
+            {
+              "year": 2010,
+              "value": 195
+            },
+            {
+              "year": 2011,
+              "value": 226
+            },
+            {
+              "year": 2012,
+              "value": 245
+            },
+            {
+              "year": 2013,
+              "value": 272
+            },
+            {
+              "year": 2014,
+              "value": 273
+            },
+            {
+              "year": 2015,
+              "value": 267
+            },
+            {
+              "year": 2016,
+              "value": 231
+            },
+            {
+              "year": 2017,
+              "value": 239
+            },
+            {
+              "year": 2018,
+              "value": 237
+            },
+            {
+              "year": 2019,
+              "value": 245
+            },
+            {
+              "year": 2020,
+              "value": 249
+            },
+            {
+              "year": 2021,
+              "value": 264
+            },
+            {
+              "year": 2022,
+              "value": 290
+            },
+            {
+              "year": 2023,
+              "value": 303
+            },
+            {
+              "year": 2024,
+              "value": 321
+            }
+          ]
+        },
+        {
+          "label": "돼지고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 83
+            },
+            {
+              "year": 1975,
+              "value": 99
+            },
+            {
+              "year": 1980,
+              "value": 239
+            },
+            {
+              "year": 1985,
+              "value": 346
+            },
+            {
+              "year": 1990,
+              "value": 508
+            },
+            {
+              "year": 1995,
+              "value": 639
+            },
+            {
+              "year": 2000,
+              "value": 714
+            },
+            {
+              "year": 2005,
+              "value": 701
+            },
+            {
+              "year": 2010,
+              "value": 764
+            },
+            {
+              "year": 2011,
+              "value": 574
+            },
+            {
+              "year": 2012,
+              "value": 750
+            },
+            {
+              "year": 2013,
+              "value": 853
+            },
+            {
+              "year": 2014,
+              "value": 830
+            },
+            {
+              "year": 2015,
+              "value": 842
+            },
+            {
+              "year": 2016,
+              "value": 891
+            },
+            {
+              "year": 2017,
+              "value": 894
+            },
+            {
+              "year": 2018,
+              "value": 936
+            },
+            {
+              "year": 2019,
+              "value": 969
+            },
+            {
+              "year": 2020,
+              "value": 1097
+            },
+            {
+              "year": 2021,
+              "value": 1097
+            },
+            {
+              "year": 2022,
+              "value": 1107
+            },
+            {
+              "year": 2023,
+              "value": 1118
+            },
+            {
+              "year": 2024,
+              "value": 1132
+            }
+          ]
+        },
+        {
+          "label": "닭고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 45
+            },
+            {
+              "year": 1975,
+              "value": 56
+            },
+            {
+              "year": 1980,
+              "value": 92
+            },
+            {
+              "year": 1985,
+              "value": 126
+            },
+            {
+              "year": 1990,
+              "value": 172
+            },
+            {
+              "year": 1995,
+              "value": 265
+            },
+            {
+              "year": 2000,
+              "value": 261
+            },
+            {
+              "year": 2005,
+              "value": 301
+            },
+            {
+              "year": 2010,
+              "value": 436
+            },
+            {
+              "year": 2011,
+              "value": 456
+            },
+            {
+              "year": 2012,
+              "value": 464
+            },
+            {
+              "year": 2013,
+              "value": 473
+            },
+            {
+              "year": 2014,
+              "value": 528
+            },
+            {
+              "year": 2015,
+              "value": 585
+            },
+            {
+              "year": 2016,
+              "value": 599
+            },
+            {
+              "year": 2017,
+              "value": 558
+            },
+            {
+              "year": 2018,
+              "value": 604
+            },
+            {
+              "year": 2019,
+              "value": 637
+            },
+            {
+              "year": 2020,
+              "value": 647
+            },
+            {
+              "year": 2021,
+              "value": 622
+            },
+            {
+              "year": 2022,
+              "value": 614
+            },
+            {
+              "year": 2023,
+              "value": 604
+            },
+            {
+              "year": 2024,
+              "value": 618
+            }
+          ]
+        }
+      ],
+      "tip": "육류 생산량(천t)입니다. 계 = 쇠고기 + 돼지고기 + 닭고기. 2020년부터 쇠고기·돼지고기 생산량은 축산물등급판정 통계연보 기준으로 바뀌어 이전 연도와 단순 비교에 주의가 필요합니다. (p.378)"
     },
     {
       "id": "livestock_self_suff",
@@ -18544,6 +18840,1089 @@
         "farm_income_by_size"
       ],
       "tip": "주로 어떤 농사를 짓는지(영농형태)별 농가 1호당 연간 소득입니다(천원). 계는 전체 농가 평균이며, 원자료에 1995년부터 집계돼 그 이전은 없습니다. (p.160~161)"
+    },
+    {
+      "id": "meat_consumption_pc",
+      "name": "1인당 육류 소비량",
+      "group": "축산",
+      "unit": "kg",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "국민 1인당 연간 육류 소비량. 계 + 축종별(쇠고기·돼지고기·닭고기)",
+      "keywords": [
+        "육류",
+        "고기",
+        "소비량",
+        "쇠고기",
+        "돼지고기",
+        "닭고기"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 Ⅵ.축산 2.축산물 수급 및 유통 (1)",
+        "page": 379,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 5.2
+        },
+        {
+          "year": 1975,
+          "value": 6.4
+        },
+        {
+          "year": 1980,
+          "value": 11.3
+        },
+        {
+          "year": 1985,
+          "value": 14.4
+        },
+        {
+          "year": 1990,
+          "value": 19.9
+        },
+        {
+          "year": 1995,
+          "value": 27.4
+        },
+        {
+          "year": 2000,
+          "value": 32.9
+        },
+        {
+          "year": 2005,
+          "value": 31.3
+        },
+        {
+          "year": 2010,
+          "value": 38.7
+        },
+        {
+          "year": 2011,
+          "value": 40.5
+        },
+        {
+          "year": 2012,
+          "value": 40.6
+        },
+        {
+          "year": 2013,
+          "value": 42.7
+        },
+        {
+          "year": 2014,
+          "value": 45.2
+        },
+        {
+          "year": 2015,
+          "value": 46.9
+        },
+        {
+          "year": 2016,
+          "value": 49.3
+        },
+        {
+          "year": 2017,
+          "value": 48.7
+        },
+        {
+          "year": 2018,
+          "value": 53.7
+        },
+        {
+          "year": 2019,
+          "value": 54.8
+        },
+        {
+          "year": 2020,
+          "value": 55.1
+        },
+        {
+          "year": 2021,
+          "value": 55.9
+        },
+        {
+          "year": 2022,
+          "value": 60.5
+        },
+        {
+          "year": 2023,
+          "value": 60.4
+        },
+        {
+          "year": 2024,
+          "value": 61.4
+        }
+      ],
+      "series_label": "육류 계",
+      "breakdown": [
+        {
+          "label": "쇠고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 1.2
+            },
+            {
+              "year": 1975,
+              "value": 2.0
+            },
+            {
+              "year": 1980,
+              "value": 2.6
+            },
+            {
+              "year": 1985,
+              "value": 2.9
+            },
+            {
+              "year": 1990,
+              "value": 4.1
+            },
+            {
+              "year": 1995,
+              "value": 6.7
+            },
+            {
+              "year": 2000,
+              "value": 9.5
+            },
+            {
+              "year": 2005,
+              "value": 6.0
+            },
+            {
+              "year": 2010,
+              "value": 8.7
+            },
+            {
+              "year": 2011,
+              "value": 10.2
+            },
+            {
+              "year": 2012,
+              "value": 9.8
+            },
+            {
+              "year": 2013,
+              "value": 10.4
+            },
+            {
+              "year": 2014,
+              "value": 10.8
+            },
+            {
+              "year": 2015,
+              "value": 11.0
+            },
+            {
+              "year": 2016,
+              "value": 11.5
+            },
+            {
+              "year": 2017,
+              "value": 11.3
+            },
+            {
+              "year": 2018,
+              "value": 12.6
+            },
+            {
+              "year": 2019,
+              "value": 13.0
+            },
+            {
+              "year": 2020,
+              "value": 12.9
+            },
+            {
+              "year": 2021,
+              "value": 13.9
+            },
+            {
+              "year": 2022,
+              "value": 14.9
+            },
+            {
+              "year": 2023,
+              "value": 14.7
+            },
+            {
+              "year": 2024,
+              "value": 15.0
+            }
+          ]
+        },
+        {
+          "label": "돼지고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 2.6
+            },
+            {
+              "year": 1975,
+              "value": 2.8
+            },
+            {
+              "year": 1980,
+              "value": 6.3
+            },
+            {
+              "year": 1985,
+              "value": 8.4
+            },
+            {
+              "year": 1990,
+              "value": 11.8
+            },
+            {
+              "year": 1995,
+              "value": 14.8
+            },
+            {
+              "year": 2000,
+              "value": 16.5
+            },
+            {
+              "year": 2005,
+              "value": 17.8
+            },
+            {
+              "year": 2010,
+              "value": 19.3
+            },
+            {
+              "year": 2011,
+              "value": 19.0
+            },
+            {
+              "year": 2012,
+              "value": 19.2
+            },
+            {
+              "year": 2013,
+              "value": 20.9
+            },
+            {
+              "year": 2014,
+              "value": 21.5
+            },
+            {
+              "year": 2015,
+              "value": 22.5
+            },
+            {
+              "year": 2016,
+              "value": 24.1
+            },
+            {
+              "year": 2017,
+              "value": 24.5
+            },
+            {
+              "year": 2018,
+              "value": 27.0
+            },
+            {
+              "year": 2019,
+              "value": 26.8
+            },
+            {
+              "year": 2020,
+              "value": 27.1
+            },
+            {
+              "year": 2021,
+              "value": 27.6
+            },
+            {
+              "year": 2022,
+              "value": 30.1
+            },
+            {
+              "year": 2023,
+              "value": 29.6
+            },
+            {
+              "year": 2024,
+              "value": 30.9
+            }
+          ]
+        },
+        {
+          "label": "닭고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": 1.4
+            },
+            {
+              "year": 1975,
+              "value": 1.6
+            },
+            {
+              "year": 1980,
+              "value": 2.4
+            },
+            {
+              "year": 1985,
+              "value": 3.1
+            },
+            {
+              "year": 1990,
+              "value": 4.0
+            },
+            {
+              "year": 1995,
+              "value": 5.9
+            },
+            {
+              "year": 2000,
+              "value": 6.9
+            },
+            {
+              "year": 2005,
+              "value": 7.5
+            },
+            {
+              "year": 2010,
+              "value": 10.7
+            },
+            {
+              "year": 2011,
+              "value": 11.3
+            },
+            {
+              "year": 2012,
+              "value": 11.6
+            },
+            {
+              "year": 2013,
+              "value": 11.4
+            },
+            {
+              "year": 2014,
+              "value": 12.9
+            },
+            {
+              "year": 2015,
+              "value": 13.4
+            },
+            {
+              "year": 2016,
+              "value": 13.7
+            },
+            {
+              "year": 2017,
+              "value": 12.9
+            },
+            {
+              "year": 2018,
+              "value": 14.1
+            },
+            {
+              "year": 2019,
+              "value": 15.0
+            },
+            {
+              "year": 2020,
+              "value": 15.1
+            },
+            {
+              "year": 2021,
+              "value": 14.4
+            },
+            {
+              "year": 2022,
+              "value": 15.5
+            },
+            {
+              "year": 2023,
+              "value": 16.1
+            },
+            {
+              "year": 2024,
+              "value": 15.5
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "milk_consumption_pc",
+        "egg_consumption_pc",
+        "meat_production",
+        "livestock_self_suff"
+      ],
+      "tip": "국민 한 사람이 1년에 먹는 육류의 무게(kg)입니다. 계 = 쇠고기 + 돼지고기 + 닭고기. (p.379)"
+    },
+    {
+      "id": "milk_consumption_pc",
+      "name": "1인당 우유 소비량",
+      "group": "축산",
+      "unit": "kg",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "국민 1인당 연간 우유(백색시유 등) 소비량",
+      "keywords": [
+        "우유",
+        "유제품",
+        "소비량"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 Ⅵ.축산 2.축산물 수급 및 유통 (1)",
+        "page": 379,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 1.6
+        },
+        {
+          "year": 1975,
+          "value": 4.6
+        },
+        {
+          "year": 1980,
+          "value": 10.8
+        },
+        {
+          "year": 1985,
+          "value": 23.8
+        },
+        {
+          "year": 1990,
+          "value": 43.8
+        },
+        {
+          "year": 1995,
+          "value": 47.5
+        },
+        {
+          "year": 2000,
+          "value": 59.6
+        },
+        {
+          "year": 2005,
+          "value": 62.9
+        },
+        {
+          "year": 2010,
+          "value": 64.2
+        },
+        {
+          "year": 2011,
+          "value": 70.7
+        },
+        {
+          "year": 2012,
+          "value": 67.2
+        },
+        {
+          "year": 2013,
+          "value": 71.3
+        },
+        {
+          "year": 2014,
+          "value": 72.4
+        },
+        {
+          "year": 2015,
+          "value": 75.7
+        },
+        {
+          "year": 2016,
+          "value": 76.4
+        },
+        {
+          "year": 2017,
+          "value": 79.5
+        },
+        {
+          "year": 2018,
+          "value": 80.1
+        },
+        {
+          "year": 2019,
+          "value": 81.8
+        },
+        {
+          "year": 2020,
+          "value": 83.9
+        },
+        {
+          "year": 2021,
+          "value": 86.1
+        },
+        {
+          "year": 2022,
+          "value": 85.7
+        },
+        {
+          "year": 2023,
+          "value": 83.9
+        },
+        {
+          "year": 2024,
+          "value": 76.0
+        }
+      ],
+      "breakdown": [],
+      "related_ids": [
+        "meat_consumption_pc",
+        "egg_consumption_pc"
+      ],
+      "tip": "국민 한 사람이 1년에 소비하는 우유의 무게(kg)입니다. (p.379)"
+    },
+    {
+      "id": "egg_consumption_pc",
+      "name": "1인당 계란 소비량",
+      "group": "축산",
+      "unit": "개",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "국민 1인당 연간 계란 소비량(개)",
+      "keywords": [
+        "계란",
+        "달걀",
+        "소비량"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 Ⅵ.축산 2.축산물 수급 및 유통 (1)",
+        "page": 379,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": 77
+        },
+        {
+          "year": 1975,
+          "value": 83
+        },
+        {
+          "year": 1980,
+          "value": 119
+        },
+        {
+          "year": 1985,
+          "value": 131
+        },
+        {
+          "year": 1990,
+          "value": 167
+        },
+        {
+          "year": 1995,
+          "value": 184
+        },
+        {
+          "year": 2000,
+          "value": 184
+        },
+        {
+          "year": 2005,
+          "value": 220
+        },
+        {
+          "year": 2010,
+          "value": 266
+        },
+        {
+          "year": 2011,
+          "value": 271
+        },
+        {
+          "year": 2012,
+          "value": 268
+        },
+        {
+          "year": 2013,
+          "value": 272
+        },
+        {
+          "year": 2014,
+          "value": 278
+        },
+        {
+          "year": 2015,
+          "value": 295
+        },
+        {
+          "year": 2016,
+          "value": 305
+        },
+        {
+          "year": 2017,
+          "value": 254
+        },
+        {
+          "year": 2018,
+          "value": 295
+        },
+        {
+          "year": 2019,
+          "value": 311
+        },
+        {
+          "year": 2020,
+          "value": 322
+        },
+        {
+          "year": 2021,
+          "value": 301
+        },
+        {
+          "year": 2022,
+          "value": 314
+        },
+        {
+          "year": 2023,
+          "value": 331
+        },
+        {
+          "year": 2024,
+          "value": 348
+        }
+      ],
+      "breakdown": [],
+      "related_ids": [
+        "meat_consumption_pc",
+        "milk_consumption_pc"
+      ],
+      "tip": "국민 한 사람이 1년에 소비하는 계란의 개수입니다. 단위는 무게가 아니라 **개**입니다. (p.379)"
+    },
+    {
+      "id": "meat_import",
+      "name": "육류 수입량",
+      "group": "축산",
+      "unit": "천t",
+      "frequency": "연간",
+      "is_headline": false,
+      "brief_weight": 1,
+      "description": "육류 수입량. 계 + 축종별(쇠고기·돼지고기·닭고기)",
+      "keywords": [
+        "육류",
+        "수입",
+        "쇠고기",
+        "돼지고기",
+        "닭고기",
+        "수입의존"
+      ],
+      "source": {
+        "publication": "농림축산식품 주요통계 2025",
+        "section": "농업·농촌 Ⅵ.축산 2.축산물 수급 및 유통 (1) 축산물 수급실적",
+        "page": 378,
+        "org": "농림축산식품부",
+        "license": "공공누리 제1유형(출처표시)"
+      },
+      "series": [
+        {
+          "year": 1970,
+          "value": null
+        },
+        {
+          "year": 1975,
+          "value": null
+        },
+        {
+          "year": 1980,
+          "value": 20
+        },
+        {
+          "year": 1985,
+          "value": 14
+        },
+        {
+          "year": 1990,
+          "value": 175
+        },
+        {
+          "year": 1995,
+          "value": 346
+        },
+        {
+          "year": 2000,
+          "value": 631
+        },
+        {
+          "year": 2005,
+          "value": 576
+        },
+        {
+          "year": 2010,
+          "value": 769
+        },
+        {
+          "year": 2011,
+          "value": 768
+        },
+        {
+          "year": 2012,
+          "value": 647
+        },
+        {
+          "year": 2013,
+          "value": 546
+        },
+        {
+          "year": 2014,
+          "value": 681
+        },
+        {
+          "year": 2015,
+          "value": 757
+        },
+        {
+          "year": 2016,
+          "value": 784
+        },
+        {
+          "year": 2017,
+          "value": 816
+        },
+        {
+          "year": 2018,
+          "value": 1006
+        },
+        {
+          "year": 2019,
+          "value": 987
+        },
+        {
+          "year": 2020,
+          "value": 869
+        },
+        {
+          "year": 2021,
+          "value": 910
+        },
+        {
+          "year": 2022,
+          "value": 1107
+        },
+        {
+          "year": 2023,
+          "value": 1088
+        },
+        {
+          "year": 2024,
+          "value": 1083
+        }
+      ],
+      "series_label": "수입 계",
+      "breakdown": [
+        {
+          "label": "쇠고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": 7
+            },
+            {
+              "year": 1985,
+              "value": 5
+            },
+            {
+              "year": 1990,
+              "value": 86
+            },
+            {
+              "year": 1995,
+              "value": 147
+            },
+            {
+              "year": 2000,
+              "value": 237
+            },
+            {
+              "year": 2005,
+              "value": 143
+            },
+            {
+              "year": 2010,
+              "value": 245
+            },
+            {
+              "year": 2011,
+              "value": 289
+            },
+            {
+              "year": 2012,
+              "value": 254
+            },
+            {
+              "year": 2013,
+              "value": 257
+            },
+            {
+              "year": 2014,
+              "value": 282
+            },
+            {
+              "year": 2015,
+              "value": 299
+            },
+            {
+              "year": 2016,
+              "value": 363
+            },
+            {
+              "year": 2017,
+              "value": 344
+            },
+            {
+              "year": 2018,
+              "value": 417
+            },
+            {
+              "year": 2019,
+              "value": 426
+            },
+            {
+              "year": 2020,
+              "value": 420
+            },
+            {
+              "year": 2021,
+              "value": 453
+            },
+            {
+              "year": 2022,
+              "value": 477
+            },
+            {
+              "year": 2023,
+              "value": 454
+            },
+            {
+              "year": 2024,
+              "value": 446
+            }
+          ]
+        },
+        {
+          "label": "돼지고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": 13
+            },
+            {
+              "year": 1985,
+              "value": 9
+            },
+            {
+              "year": 1990,
+              "value": 89
+            },
+            {
+              "year": 1995,
+              "value": 199
+            },
+            {
+              "year": 2000,
+              "value": 394
+            },
+            {
+              "year": 2005,
+              "value": 433
+            },
+            {
+              "year": 2010,
+              "value": 524
+            },
+            {
+              "year": 2011,
+              "value": 370
+            },
+            {
+              "year": 2012,
+              "value": 275
+            },
+            {
+              "year": 2013,
+              "value": 185
+            },
+            {
+              "year": 2014,
+              "value": 274
+            },
+            {
+              "year": 2015,
+              "value": 358
+            },
+            {
+              "year": 2016,
+              "value": 318
+            },
+            {
+              "year": 2017,
+              "value": 369
+            },
+            {
+              "year": 2018,
+              "value": 463
+            },
+            {
+              "year": 2019,
+              "value": 421
+            },
+            {
+              "year": 2020,
+              "value": 310
+            },
+            {
+              "year": 2021,
+              "value": 333
+            },
+            {
+              "year": 2022,
+              "value": 442
+            },
+            {
+              "year": 2023,
+              "value": 403
+            },
+            {
+              "year": 2024,
+              "value": 453
+            }
+          ]
+        },
+        {
+          "label": "닭고기",
+          "series": [
+            {
+              "year": 1970,
+              "value": null
+            },
+            {
+              "year": 1975,
+              "value": null
+            },
+            {
+              "year": 1980,
+              "value": null
+            },
+            {
+              "year": 1985,
+              "value": null
+            },
+            {
+              "year": 1990,
+              "value": null
+            },
+            {
+              "year": 1995,
+              "value": null
+            },
+            {
+              "year": 2000,
+              "value": null
+            },
+            {
+              "year": 2005,
+              "value": null
+            },
+            {
+              "year": 2010,
+              "value": null
+            },
+            {
+              "year": 2011,
+              "value": 109
+            },
+            {
+              "year": 2012,
+              "value": 118
+            },
+            {
+              "year": 2013,
+              "value": 104
+            },
+            {
+              "year": 2014,
+              "value": 125
+            },
+            {
+              "year": 2015,
+              "value": 100
+            },
+            {
+              "year": 2016,
+              "value": 103
+            },
+            {
+              "year": 2017,
+              "value": 103
+            },
+            {
+              "year": 2018,
+              "value": 126
+            },
+            {
+              "year": 2019,
+              "value": 140
+            },
+            {
+              "year": 2020,
+              "value": 139
+            },
+            {
+              "year": 2021,
+              "value": 124
+            },
+            {
+              "year": 2022,
+              "value": 188
+            },
+            {
+              "year": 2023,
+              "value": 231
+            },
+            {
+              "year": 2024,
+              "value": 184
+            }
+          ]
+        }
+      ],
+      "related_ids": [
+        "meat_production",
+        "livestock_self_suff",
+        "meat_consumption_pc"
+      ],
+      "tip": "육류 수입량(천t)입니다. 계 = 쇠고기 + 돼지고기 + 닭고기. 「축산물(육류) 생산량」과 나란히 보면 축종별 수입 의존 정도를 알 수 있습니다. (p.378)"
     }
   ]
 }

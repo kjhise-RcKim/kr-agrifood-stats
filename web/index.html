@@ -235,6 +235,10 @@
   .btog button{background:var(--panel2);color:var(--muted);border:1px solid var(--line);
     border-radius:8px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit;}
   .btog button.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;}
+  #cmpList label{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;font-size:12.5px;cursor:pointer;}
+  #cmpList label:hover{background:var(--panel2);}
+  #cmpList .g{font-size:10.5px;color:var(--muted);margin:8px 4px 2px;font-weight:600;}
+  #cmpList .u{color:var(--muted);font-size:11px;margin-left:auto;}
   .dtbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px;}
   .dtbl th{position:sticky;top:0;background:var(--panel2);color:var(--muted);font-weight:600;
     text-align:right;padding:7px 9px;border-bottom:1px solid var(--line);font-size:11.5px;}
@@ -282,6 +286,7 @@
   </div>
   <div class="hbtns">
     <button class="hbtn" id="briefBtn">📑 브리프</button>
+    <button class="hbtn" id="cmpBtn">⚖️ 지표 비교</button>
     <button class="hbtn" id="diffBtn">📊 연도 비교</button>
     <button class="hbtn" id="helpBtn">ℹ️ 이용안내</button>
     <button class="hbtn" id="themeBtn">🌙</button>
@@ -402,6 +407,7 @@
     <ul>
       <li><b>🔗 링크 복사</b> — 보고 있는 지표·브리프·검색 결과를 링크로 공유. 받는 사람 화면에 <b>그대로 열립니다</b>(밝게/어둡게 배경까지).</li>
       <li><b>📊 연도 비교</b> — 두 해를 고르면 지표들이 <b>변화가 큰 순서로</b> 정렬됩니다. CSV로 내려받을 수 있어요.</li>
+      <li><b>⚖️ 지표 비교</b> — 원하는 <b>지표를 직접 2개 이상 골라</b> 한 그래프에 겹쳐 봅니다. 단위가 같으면 실제 값, 다르면 첫해=100 지수로 자동 전환돼요. 링크로 공유도 됩니다.</li>
       <li><b>⭐ 즐겨찾기</b> — 자주 보는 지표를 담아두면(이 브라우저에 저장) 모아볼 수 있고, 2개 이상이면 <b>겹쳐보기</b>로 한 그래프에 비교합니다(첫해=100 지수).</li>
     </ul>
 
@@ -423,6 +429,34 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="cmpModal" style="display:none">
+  <div class="modal" style="max-width:920px">
+    <h2>⚖️ 지표 비교</h2>
+    <p class="mmuted">지표를 <b>2개 이상</b> 고르면 한 그래프에 겹쳐 보여줍니다. 단위가 같으면 실제 값, 다르면 첫해=100 지수로 자동 전환됩니다.</p>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0 8px">
+      <input id="cmpSearch" type="text" placeholder="🔍 지표 이름 검색" autocomplete="off"
+        style="flex:1;min-width:160px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit">
+      <span id="cmpCount" class="mmuted" style="font-size:12px">선택 0개</span>
+      <select class="dsel" id="cmpModeSel">
+        <option value="auto">단위: 자동</option>
+        <option value="raw">실제 값</option>
+        <option value="index">첫해=100 지수</option>
+      </select>
+    </div>
+    <div id="cmpBody" style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+      <div id="cmpList" style="flex:1;min-width:220px;max-height:340px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;padding:6px 8px"></div>
+      <div style="flex:1.4;min-width:280px">
+        <div class="bpbox" style="height:300px"><canvas id="cmpChart"></canvas></div>
+        <div id="cmpNote" class="mmuted" style="font-size:11.5px;margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="lnk" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <span id="cmpClear" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px">선택 초기화</span>
+      <span id="cmpLink" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px">🔗 링크 복사</span>
+    </div>
+    <button class="modal-close" id="cmpClose">닫기</button>
+  </div>
+</div>
 <div class="modal-overlay" id="diffModal" style="display:none">
   <div class="modal" style="max-width:820px">
     <h2>📊 두 연도 비교</h2>
@@ -586,6 +620,10 @@ function applyURL(){
   } else if(vq){
     query=vq; if(qel) qel.value=query; curId=null; compareMode=false;
     renderTabs(); renderCards(); renderOrig(query); return;
+  } else if(vv==='cmp'){
+    query=''; if(qel) qel.value=''; compareMode=false;
+    renderTabs(); renderCards(); renderOrig('');
+    var idsRaw=get('ids'); _beforeCmp=_beforeCmp||''; openCmp(idsRaw?idsRaw.split(','):[]); return;
   } else if(vv==='diff'){
     query=''; if(qel) qel.value=''; compareMode=false;
     renderTabs(); renderCards(); renderOrig('');
@@ -1407,6 +1445,89 @@ function renderHero(){
     var k=el.getAttribute('data-c'); if(C[k]!==undefined) el.textContent=C[k];
   });
 })();
+
+/* ══════════ ⚖️ 지표 비교 — 사용자가 2개 이상 지표를 골라 한 그래프에 겹쳐보기 ══════════
+   단위가 같으면 실제 값, 다르면 첫해=100 지수. (브리프의 큐레이션 비교와 별개의 자유 비교) */
+var cmpSel = [], cmpMode = 'auto', cmpChart = null, _beforeCmp = '';
+function cmpEligible(){ return INDS.filter(function(i){ return !i.compare && seriesPts(i).length >= 2; }); }
+function renderCmpList(){
+  var box = document.getElementById('cmpList'); if(!box) return;
+  var q = (document.getElementById('cmpSearch').value || '').trim().toLowerCase();
+  var byG = {};
+  cmpEligible().forEach(function(i){
+    if(q && i.name.toLowerCase().indexOf(q) < 0 && (i.group||'').toLowerCase().indexOf(q) < 0) return;
+    (byG[i.group] = byG[i.group] || []).push(i);
+  });
+  var h = '';
+  Object.keys(byG).forEach(function(g){
+    h += '<div class="g">' + esc(g) + '</div>';
+    byG[g].forEach(function(i){
+      var on = cmpSel.indexOf(i.id) >= 0;
+      h += '<label><input type="checkbox" data-id="' + esc(i.id) + '"' + (on?' checked':'') + '>' +
+           '<span>' + esc(i.name) + '</span><span class="u">' + esc(i.unit||'') + '</span></label>';
+    });
+  });
+  box.innerHTML = h || '<div class="empty" style="padding:10px">일치하는 지표가 없어요.</div>';
+  box.querySelectorAll('input[type=checkbox]').forEach(function(el){
+    el.onchange = function(){
+      var id = el.getAttribute('data-id');
+      var k = cmpSel.indexOf(id);
+      if(el.checked){ if(k < 0) cmpSel.push(id); } else if(k >= 0){ cmpSel.splice(k,1); }
+      renderCmpChart(); updateCmpURL();
+    };
+  });
+}
+function renderCmpChart(){
+  var sel = cmpSel.map(function(id){ return INDS.find(function(i){return i.id===id;}); }).filter(Boolean);
+  document.getElementById('cmpCount').textContent = '선택 ' + sel.length + '개';
+  var note = document.getElementById('cmpNote');
+  if(cmpChart){ try{cmpChart.destroy();}catch(e){} cmpChart = null; }
+  if(sel.length < 2){ note.textContent = '지표를 2개 이상 고르면 그래프가 나타납니다.'; return; }
+  var units = {}; sel.forEach(function(i){ units[i.unit||''] = 1; });
+  var sameUnit = Object.keys(units).length === 1;
+  var mode = cmpMode === 'auto' ? (sameUnit ? 'raw' : 'index') : cmpMode;
+  var C = chartColors(), AX = C.AX, GRID = C.GRID, LEG = C.LEG;
+  var yset = {}, smap = [];
+  sel.forEach(function(i){ var pts = seriesPts(i); if(pts.length){ smap.push({i:i, pts:pts}); pts.forEach(function(p){ yset[p.year]=1; }); } });
+  var labels = Object.keys(yset).map(Number).sort(function(a,b){return a-b;});
+  var dsets = smap.map(function(m, idx){
+    var base = m.pts[0].value, col = PALETTE[idx % PALETTE.length];
+    var data = labels.map(function(y){
+      var p = m.pts.find(function(x){return x.year===y;});
+      if(!p || p.value == null) return null;
+      return mode === 'index' ? (base ? Math.round(p.value/base*1000)/10 : null) : p.value;
+    });
+    var lab = m.i.name + (mode === 'raw' ? ' ('+(m.i.unit||'')+')' : '');
+    return { label: lab, data: data, borderColor: col, backgroundColor:'transparent',
+             tension:.25, pointRadius:1, borderWidth:2, spanGaps:true };
+  });
+  cmpChart = new Chart(document.getElementById('cmpChart'), { type:'line',
+    data:{ labels: labels, datasets: dsets },
+    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{ labels:{ color:LEG, boxWidth:12, font:{size:11} } },
+        tooltip:{ callbacks:{ label:function(c){ return ' '+c.dataset.label+': '+fmt(c.parsed.y)+(mode==='index'?' (지수)':''); } } } },
+      scales:{ x:{ ticks:{color:AX,maxTicksLimit:12}, grid:{color:GRID} },
+        y:{ ticks:{color:AX}, grid:{color:GRID} } } } });
+  note.innerHTML = mode === 'index'
+    ? '단위가 서로 달라 <b>각 지표의 가장 이른 해를 100</b>으로 맞춰 상대 변화를 비교합니다(100→60이면 40% 감소).'
+    : '같은 단위(<b>'+esc(Object.keys(units)[0])+'</b>)라 실제 값을 그대로 표시합니다.';
+}
+function updateCmpURL(){ replaceURL(cmpSel.length ? '?view=cmp&ids='+encodeURIComponent(cmpSel.join(',')) : '?view=cmp'); }
+function openCmp(ids){
+  cmpSel = (ids||[]).filter(function(id){ return INDS.some(function(i){return i.id===id;}); });
+  document.getElementById('cmpSearch').value = '';
+  document.getElementById('cmpModeSel').value = cmpMode;
+  document.getElementById('cmpModal').style.display = 'flex';
+  renderCmpList(); renderCmpChart();
+}
+function closeCmp(){ document.getElementById('cmpModal').style.display='none'; replaceURL(_beforeCmp); }
+document.getElementById('cmpBtn').onclick = function(){ _beforeCmp = baseQS(); go('?view=cmp'); };
+document.getElementById('cmpClose').onclick = closeCmp;
+document.getElementById('cmpModal').onclick = function(e){ if(e.target.id==='cmpModal') closeCmp(); };
+document.getElementById('cmpSearch').addEventListener('input', renderCmpList);
+document.getElementById('cmpModeSel').onchange = function(){ cmpMode = this.value; renderCmpChart(); };
+document.getElementById('cmpClear').onclick = function(){ cmpSel = []; renderCmpList(); renderCmpChart(); updateCmpURL(); };
+document.getElementById('cmpLink').onclick = function(){ copyLink(this); };
 
 document.getElementById('q').addEventListener('input', e=>{
   setBriefPage(false);
