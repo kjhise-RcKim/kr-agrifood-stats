@@ -421,7 +421,7 @@ window.BRIEFS = [
   ]
 },
 {
-  id: 'korjpn', icon: '🇯🇵', name: '한일 비교 브리프', short: '한일 비교',
+  id: 'korjpn', icon: '🆚', name: '한일 비교 브리프', short: '한일 비교',
   desc: '한국과 일본의 자급률·1인당 소비량을 나란히 놓았습니다. 두 나라의 조사 주체와 산출 방식이 달라 단순 비교에는 주의가 필요합니다.',
   kpis: [
     { label: '한국 밀 자급률',   src: ['food_self_suff', '밀'],       unit: '%' },
