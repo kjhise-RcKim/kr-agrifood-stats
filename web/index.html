@@ -13,27 +13,41 @@
 <meta property="og:image" content="https://kr-agrifood-stats.vercel.app/og.png">
 <meta property="og:url" content="https://kr-agrifood-stats.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="./data.js"></script>
 <script src="./briefs.js"></script>
 <style>
+  /* ═══ 디자인 리뉴얼 v1 "들녘의 새벽" — 라이트 기본(밝은 도구) + 🌙 다크 ═══ */
   :root{
-    --bg1:#0d141d; --bg2:#0f1720; --panel:#16212e; --panel2:#1c2a3a; --line:#24384d;
-    --text:#e8eef4; --muted:#8fa6bd; --accent:#3fa7ff; --accent2:#38d39f;
-    --up:#38d39f; --down:#ff6b6b; --chip:#22344a; --btn:#22344a; --btntext:#cfe0f2;
-    --grid:#1d2c3d; --axis:#7f97ae; --total:#e8eef4; --star:#ffce54;
-    --sign:#5c7288;
+    /* 시그니처 (라이트·다크 공통) */
+    --wheat:#C9962E; --wheat-soft:#E8C87A; --green:#1B6B4A;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --serif:'Noto Serif KR',serif;
+    --sans:'Pretendard Variable',Pretendard,'Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;
+    /* 라이트(기본) — 기존 토큰명에 새 팔레트 값 매핑 */
+    --ink:#141F1A; --paper:#F7F8F5;
+    --bg1:#F7F8F5; --bg2:#F7F8F5; --panel:#FFFFFF; --panel2:#EFF3EF; --line:#E3E7E0;
+    --text:#141F1A; --muted:#6B776F; --accent:#1B6B4A; --accent2:#C9962E;
+    --up:#1B6B4A; --down:#B4552D; --chip:#EFF3EF; --btn:#EFF3EF; --btntext:#2A3A32;
+    --grid:#E3E7E0; --axis:#6B776F; --total:#C9962E; --star:#C9962E;
+    --green-tint:#EAF3EE; --sign:#6B776F;
   }
-  body[data-theme="light"]{
-    --bg1:#eef2f7; --bg2:#f6f9fc; --panel:#ffffff; --panel2:#eef3f8; --line:#d7e0ea;
-    --text:#1a2836; --muted:#5c6f80; --accent:#1f7ae0; --accent2:#12a97a;
-    --up:#12a97a; --down:#e5484d; --chip:#e6eef6; --btn:#e6eef6; --btntext:#274158;
-    --grid:#e5ecf3; --axis:#708698; --total:#1a2836; --star:#f5a623;
-    --sign:#2C7A86;
+  body[data-theme="dark"]{
+    --ink:#101713; --paper:#101713;
+    --bg1:#101713; --bg2:#101713; --panel:#1A241E; --panel2:#222E27; --line:#2A3630;
+    --text:#E8EAE5; --muted:#8B968E; --accent:#4FB286; --accent2:#C9962E;
+    --up:#4FB286; --down:#D98A5B; --chip:#222E27; --btn:#222E27; --btntext:#D6DDD6;
+    --grid:rgba(255,255,255,0.06); --axis:#8B968E; --total:#C9962E; --star:#C9962E;
+    --green-tint:rgba(27,107,74,0.16); --sign:#8B968E;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--text);
-    font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;transition:background .2s,color .2s;}
+  body{margin:0;background:var(--bg1);color:var(--text);
+    font-family:var(--sans);font-feature-settings:'tnum';transition:background .2s,color .2s;
+    -webkit-font-smoothing:antialiased;}
   header{padding:24px 32px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   header h1{margin:0;font-size:22px;letter-spacing:-.3px;}
   header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
@@ -48,7 +62,7 @@
     background:linear-gradient(180deg,var(--panel),var(--panel2));}
   .hero .heroline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
   .hero .heroline path{fill:none;stroke:var(--accent);stroke-width:1.6;opacity:.13;}
-  body[data-theme="light"] .hero .heroline path{opacity:.11;}
+  body[data-theme="dark"] .hero .heroline path{opacity:.13;}
   .hero .herolab{position:absolute;right:18px;bottom:12px;font-size:10.5px;color:var(--muted);
     opacity:0;cursor:pointer;z-index:1;letter-spacing:-.1px;
     animation:heroIn 1.2s ease 4.2s forwards;}
@@ -85,7 +99,7 @@
   .searchbar{margin:22px 0 4px;display:flex;align-items:center;gap:12px;}
   .searchbar input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);
     border-radius:12px;padding:12px 16px;font-size:15px;outline:none;transition:.15s;font-family:inherit;}
-  .searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(63,167,255,.12);}
+  .searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(27,107,74,.14);}
   .searchbar input::placeholder{color:var(--muted);}
   .qcount{color:var(--muted);font-size:13px;white-space:nowrap;}
   .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px;}
@@ -518,7 +532,7 @@ function applyTheme(t){
   if(compareMode) renderCompare();
   else if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
 }
-(function initTheme(){ let t='dark'; try{ t=localStorage.getItem('theme')||'dark'; }catch(e){} applyTheme(t); })();
+(function initTheme(){ let t='light'; try{ t=localStorage.getItem('theme')||'light'; }catch(e){} applyTheme(t); })();
 document.getElementById('themeBtn').onclick=()=>{
   applyTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');
   replaceURL(baseQS());   /* 주소의 t= 값도 함께 갱신 → 지금 보는 화면 그대로 공유됨 */
@@ -827,7 +841,7 @@ async function openPage(p){
   document.getElementById('pageModal').style.display='flex';
 }
 
-const PALETTE=['#3fa7ff','#38d39f','#ffb84d','#ff6b6b','#b98cff','#4dd0e1','#f78fb3'];
+const PALETTE=['#C9962E','#1B6B4A','#4A7FB5','#B4552D','#7A6AA8','#5B8A3C','#B08968'];
 const pctc=(a,b)=>(a-b)/Math.abs(b)*100;
 const arw=x=>x>=0?'▲':'▼';
 function insightFor(ind){

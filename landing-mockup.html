@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>농식품 주요통계 대시보드 — 디자인 목업 v1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   농식품 주요통계 대시보드 — 디자인 목업 v1
+   컨셉: "들녘의 새벽" — 어두운 이야기(히어로) → 밝은 도구(대시보드)
+   ⚠️ 데이터는 예시입니다. 적용 시 프로젝트의 실제 지표 배열로 교체하세요.
+   ============================================================ */
+
+:root {
+  /* 컬러 토큰 (DESIGN_SPEC.md 참조) */
+  --ink: #141F1A;            /* 녹흑 잉크: 히어로 배경, 본문 텍스트 */
+  --ink-soft: #2A3A32;
+  --paper: #F7F8F5;          /* 옅은 웜그레이 그린: 본문 배경 */
+  --surface: #FFFFFF;        /* 카드 표면 */
+  --line: #E3E7E0;           /* 1px 보더 */
+  --wheat: #C9962E;          /* 밀 골드: 시그니처 액센트, 데이터 라인 */
+  --wheat-soft: #E8C87A;
+  --green: #1B6B4A;          /* 필드 그린: 인터랙션 액센트 */
+  --green-tint: #EAF3EE;
+  --muted: #6B776F;          /* 보조 텍스트 */
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum'; /* 고정폭 숫자 */
+}
+
+/* ---------- 내비게이션 ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 60px;
+  background: rgba(20, 31, 26, 0.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background .4s ease, border-color .4s ease;
+}
+.nav.on-paper {
+  background: rgba(247, 248, 245, 0.82);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-mark { width: 22px; height: 22px; }
+.brand-name {
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+  color: #fff; transition: color .4s ease;
+}
+.nav.on-paper .brand-name { color: var(--ink); }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-link {
+  font-size: 13.5px; font-weight: 500; text-decoration: none;
+  color: rgba(255,255,255,0.75); padding: 7px 12px; border-radius: 8px;
+  transition: color .2s, background .2s;
+}
+.nav.on-paper .nav-link { color: var(--muted); }
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.nav.on-paper .nav-link:hover { color: var(--ink); background: var(--green-tint); }
+.nav-cta {
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  color: var(--ink); background: var(--wheat);
+  padding: 8px 16px; border-radius: 8px; margin-left: 8px;
+  transition: transform .15s ease, background .2s;
+}
+.nav-cta:hover { transform: translateY(-1px); background: var(--wheat-soft); }
+
+/* ---------- 히어로 (스크롤 스토리텔링) ---------- */
+.hero-track { height: 420vh; position: relative; background: var(--ink); }
+.hero-sticky {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.hero-sky {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 110%, rgba(201,150,46,0.14), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 80% -10%, rgba(27,107,74,0.22), transparent 65%),
+    var(--ink);
+}
+.hero-head {
+  position: relative; z-index: 3;
+  padding: 110px 28px 0; text-align: center;
+}
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+  color: var(--wheat); text-transform: uppercase; margin-bottom: 18px;
+}
+.hero-title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(28px, 4.4vw, 52px); line-height: 1.3;
+  color: #F4F1E8; letter-spacing: -0.01em;
+}
+.hero-title em { font-style: normal; color: var(--wheat); }
+.hero-sub {
+  margin-top: 16px; font-size: clamp(14px, 1.5vw, 16.5px);
+  color: rgba(244,241,232,0.6); line-height: 1.7;
+}
+/* 차트 스테이지 */
+.chart-stage { position: relative; flex: 1; z-index: 2; }
+.chart-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.axis-label {
+  font-family: var(--mono); font-size: 11px; fill: rgba(244,241,232,0.35);
+}
+.wheat-line {
+  fill: none; stroke: var(--wheat); stroke-width: 2.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 12px rgba(201,150,46,0.45));
+}
+.wheat-area { fill: url(#wheatFill); opacity: 0; transition: opacity .6s ease; }
+.wheat-area.show { opacity: 1; }
+.anno-dot { fill: var(--wheat); opacity: 0; transition: opacity .4s ease; }
+.anno-dot.show { opacity: 1; }
+/* 변곡점 캡션 */
+.caption {
+  position: absolute; z-index: 4; max-width: 300px;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .55s ease, transform .55s ease;
+  pointer-events: none;
+}
+.caption.show { opacity: 1; transform: translateY(0); }
+.caption .cap-year {
+  font-family: var(--mono); font-size: 12px; color: var(--wheat);
+  letter-spacing: 0.1em; margin-bottom: 6px;
+}
+.caption .cap-num {
+  font-family: var(--mono); font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 44px); color: #F4F1E8; line-height: 1;
+}
+.caption .cap-num small { font-size: 0.5em; color: rgba(244,241,232,0.5); }
+.caption .cap-text {
+  margin-top: 8px; font-size: 13.5px; line-height: 1.65;
+  color: rgba(244,241,232,0.68);
+}
+/* 스크롤 힌트 & 건너뛰기 */
+.hero-foot {
+  position: absolute; bottom: 24px; left: 0; right: 0; z-index: 5;
+  display: flex; justify-content: center; align-items: center; gap: 18px;
+}
+.scroll-hint {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: rgba(244,241,232,0.5);
+}
+.scroll-hint .dot {
+  width: 5px; height: 9px; border: 1.5px solid rgba(244,241,232,0.5);
+  border-radius: 5px; position: relative;
+}
+.scroll-hint .dot::after {
+  content: ''; position: absolute; top: 2px; left: 50%; margin-left: -1px;
+  width: 2px; height: 2px; background: rgba(244,241,232,0.7); border-radius: 50%;
+  animation: wheel 1.6s ease-in-out infinite;
+}
+@keyframes wheel { 0%,100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(3px); opacity: 0; } }
+.skip-link {
+  font-size: 12.5px; color: rgba(244,241,232,0.55); text-decoration: none;
+  border-bottom: 1px dotted rgba(244,241,232,0.35); padding-bottom: 1px;
+  transition: color .2s;
+}
+.skip-link:hover { color: var(--wheat); }
+
+/* ---------- 전환부 ---------- */
+.bridge {
+  background: var(--ink); text-align: center;
+  padding: 0 28px 120px;
+}
+.bridge-inner { max-width: 680px; margin: 0 auto; }
+.bridge h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(24px, 3.2vw, 38px); line-height: 1.45;
+  color: #F4F1E8;
+}
+.bridge h2 em { font-style: normal; color: var(--wheat); }
+.bridge p {
+  margin-top: 18px; font-size: 15.5px; line-height: 1.8;
+  color: rgba(244,241,232,0.62);
+}
+.bridge .src-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 26px; padding: 7px 14px;
+  font-family: var(--mono); font-size: 12px;
+  color: rgba(244,241,232,0.55);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 100px;
+}
+
+/* ---------- 라이트 존 공통 ---------- */
+.zone { padding: 96px 28px; }
+.zone-inner { max-width: 1120px; margin: 0 auto; }
+.zone-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+  color: var(--green); text-transform: uppercase; margin-bottom: 14px;
+}
+.zone-title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.01em;
+}
+.zone-desc { margin-top: 12px; font-size: 15.5px; line-height: 1.75; color: var(--muted); max-width: 560px; }
+
+/* ---------- 통계 스트립 (롤링 숫자) ---------- */
+.stats-strip {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.stats-grid {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  padding: 64px 0;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--mono); font-weight: 600;
+  font-size: clamp(40px, 5vw, 64px); line-height: 1;
+  color: var(--ink); display: inline-flex; overflow: hidden;
+}
+.stat-num .digit-col {
+  display: inline-block; height: 1em; overflow: hidden;
+}
+.stat-num .digit-reel {
+  display: flex; flex-direction: column;
+  transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stat-num .digit-reel span { height: 1em; line-height: 1; }
+.stat-label { margin-top: 12px; font-size: 14px; font-weight: 500; color: var(--muted); }
+.stat-label b { color: var(--green); font-weight: 600; }
+
+/* ---------- 검색 바 ---------- */
+.search-wrap { max-width: 640px; margin: 44px auto 0; }
+.search-box {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 16px 20px;
+  box-shadow: 0 1px 2px rgba(20,31,26,0.04);
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-box:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(27,107,74,0.12);
+}
+.search-box svg { flex-shrink: 0; color: var(--muted); }
+.search-box input {
+  flex: 1; border: none; outline: none; font-family: var(--sans);
+  font-size: 15.5px; background: transparent; color: var(--ink);
+}
+.search-box input::placeholder { color: #A6B0A8; }
+.search-box kbd {
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 5px; padding: 3px 7px;
+  background: var(--paper);
+}
+
+/* ---------- 지표 카드 그리드 ---------- */
+.card-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  margin-top: 44px;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; padding: 24px;
+  cursor: pointer; position: relative;
+  transition: transform .25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow .25s ease, border-color .25s ease;
+  opacity: 0; transform: translateY(22px);
+}
+.card.revealed { opacity: 1; transform: translateY(0); }
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(27,107,74,0.35);
+  box-shadow: 0 12px 32px -12px rgba(20,31,26,0.16);
+}
+.card-cat {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  color: var(--green); text-transform: uppercase;
+}
+.card-title {
+  margin-top: 10px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 6px;
+}
+.card-title .info-i {
+  width: 15px; height: 15px; border-radius: 50%;
+  border: 1px solid var(--line); color: var(--muted);
+  font-size: 10px; font-family: var(--mono);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-val {
+  margin-top: 14px; font-family: var(--mono); font-weight: 600;
+  font-size: 28px; line-height: 1;
+}
+.card-val small { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+.card-delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 8px; font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+}
+.card-delta.up { color: var(--green); }
+.card-delta.down { color: #B4552D; }
+.card-spark { margin-top: 16px; height: 44px; }
+.card-spark svg { width: 100%; height: 100%; overflow: visible; }
+.spark-line {
+  fill: none; stroke: var(--wheat); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 300; stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover .spark-line { animation: sparkDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
+@keyframes sparkDraw { from { stroke-dashoffset: 300; } to { stroke-dashoffset: 0; } }
+.card-src {
+  margin-top: 16px; display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px;
+  background: var(--paper);
+}
+
+/* ---------- TOP5 / 내 관심지표 ---------- */
+.tabs { display: flex; gap: 6px; margin-top: 44px; border-bottom: 1px solid var(--line); }
+.tab {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 600;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  padding: 12px 16px; position: relative; display: flex; align-items: center; gap: 7px;
+  transition: color .2s;
+}
+.tab svg { flex-shrink: 0; }
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--ink); }
+.tab.active::after {
+  content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px;
+  height: 2px; background: var(--wheat); border-radius: 2px;
+}
+.tab-note { margin-left: auto; align-self: center; font-size: 12.5px; color: var(--muted); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.top5-list { margin-top: 8px; }
+.top5-row {
+  display: grid; grid-template-columns: 44px 1fr auto auto; gap: 20px;
+  align-items: center; padding: 18px 8px;
+  border-bottom: 1px solid var(--line); cursor: pointer;
+  transition: background .2s;
+  opacity: 0; transform: translateY(14px);
+}
+.top5-row.revealed { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease, background .2s; }
+.top5-row:hover { background: var(--surface); }
+.top5-rank {
+  font-family: var(--mono); font-weight: 600; font-size: 22px;
+  color: var(--wheat); text-align: center;
+}
+.top5-name { font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.top5-name .card-src { margin-top: 0; }
+.top5-change {
+  font-family: var(--mono); font-size: 14px; color: var(--muted); white-space: nowrap;
+}
+.top5-change b { color: var(--ink); font-weight: 600; }
+.top5-delta {
+  font-family: var(--mono); font-size: 14px; font-weight: 600; white-space: nowrap;
+  padding: 5px 11px; border-radius: 100px;
+}
+.top5-delta.up { color: var(--green); background: var(--green-tint); }
+.top5-delta.down { color: #B4552D; background: #F7ECE5; }
+.fav-empty {
+  margin-top: 24px; padding: 36px 24px; text-align: center;
+  border: 1.5px dashed var(--line); border-radius: 16px; color: var(--muted);
+  font-size: 14.5px; line-height: 1.7;
+}
+.fav-empty svg { color: var(--wheat); margin-bottom: 10px; }
+.fav-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+  color: var(--green); background: var(--green-tint);
+  border: none; border-radius: 10px; padding: 9px 16px; cursor: pointer;
+  transition: background .2s;
+}
+.btn-ghost:hover { background: #DCEBE2; }
+
+/* ---------- 브리프 입구 ---------- */
+.brief-zone { background: var(--surface); border-top: 1px solid var(--line); }
+.brief-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 40px;
+}
+.brief-chip {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+  padding: 15px 18px; cursor: pointer; text-decoration: none; color: var(--ink);
+  transition: transform .2s cubic-bezier(0.2,0.8,0.2,1), border-color .2s, background .2s;
+}
+.brief-chip:hover {
+  transform: translateY(-2px); border-color: rgba(201,150,46,0.5); background: #FDF9F0;
+}
+.brief-emoji { font-size: 20px; line-height: 1; }
+.brief-chip div { min-width: 0; }
+.brief-name { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; }
+.brief-count { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ---------- AI 플로팅 버튼 ---------- */
+.fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 90;
+  display: flex; align-items: center; gap: 0;
+  background: var(--green); color: #fff; border: none; cursor: pointer;
+  height: 54px; border-radius: 100px; padding: 0 16px;
+  box-shadow: 0 8px 24px -6px rgba(27,107,74,0.5);
+  transition: gap .25s ease, padding .25s ease, transform .2s ease, background .2s;
+  font-family: var(--sans);
+}
+.fab:hover { transform: translateY(-2px); background: #185F42; gap: 9px; padding: 0 20px 0 16px; }
+.fab svg { flex-shrink: 0; }
+.fab-label {
+  max-width: 0; overflow: hidden; white-space: nowrap;
+  font-size: 14px; font-weight: 600;
+  transition: max-width .3s ease;
+}
+.fab:hover .fab-label { max-width: 140px; }
+.fab-badge {
+  position: absolute; top: -3px; right: -1px; width: 10px; height: 10px;
+  background: var(--wheat); border: 2px solid var(--paper); border-radius: 50%;
+}
+
+/* ---------- 신뢰 원칙 밴드 ---------- */
+.trust { background: var(--green-tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.trust-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 40px;
+}
+.trust-item h3 {
+  font-size: 15.5px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+}
+.trust-item h3 svg { color: var(--green); flex-shrink: 0; }
+.trust-item p { margin-top: 8px; font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+/* ---------- 푸터 ---------- */
+.footer {
+  background: var(--ink); color: rgba(244,241,232,0.55);
+  padding: 48px 28px; font-size: 13px; line-height: 1.8; text-align: center;
+}
+.footer a { color: var(--wheat); text-decoration: none; }
+.footer .foot-brand { display: flex; justify-content: center; margin-bottom: 14px; }
+
+/* ---------- 모션 감소 대응 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+  .hero-track { height: auto; }
+  .hero-sticky { position: relative; height: auto; min-height: 100vh; }
+  .caption { opacity: 1; transform: none; position: relative; margin: 12px 28px; }
+  .card, .top5-row { opacity: 1; transform: none; }
+}
+
+/* ---------- 반응형 ---------- */
+@media (max-width: 900px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-grid { grid-template-columns: 1fr; gap: 24px; }
+  .nav-links .nav-link { display: none; }
+  .brief-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .brief-grid { grid-template-columns: 1fr; }
+  .top5-row { grid-template-columns: 32px 1fr; row-gap: 8px; }
+  .top5-change, .top5-delta { grid-column: 2; justify-self: start; }
+  .tab-note { display: none; }
+  .fab { right: 16px; bottom: 16px; }
+  .stats-grid { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
+  .caption { max-width: 220px; }
+  .hero-track { height: 480vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= 내비게이션 ================= -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#">
+    <!-- 밀 이삭 로고 마크 (시그니처) -->
+    <svg class="brand-mark" viewBox="0 0 24 24" fill="none">
+      <path d="M12 21V8" stroke="#C9962E" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 8c0-2.5 1.8-4.5 4-5-0 2.5-1.8 4.5-4 5Z" fill="#C9962E"/>
+      <path d="M12 8c0-2.5-1.8-4.5-4-5 0 2.5 1.8 4.5 4 5Z" fill="#1B6B4A"/>
+      <path d="M12 13c0-2.2 1.6-4 3.6-4.4 0 2.2-1.6 4-3.6 4.4Z" fill="#C9962E"/>
+      <path d="M12 13c0-2.2-1.6-4-3.6-4.4 0 2.2 1.6 4 3.6 4.4Z" fill="#1B6B4A"/>
+      <path d="M12 17.5c0-1.9 1.4-3.5 3.1-3.9 0 1.9-1.4 3.5-3.1 3.9Z" fill="#C9962E"/>
+      <path d="M12 17.5c0-1.9-1.4-3.5-3.1-3.9 0 1.9 1.4 3.5 3.1 3.9Z" fill="#1B6B4A"/>
+    </svg>
+    <span class="brand-name">농식품 주요통계</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#indicators">지표</a>
+    <a class="nav-link" href="#indicators">브리프</a>
+    <a class="nav-link" href="#indicators">지표 비교</a>
+    <a class="nav-link" href="#indicators">연도 비교</a>
+    <a class="nav-cta" href="#indicators">지표 둘러보기</a>
+  </div>
+</nav>
+
+<!-- ================= 히어로: 스크롤 스토리텔링 ================= -->
+<div class="hero-track" id="heroTrack">
+  <div class="hero-sticky">
+    <div class="hero-sky"></div>
+
+    <header class="hero-head">
+      <div class="hero-eyebrow">1970 — 2024 · 55년의 기록</div>
+      <h1 class="hero-title">우리 밀은,<br>어디까지 내려갔다 <em>돌아오고</em> 있을까요</h1>
+      <p class="hero-sub">스크롤을 내리면 밀 자급률 55년이 그려집니다 — 숫자는 원자료 그대로.</p>
+    </header>
+
+    <div class="chart-stage" id="chartStage">
+      <svg id="heroChart" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wheatFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9962E" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#C9962E" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="wheat-area" id="wheatArea" d=""/>
+        <path class="wheat-line" id="wheatLine" d=""/>
+        <g id="annoDots"></g>
+        <g id="axisLabels"></g>
+      </svg>
+
+      <!-- 변곡점 캡션 4개: JS가 progress에 따라 표시 -->
+      <div class="caption" id="cap0" style="left:6%; top:8%;">
+        <div class="cap-year">1970</div>
+        <div class="cap-num">15.4<small>%</small></div>
+        <div class="cap-text">밥상 위 밀의 여섯 그릇 중 한 그릇은 우리 땅에서 났습니다.</div>
+      </div>
+      <div class="caption" id="cap1" style="left:32%; top:34%;">
+        <div class="cap-year">1984</div>
+        <div class="cap-num">↓</div>
+        <div class="cap-text">정부의 밀 수매가 중단됩니다. 값싼 수입 밀이 식탁을 채우고, 선은 바닥을 향합니다.</div>
+      </div>
+      <div class="caption" id="cap2" style="left:54%; top:16%;">
+        <div class="cap-year">1990년대 — 2000년대</div>
+        <div class="cap-num">0.<small>x</small>%</div>
+        <div class="cap-text">자급률은 30년 가까이 1%를 넘지 못했습니다. 선이 바닥에 붙어 있는 이유입니다.</div>
+      </div>
+      <div class="caption" id="cap3" style="right:5%; top:10%;">
+        <div class="cap-year">2020 → 2023</div>
+        <div class="cap-num">0.5 → 2.0<small>%</small></div>
+        <div class="cap-text">밀산업 육성법 이후 3년 만에 4배. 그러나 2024년, 생산량은 다시 줄었습니다. 이 이야기의 다음 장을 데이터로 지켜봅니다.</div>
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      <div class="scroll-hint"><span class="dot"></span>스크롤해서 55년 따라가기</div>
+      <a class="skip-link" href="#bridge">건너뛰고 대시보드로 →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 전환부 ================= -->
+<section class="bridge zone" id="bridge">
+  <div class="bridge-inner">
+    <h2>이런 이야기가 <em>581쪽</em>에 잠들어 있습니다.<br>여기서는 한 화면이면 됩니다.</h2>
+    <p>농림축산식품부 『농림축산식품 주요통계 2025』 — 그래프로 보고, 원문에서 찾고, AI에게 물어보세요. 모든 숫자에는 근거 쪽수가 붙어 있습니다.</p>
+    <span class="src-badge">📄 원자료: 농림축산식품부 · 공공누리 제1유형</span>
+  </div>
+</section>
+
+<!-- ================= 통계 스트립 ================= -->
+<section class="stats-strip">
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat">
+      <div class="stat-num" data-target="46"></div>
+      <div class="stat-label">시계열 <b>지표</b></div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="12"></div>
+      <div class="stat-label">주제별 <b>브리프</b></div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="581"></div>
+      <div class="stat-label">검색 가능한 <b>원문 쪽수</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 검색 + 주목할 변화 TOP 5 ================= -->
+<section class="zone" id="top5">
+  <div class="zone-inner">
+    <div class="search-wrap" style="margin-top:0;">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" placeholder="지표와 원문 581쪽에서 함께 찾기 — 예: 밀 자급률, 농가소득, 산불">
+        <kbd>⌘K</kbd>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-panel="panelTop5">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+        주목할 변화 TOP 5
+      </button>
+      <button class="tab" data-panel="panelFav">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        내 관심지표
+      </button>
+      <span class="tab-note">46개 지표의 최근 두 시점을 비교해 자동으로 고릅니다 — AI가 아닌 원자료 계산</span>
+    </div>
+
+    <!-- ⚠️ TOP5 데이터는 예시 — 실제 자동계산 결과로 교체 -->
+    <div class="tab-panel active" id="panelTop5">
+      <div class="top5-list" id="top5List">
+        <div class="top5-row">
+          <div class="top5-rank">1</div>
+          <div class="top5-name">농가소득 <span class="card-src">📄 p.132</span></div>
+          <div class="top5-change"><b>4,615</b> → <b>5,083</b> 만원</div>
+          <div class="top5-delta up">▲ +10.1%</div>
+        </div>
+        <div class="top5-row">
+          <div class="top5-rank">2</div>
+          <div class="top5-name">밀 자급률 <span class="card-src">📄 p.86</span></div>
+          <div class="top5-change"><b>1.3</b> → <b>2.0</b> %</div>
+          <div class="top5-delta up">▲ +0.7%p</div>
+        </div>
+        <div class="top5-row">
+          <div class="top5-rank">3</div>
+          <div class="top5-name">한육우 사육마릿수 <span class="card-src">📄 p.245</span></div>
+          <div class="top5-change"><b>371</b> → <b>351</b> 만마리</div>
+          <div class="top5-delta down">▼ −5.4%</div>
+        </div>
+        <div class="top5-row">
+          <div class="top5-rank">4</div>
+          <div class="top5-name">농촌 65세 이상 비율 <span class="card-src">📄 p.41</span></div>
+          <div class="top5-change"><b>49.8</b> → <b>52.6</b> %</div>
+          <div class="top5-delta down">▲ +2.8%p</div>
+        </div>
+        <div class="top5-row">
+          <div class="top5-rank">5</div>
+          <div class="top5-name">쌀 재배면적 <span class="card-src">📄 p.198</span></div>
+          <div class="top5-change"><b>72.7</b> → <b>70.8</b> 만ha</div>
+          <div class="top5-delta down">▼ −2.6%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panelFav">
+      <div class="fav-empty">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><br>
+        아직 담아둔 지표가 없습니다.<br>
+        지표 카드의 <b>별(☆)</b>을 누르면 여기에 모입니다. 2개 이상이면 한 그래프에 겹쳐 비교할 수 있어요.
+      </div>
+      <div class="fav-actions">
+        <button class="btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+          겹쳐보기 (첫해=100)
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 지표 그리드 ================= -->
+<section class="zone" id="indicators" style="padding-top:0;">
+  <div class="zone-inner">
+    <div class="zone-eyebrow">Indicators</div>
+    <h2 class="zone-title">지표 둘러보기</h2>
+    <p class="zone-desc">대표 지표 11개를 먼저 보여드려요. 카드를 누르면 시계열 그래프와 자동 분석이 열리고, 전체 46개는 <b>전체 지표</b>에서 볼 수 있습니다. 숫자를 짐작하기 쉬운 지표에는 <b>ⓘ</b> 주의 안내가 붙습니다.</p>
+
+    <!-- ⚠️ 카드 데이터는 예시 — 실제 지표 데이터로 교체 -->
+    <div class="card-grid" id="cardGrid">
+      <div class="card">
+        <div class="card-cat">식량안보</div>
+        <div class="card-title">밀 자급률 <span class="info-i">i</span></div>
+        <div class="card-val">2.0<small>% · 2023</small></div>
+        <div class="card-delta up">▲ +0.7%p 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,4 L30,18 L60,34 L90,40 L120,41 L150,39 L175,30 L200,14"/></svg></div>
+        <span class="card-src">📄 원문 p.86</span>
+      </div>
+      <div class="card">
+        <div class="card-cat">식량안보</div>
+        <div class="card-title">식량자급률 <span class="info-i">i</span></div>
+        <div class="card-val">49.3<small>% · 2023</small></div>
+        <div class="card-delta up">▲ +3.2%p 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,6 L35,14 L70,20 L105,26 L140,32 L170,34 L200,28"/></svg></div>
+        <span class="card-src">📄 원문 p.84</span>
+      </div>
+      <div class="card">
+        <div class="card-cat">농가경제</div>
+        <div class="card-title">농가소득</div>
+        <div class="card-val">5,083<small>만원 · 2023</small></div>
+        <div class="card-delta up">▲ +10.1% 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,38 L35,34 L70,30 L105,28 L140,22 L170,18 L200,8"/></svg></div>
+        <span class="card-src">📄 원문 p.132</span>
+      </div>
+      <div class="card">
+        <div class="card-cat">인구구조</div>
+        <div class="card-title">농가 고령화율 <span class="info-i">i</span></div>
+        <div class="card-val">52.6<small>% · 2023</small></div>
+        <div class="card-delta down">▲ +2.8%p 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,40 L35,36 L70,30 L105,24 L140,18 L170,12 L200,5"/></svg></div>
+        <span class="card-src">📄 원문 p.41</span>
+      </div>
+      <div class="card">
+        <div class="card-cat">쌀 수급</div>
+        <div class="card-title">1인당 쌀 소비량</div>
+        <div class="card-val">56.4<small>kg · 2023</small></div>
+        <div class="card-delta down">▼ −0.6% 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,4 L35,10 L70,16 L105,22 L140,28 L170,34 L200,39"/></svg></div>
+        <span class="card-src">📄 원문 p.203</span>
+      </div>
+      <div class="card">
+        <div class="card-cat">무역</div>
+        <div class="card-title">농식품 수출액</div>
+        <div class="card-val">91.6<small>억$ · 2023</small></div>
+        <div class="card-delta up">▲ +3.0% 전년 대비</div>
+        <div class="card-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none"><path class="spark-line" d="M0,36 L35,32 L70,30 L105,24 L140,20 L170,14 L200,6"/></svg></div>
+        <span class="card-src">📄 원문 p.311</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 브리프 입구 ================= -->
+<section class="zone brief-zone" id="briefs">
+  <div class="zone-inner">
+    <div class="zone-eyebrow">Briefs</div>
+    <h2 class="zone-title">주제별 브리프</h2>
+    <p class="zone-desc">흩어진 지표를 주제별로 한 화면에 모았습니다. 핵심 숫자(첫해 → 최신)와 그래프로 구성되고, 모든 그래프에 원문 쪽수가 붙습니다.</p>
+    <div class="brief-grid">
+      <a class="brief-chip" href="#"><span class="brief-emoji">🌾</span><div><div class="brief-name">우리밀</div><div class="brief-count">지표 4</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🛡️</span><div><div class="brief-name">식량안보</div><div class="brief-count">지표 5</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🍚</span><div><div class="brief-name">쌀 수급</div><div class="brief-count">지표 4</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🐄</span><div><div class="brief-name">축산</div><div class="brief-count">지표 5</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🌏</span><div><div class="brief-name">무역</div><div class="brief-count">지표 4</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🌱</span><div><div class="brief-name">잡곡·콩</div><div class="brief-count">지표 3</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">💰</span><div><div class="brief-name">농가경제</div><div class="brief-count">지표 4</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">👥</span><div><div class="brief-name">농촌 인구구조</div><div class="brief-count">지표 3</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🌍</span><div><div class="brief-name">세계 곡물 생산</div><div class="brief-count">지표 3</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🍱</span><div><div class="brief-name">국민 영양</div><div class="brief-count">지표 3</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🇯🇵</span><div><div class="brief-name">한일 비교</div><div class="brief-count">지표 4</div></div></a>
+      <a class="brief-chip" href="#"><span class="brief-emoji">🥬</span><div><div class="brief-name">채소·과일</div><div class="brief-count">지표 4</div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AI 플로팅 버튼 ================= -->
+<button class="fab" id="fab" style="position:fixed;">
+  <span class="fab-badge"></span>
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  <span class="fab-label">AI에게 물어보기</span>
+</button>
+
+<!-- ================= 신뢰 원칙 ================= -->
+<section class="trust zone">
+  <div class="zone-inner">
+    <div class="zone-eyebrow">Trust</div>
+    <h2 class="zone-title">믿을 수 있는 이유</h2>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>모든 숫자에 근거 쪽수</h3>
+        <p>수치는 원자료에 실제 있는 값만 쓰고, 근거가 된 원문 쪽수(p.XX)를 함께 표시합니다.</p>
+      </div>
+      <div class="trust-item">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>없는 값은 지어내지 않음</h3>
+        <p>AI 답변도 원문 581쪽에서 찾은 실제 수치만 근거로 답하고, 찾지 못하면 그렇게 말합니다.</p>
+      </div>
+      <div class="trust-item">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>원문 그대로 확인</h3>
+        <p>검색 결과의 쪽수를 누르면 실제 PDF 페이지 이미지가 그대로 열립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 푸터 ================= -->
+<footer class="footer">
+  <div class="foot-brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M12 21V8" stroke="#C9962E" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 8c0-2.5 1.8-4.5 4-5 0 2.5-1.8 4.5-4 5Z" fill="#C9962E"/>
+      <path d="M12 8c0-2.5-1.8-4.5-4-5 0 2.5 1.8 4.5 4 5Z" fill="#1B6B4A"/>
+      <path d="M12 13c0-2.2 1.6-4 3.6-4.4 0 2.2-1.6 4-3.6 4.4Z" fill="#C9962E"/>
+      <path d="M12 13c0-2.2-1.6-4-3.6-4.4 0 2.2 1.6 4 3.6 4.4Z" fill="#1B6B4A"/>
+    </svg>
+  </div>
+  데이터 출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시) · 2024년은 잠정치(p)<br>
+  Copyright© 2026 우리밀운동본부 · Designed by 농업회사법인(주)네니아 &amp; Richard Kim · <a href="mailto:kjhise@gmail.com">문의</a>
+</footer>
+
+<script>
+/* ============================================================
+   ⚠️ 예시 데이터 — 프로젝트의 실제 밀 자급률 배열로 교체하세요.
+   실제 앵커(확인된 값): 1970 15.4 / 2020 0.5 / 2021 1.1 / 2022 1.3 / 2023 2.0
+   중간 연도는 근사치입니다. 원자료 수치로 반드시 교체할 것.
+   ============================================================ */
+const WHEAT = [
+  [1970,15.4],[1971,12.9],[1972,10.6],[1973,8.2],[1974,6.4],[1975,5.7],
+  [1976,5.0],[1977,3.9],[1978,3.0],[1979,4.6],[1980,4.8],[1981,3.4],
+  [1982,2.7],[1983,2.0],[1984,1.2],[1985,0.4],[1986,0.3],[1987,0.2],
+  [1988,0.2],[1989,0.1],[1990,0.05],[1991,0.05],[1992,0.1],[1993,0.2],
+  [1994,0.3],[1995,0.3],[1996,0.3],[1997,0.2],[1998,0.2],[1999,0.1],
+  [2000,0.1],[2001,0.1],[2002,0.1],[2003,0.1],[2004,0.2],[2005,0.2],
+  [2006,0.2],[2007,0.2],[2008,0.4],[2009,0.9],[2010,1.7],[2011,1.1],
+  [2012,0.9],[2013,0.7],[2014,0.7],[2015,0.7],[2016,0.9],[2017,0.9],
+  [2018,0.7],[2019,0.7],[2020,0.5],[2021,1.1],[2022,1.3],[2023,2.0],[2024,1.5]
+];
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- 히어로 차트 그리기 ---------- */
+const svg = document.getElementById('heroChart');
+const line = document.getElementById('wheatLine');
+const area = document.getElementById('wheatArea');
+const dotsG = document.getElementById('annoDots');
+const axisG = document.getElementById('axisLabels');
+
+let W = 0, H = 0, PAD_X = 70, PAD_TOP = 30, PAD_BOT = 46;
+let pathLen = 0;
+
+function xScale(year) {
+  return PAD_X + (year - 1970) / (2024 - 1970) * (W - PAD_X * 2);
+}
+function yScale(v) {
+  const max = 16; // 최대 15.4 → 여유
+  return PAD_TOP + (1 - v / max) * (H - PAD_TOP - PAD_BOT);
+}
+
+function buildChart() {
+  const stage = document.getElementById('chartStage');
+  W = stage.clientWidth; H = stage.clientHeight;
+  PAD_X = window.innerWidth < 600 ? 24 : 70;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  let d = '';
+  WHEAT.forEach(([yr, v], i) => {
+    const x = xScale(yr), y = yScale(v);
+    d += (i === 0 ? `M${x},${y}` : ` L${x},${y}`);
+  });
+  line.setAttribute('d', d);
+  area.setAttribute('d', d + ` L${xScale(2024)},${H - PAD_BOT} L${xScale(1970)},${H - PAD_BOT} Z`);
+
+  pathLen = line.getTotalLength();
+  line.style.strokeDasharray = pathLen;
+  line.style.strokeDashoffset = reduceMotion ? 0 : pathLen;
+
+  // 변곡점 도트
+  dotsG.innerHTML = '';
+  [[1970,15.4],[1984,1.2],[2000,0.1],[2023,2.0]].forEach(([yr, v], i) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', xScale(yr)); c.setAttribute('cy', yScale(v));
+    c.setAttribute('r', 4.5); c.setAttribute('class', 'anno-dot');
+    c.id = 'dot' + i;
+    dotsG.appendChild(c);
+  });
+
+  // X축 라벨
+  axisG.innerHTML = '';
+  [1970, 1984, 2000, 2010, 2024].forEach(yr => {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', xScale(yr)); t.setAttribute('y', H - 18);
+    t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'axis-label');
+    t.textContent = yr;
+    axisG.appendChild(t);
+  });
+  if (reduceMotion) {
+    area.classList.add('show');
+    document.querySelectorAll('.anno-dot, .caption').forEach(el => el.classList.add('show'));
+  }
+}
+
+/* ---------- 스크롤 진행도 → 선 그리기 + 캡션 ---------- */
+const track = document.getElementById('heroTrack');
+const capRanges = [ // [등장, 퇴장] progress
+  [0.02, 0.30], [0.28, 0.55], [0.52, 0.78], [0.76, 1.01]
+];
+
+function onScroll() {
+  if (reduceMotion) return;
+  const rect = track.getBoundingClientRect();
+  const total = track.offsetHeight - window.innerHeight;
+  const progress = Math.min(1, Math.max(0, -rect.top / total));
+
+  // 선 그리기 (약간 앞서가게 easing)
+  const drawP = Math.min(1, progress * 1.08);
+  line.style.strokeDashoffset = pathLen * (1 - drawP);
+  area.classList.toggle('show', progress > 0.9);
+
+  // 캡션 & 도트
+  capRanges.forEach((range, i) => {
+    const show = progress >= range[0] && progress < range[1];
+    document.getElementById('cap' + i).classList.toggle('show', show);
+    const dot = document.getElementById('dot' + i);
+    if (dot) dot.classList.toggle('show', progress >= range[0]);
+  });
+
+  // 내비 배경 전환 (라이트 존 진입 시)
+  const bridge = document.getElementById('bridge');
+  document.getElementById('nav').classList.toggle(
+    'on-paper',
+    bridge.getBoundingClientRect().top < 60 &&
+    document.querySelector('.stats-strip').getBoundingClientRect().top < window.innerHeight
+  );
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', () => { buildChart(); onScroll(); });
+buildChart();
+onScroll();
+
+/* ---------- 롤링 숫자 카운터 ---------- */
+function buildRollingNumber(el, target) {
+  const str = String(target);
+  el.innerHTML = '';
+  str.split('').forEach((digit, idx) => {
+    const col = document.createElement('span');
+    col.className = 'digit-col';
+    const reel = document.createElement('span');
+    reel.className = 'digit-reel';
+    // 0~해당 숫자까지 릴 구성 (자릿수마다 회전량 다르게 → 슬롯머신 느낌)
+    const spins = reduceMotion ? 0 : (str.length - idx); // 뒷자리일수록 적게
+    let digits = [];
+    for (let s = 0; s < spins; s++) for (let n = 0; n <= 9; n++) digits.push(n);
+    digits.push(Number(digit));
+    reel.innerHTML = digits.map(n => `<span>${n}</span>`).join('');
+    col.appendChild(reel);
+    el.appendChild(col);
+    if (!reduceMotion) {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          reel.style.transform = `translateY(-${(digits.length - 1)}em)`;
+        }, 80 * idx);
+      });
+    }
+  });
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-num').forEach(el => {
+        buildRollingNumber(el, el.dataset.target);
+      });
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+statsObserver.observe(document.getElementById('statsGrid'));
+
+/* ---------- TOP5 탭 전환 & 행 등장 ---------- */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.panel).classList.add('active');
+  });
+});
+const top5Observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      [...document.querySelectorAll('.top5-row')].forEach((row, i) => {
+        setTimeout(() => row.classList.add('revealed'), reduceMotion ? 0 : i * 90);
+      });
+      top5Observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+top5Observer.observe(document.getElementById('top5List'));
+
+/* ---------- 카드 staggered 등장 ---------- */
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const cards = [...document.querySelectorAll('#cardGrid .card')];
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('revealed'), reduceMotion ? 0 : i * 70);
+      });
+      cardObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+cardObserver.observe(document.getElementById('cardGrid'));
+</script>
+</body>
+</html>
