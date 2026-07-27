@@ -48,6 +48,18 @@
   body{margin:0;background:var(--bg1);color:var(--text);
     font-family:var(--sans);font-feature-settings:'tnum';transition:background .2s,color .2s;
     -webkit-font-smoothing:antialiased;}
+  /* Lucide 라인 아이콘 — 버튼/라벨 안 인라인 SVG 공통 스타일 */
+  svg.ic{width:16px;height:16px;flex:0 0 auto;stroke:currentColor;fill:none;
+    stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;}
+  svg.ic.sm{width:14px;height:14px;} svg.ic.lg{width:18px;height:18px;}
+  .tab{display:inline-flex;align-items:center;gap:5px;}
+  .searchbar{position:relative;} .search-ic{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+  .searchbar input{padding-left:44px !important;}
+  .dlrow button.on svg.ic{fill:var(--star);stroke:var(--star);}
+  .favbar button,.bpsec .lnk span,.orig-item,.pglink,.bpg,.allhint .alink,.bpchips span,.btog button{display:inline-flex;align-items:center;gap:5px;}
+  .card .fav svg.ic{fill:var(--star);stroke:var(--star);}
+  .hbtn,.dlrow button,.hcta button,.chatform button,.chead{display:inline-flex;align-items:center;gap:6px;}
+  .chead{display:flex;}
   header{padding:24px 32px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   header h1{margin:0;font-size:22px;letter-spacing:-.3px;}
   header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
@@ -302,11 +314,11 @@
     <div class="sub">농림축산식품부 『농림축산식품 주요통계 2025』 · 공공누리 제1유형(출처표시)</div>
   </div>
   <div class="hbtns">
-    <button class="hbtn" id="briefBtn">📑 브리프</button>
-    <button class="hbtn" id="cmpBtn">⚖️ 지표 비교</button>
-    <button class="hbtn" id="diffBtn">📊 연도 비교</button>
-    <button class="hbtn" id="helpBtn">ℹ️ 이용안내</button>
-    <button class="hbtn" id="themeBtn">🌙</button>
+    <button class="hbtn" id="briefBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg> 브리프</button>
+    <button class="hbtn" id="cmpBtn"><svg class="ic" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> 지표 비교</button>
+    <button class="hbtn" id="diffBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> 연도 비교</button>
+    <button class="hbtn" id="helpBtn"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> 이용안내</button>
+    <button class="hbtn" id="themeBtn" title="밝게/어둡게" aria-label="테마 전환"></button>
   </div>
 </header>
 <div class="wrap">
@@ -325,13 +337,14 @@
       </div>
       <div class="hcta fade" style="animation-delay:1.35s">
         <button id="hc1">지표 둘러보기</button>
-        <button class="gh" id="hc2">📑 브리프 보기</button>
-        <button class="gh" id="hc3">💬 AI에게 물어보기</button>
+        <button class="gh" id="hc2"><svg class="ic" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg> 브리프 보기</button>
+        <button class="gh" id="hc3"><svg class="ic" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> AI에게 물어보기</button>
       </div>
     </div>
   </div>
   <div class="searchbar">
-    <input id="q" type="text" placeholder="🔍 검색  (지표 + 원문 전체 · 예: 자급률, 농약, 산불, 인삼 수출)" autocomplete="off">
+    <svg class="ic search-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="q" type="text" placeholder="검색  (지표 + 원문 전체 · 예: 자급률, 농약, 산불, 인삼 수출)" autocomplete="off">
     <span class="qcount" id="qcount"></span>
   </div>
   <div class="tabs" id="tabs"></div>
@@ -347,17 +360,17 @@
     <div class="tipbox" id="d-tipbox" style="display:none"></div>
     <div class="meta" id="d-desc"></div>
     <div class="dlrow" id="dlrow">
-      <button id="dl-fav">☆ 즐겨찾기</button>
-      <button id="dl-csv">⬇ CSV</button>
-      <button id="dl-png">⬇ 그래프 이미지</button>
-      <button id="dl-link">🔗 링크 복사</button>
+      <button id="dl-fav"><svg class="ic" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 즐겨찾기</button>
+      <button id="dl-csv"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> CSV</button>
+      <button id="dl-png"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> 그래프 이미지</button>
+      <button id="dl-link"><svg class="ic" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 링크 복사</button>
     </div>
     <div class="chartbox"><canvas id="chart"></canvas></div>
     <div class="insight" id="d-insight"></div>
     <div class="src" id="d-src"></div>
   </div>
   <div class="chat">
-    <div class="chead">💬 AI에게 물어보기 <span class="badge">Gemini</span></div>
+    <div class="chead"><svg class="ic" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> AI에게 물어보기 <span class="badge">Gemini</span></div>
     <div class="csub">원문 581쪽 전체에서 실제 수치만 근거로 답하고 출처를 밝힙니다. 없는 값은 지어내지 않아요.</div>
     <div class="chips" id="chips"></div>
     <div class="chatlog" id="chatlog"></div>
@@ -448,10 +461,10 @@
 
 <div class="modal-overlay" id="cmpModal" style="display:none">
   <div class="modal" style="max-width:920px">
-    <h2>⚖️ 지표 비교</h2>
+    <h2><svg class="ic lg" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> 지표 비교</h2>
     <p class="mmuted">지표를 <b>2개 이상</b> 고르면 한 그래프에 겹쳐 보여줍니다. 단위가 같으면 실제 값, 다르면 첫해=100 지수로 자동 전환됩니다.</p>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0 8px">
-      <input id="cmpSearch" type="text" placeholder="🔍 지표 이름 검색" autocomplete="off"
+      <input id="cmpSearch" type="text" placeholder="지표 이름 검색" autocomplete="off"
         style="flex:1;min-width:160px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit">
       <span id="cmpCount" class="mmuted" style="font-size:12px">선택 0개</span>
       <select class="dsel" id="cmpModeSel">
@@ -469,21 +482,21 @@
     </div>
     <div class="lnk" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
       <span id="cmpClear" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px">선택 초기화</span>
-      <span id="cmpLink" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px">🔗 링크 복사</span>
+      <span id="cmpLink" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px"><svg class="ic sm" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 링크 복사</span>
     </div>
     <button class="modal-close" id="cmpClose">닫기</button>
   </div>
 </div>
 <div class="modal-overlay" id="diffModal" style="display:none">
   <div class="modal" style="max-width:820px">
-    <h2>📊 두 연도 비교</h2>
+    <h2><svg class="ic lg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> 두 연도 비교</h2>
     <p class="mmuted">두 해를 고르면 지표별 변화를 <b>변화가 큰 순서</b>로 보여줍니다. 두 해 모두 값이 있는 지표만 나옵니다.</p>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 4px">
       <select class="dsel" id="dy1"></select>
       <span style="color:var(--muted)">→</span>
       <select class="dsel" id="dy2"></select>
-      <button class="hbtn" id="dcsv" style="margin-left:auto">⬇ CSV</button>
-      <button class="hbtn" id="dlink">🔗 링크 복사</button>
+      <button class="hbtn" id="dcsv" style="margin-left:auto"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> CSV</button>
+      <button class="hbtn" id="dlink"><svg class="ic" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 링크 복사</button>
     </div>
     <div id="dbody"></div>
     <button class="modal-close" id="diffClose">닫기</button>
@@ -500,6 +513,26 @@
 <script>
 const D = window.INDICATORS;
 const INDS = D.indicators;
+/* ── Lucide 라인 아이콘 (인라인 SVG) ── ic('name') → 문자열 반환, innerHTML에 사용 */
+const ICO = {
+  'file-text':'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  'scale':'<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
+  'bar-chart':'<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  'info':'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  'moon':'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  'sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>',
+  'download':'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>',
+  'link':'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  'message':'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  'star':'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  'search':'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  'home':'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+  'list':'<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/>',
+  'trending-up':'<path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/>',
+  'refresh':'<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  'check':'<path d="M20 6 9 17l-5-5"/>'
+};
+function ic(name, cls){ return '<svg class="ic'+(cls?' '+cls:'')+'" viewBox="0 0 24 24" aria-hidden="true">'+(ICO[name]||'')+'</svg>'; }
 const fmt = n => n===null||n===undefined ? '–' :
   (Math.abs(n)>=1000 ? n.toLocaleString('ko-KR') : (Number.isInteger(n)?n:n.toFixed(1)));
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -517,7 +550,8 @@ const FAV='⭐ 즐겨찾기';
 const ALL='📋 전체 지표';   /* 34개 전부 보여주는 탭 */
 function groups(){ return ['전체', FAV, ...new Set(INDS.map(i=>i.group)), ALL]; }
 /* 내부값 '전체'는 대표지표(요약) 화면. 화면에 보이는 이름만 '🏠 한눈에'로 표기 */
-function tabLabel(g){ return g==='전체' ? '🏠 대표지표' : g; }
+function tabLabel(g){ return g==='전체' ? '대표지표' : (g===FAV ? '즐겨찾기' : (g===ALL ? '전체 지표' : g)); }
+function tabIcon(g){ return g==='전체' ? ic('home','sm') : (g===FAV ? ic('star','sm') : (g===ALL ? ic('list','sm') : '')); }
 let curGroup='전체', curId=null, chart=null, query='', compareMode=false;
 let favs=[]; try{ favs=JSON.parse(localStorage.getItem('favs')||'[]'); }catch(e){ favs=[]; }
 function saveFavs(){ try{ localStorage.setItem('favs', JSON.stringify(favs)); }catch(e){} }
@@ -527,7 +561,7 @@ function css(v){ return getComputedStyle(document.body).getPropertyValue(v).trim
 function applyTheme(t){
   document.body.setAttribute('data-theme', t);
   try{ localStorage.setItem('theme', t); }catch(e){}
-  document.getElementById('themeBtn').textContent = t==='light' ? '☀️' : '🌙';
+  document.getElementById('themeBtn').innerHTML = t==='light' ? ic('moon') : ic('sun');
   if(curBrief){ setBriefPage(curBrief); return; }
   if(compareMode) renderCompare();
   else if(curId){ const ind=INDS.find(i=>i.id===curId); if(ind) renderDetail(ind); }
@@ -581,12 +615,12 @@ function findInd(key){
 function shareURL(){ return location.origin+location.pathname+location.search; }
 function copyLink(btn){
   var url=shareURL();
-  /* 원래 라벨은 최초 1회만 기억(연속 클릭해도 '복사됨!'이 굳지 않게) */
-  if(!btn.getAttribute('data-label')) btn.setAttribute('data-label', btn.textContent);
-  var old=btn.getAttribute('data-label');
+  /* 원래 라벨(아이콘 포함)은 최초 1회만 기억(연속 클릭해도 '복사됨!'이 굳지 않게) */
+  if(!btn._label) btn._label = btn.innerHTML;
+  var old=btn._label;
   if(btn._t){ clearTimeout(btn._t); btn._t=null; }
-  var done=function(ok){ btn.textContent = ok?'✅ 복사됨!':'복사 실패 — 주소창을 복사하세요';
-    btn._t=setTimeout(function(){ btn.textContent=old; btn._t=null; }, 1800); };
+  var done=function(ok){ btn.innerHTML = ok?(ic('check')+' 복사됨!'):'복사 실패 — 주소창을 복사하세요';
+    btn._t=setTimeout(function(){ btn.innerHTML=old; btn._t=null; }, 1800); };
   try{
     if(navigator.clipboard && window.isSecureContext){
       navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);}); return;
@@ -662,7 +696,7 @@ function renderTabs(){
   const t=document.getElementById('tabs'); t.innerHTML='';
   groups().forEach(g=>{
     const b=document.createElement('div'); b.className='tab'+(g===curGroup&&!query?' active':'');
-    b.textContent=tabLabel(g);
+    b.innerHTML=tabIcon(g)+(tabIcon(g)?' ':'')+esc(tabLabel(g));
     b.onclick=()=>go(g==='전체'?'':'?g='+encodeURIComponent(g===ALL?'all':g));
     t.appendChild(b);
   });
@@ -679,7 +713,7 @@ function matchList(){
 function renderFavbar(){
   const fb=document.getElementById('favbar'); fb.innerHTML='';
   if(!query && curGroup===FAV && favs.filter(id=>{const i=INDS.find(x=>x.id===id);return i&&!i.compare;}).length>=2){
-    const b=document.createElement('button'); b.textContent='📊 즐겨찾기 겹쳐보기 (각 지표 첫해=100 지수)';
+    const b=document.createElement('button'); b.innerHTML=ic('bar-chart','sm')+' 즐겨찾기 겹쳐보기 (각 지표 첫해=100 지수)';
     b.onclick=()=>{go('?view=compare');document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'});};
     fb.appendChild(b);
   }
@@ -706,7 +740,7 @@ function renderCards(){
   if(hint){
     if(!searching && curGroup==='전체'){
       hint.innerHTML='분야별 대표 지표 '+list.length+'개를 보여주고 있어요. '+
-        '<span class="alink">📋 전체 '+INDS.length+'개 지표 보기 →</span>';
+        '<span class="alink">'+ic('list','sm')+' 전체 '+INDS.length+'개 지표 보기 →</span>';
       hint.style.display='block';
       var lk=hint.querySelector('.alink'); if(lk) lk.onclick=function(){ go('?g=all'); };
     } else hint.style.display='none';
@@ -714,7 +748,7 @@ function renderCards(){
   list.forEach(ind=>{
     const card=document.createElement('div');
     card.className='card'+(ind.id===curId&&!compareMode?' sel':'');
-    const star=favs.includes(ind.id)?'<span class="fav">★</span>':'';
+    const star=favs.includes(ind.id)?'<span class="fav">'+ic('star','sm')+'</span>':'';
     const gtag='<div class="gtag">'+ind.group+'</div>';
     if(ind.compare){
       const top=ind.compare[0];
@@ -784,7 +818,7 @@ async function renderOrig(q){
   scored.sort((a,b)=>b.s-a.s);
   const top=scored.slice(0,8);
   if(!top.length){ box.innerHTML=''; return; }
-  box.innerHTML='<div class="orig-h">📄 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 원문을 보고 AI에게 물어봅니다</div>'+
+  box.innerHTML='<div class="orig-h">'+ic('file-text','sm')+' 원문에서 찾기 <b>'+scored.length+'건</b> · 누르면 원문을 보고 AI에게 물어봅니다</div>'+
     top.map(x=>'<div class="orig-item" data-p="'+x.e.p+'"><b>p.'+x.e.p+'</b> '+esc(x.e.t||'(제목 없음)')+'</div>').join('');
   box.querySelectorAll('.orig-item').forEach(el=>el.onclick=()=>openPage(+el.getAttribute('data-p')));
 }
@@ -894,7 +928,7 @@ function relatedInsight(ind){
 }
 function fillInsight(ind){
   const ins=insightFor(ind), rel=relatedInsight(ind);
-  let html='<div class="ihead">📊 자동 분석 <span class="ismall">규칙기반 · 원자료 수치만 사용, 출처 아래</span></div>';
+  let html='<div class="ihead">'+ic('bar-chart','sm')+' 자동 분석 <span class="ismall">규칙기반 · 원자료 수치만 사용, 출처 아래</span></div>';
   html+='<ul>'+ins.map(s=>'<li>'+s+'</li>').join('')+'</ul>';
   if(rel.length) html+='<div class="irel">관련 지표 추이 — '+rel.join(' · ')+'</div>';
   document.getElementById('d-insight').innerHTML=html;
@@ -931,14 +965,15 @@ function renderDetail(ind){
     '출처: '+(s.publication||'')+' · '+(s.section||'')+' (p.'+(s.page||'?')+')<br>제공: '+(s.org||'')+' · '+(s.license||'');
   fillInsight(ind);
   const favBtn=document.getElementById('dl-fav');
-  favBtn.textContent = favs.includes(ind.id)?'★ 즐겨찾기 해제':'☆ 즐겨찾기';
+  favBtn.innerHTML = ic('star') + (favs.includes(ind.id)?' 즐겨찾기 해제':' 즐겨찾기');
+  favBtn.classList.toggle('on', favs.includes(ind.id));
   favBtn.onclick=()=>{ toggleFav(ind.id); renderDetail(ind); renderCards(); };
   document.getElementById('dl-csv').onclick=()=>downloadCSV(ind);
   document.getElementById('dl-png').onclick=()=>downloadPNG(ind);
   var lkBtn=document.getElementById('dl-link');
   /* 다른 지표로 넘어오면 '복사됨!' 표시를 즉시 원래대로 */
   if(lkBtn._t){ clearTimeout(lkBtn._t); lkBtn._t=null; }
-  lkBtn.textContent = lkBtn.getAttribute('data-label') || '🔗 링크 복사';
+  lkBtn.innerHTML = lkBtn._label || (ic('link')+' 링크 복사');
   lkBtn.onclick=function(){
     var qs='?i='+encodeURIComponent(ind.id);
     if(location.pathname+location.search!==urlFor(qs)) replaceURL(qs);
@@ -992,7 +1027,7 @@ function renderCompare(){
   compareMode=true; curId=null;
   document.getElementById('detail').style.display='block';
   document.getElementById('dlrow').style.display='none';
-  document.getElementById('d-name').textContent='⭐ 즐겨찾기 비교 (각 지표 첫해=100 지수)';
+  document.getElementById('d-name').innerHTML=ic('star')+' 즐겨찾기 비교 (각 지표 첫해=100 지수)';
   document.getElementById('d-desc').textContent='단위가 다른 지표를 함께 보기 위해, 각 지표의 가장 이른 해를 100으로 맞춰 상대적 변화를 비교합니다.';
   document.getElementById('d-insight').innerHTML='';
   document.getElementById('d-src').innerHTML='출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · 각 지표 원값은 개별 카드에서 확인하세요.';
@@ -1113,8 +1148,8 @@ function renderBrief(){
   var items=briefItems(mode).slice(0, mode==='fav'?8:5);
   var tog='<span class="btog">'+
     '<button class="'+(mode==='auto'?'on':'')+'" data-m="auto">자동 추천</button>'+
-    '<button class="'+(mode==='fav'?'on':'')+'" data-m="fav">⭐ 내 관심 지표</button></span>';
-  var h='<div class="bhead">📌 '+(mode==='fav'?'내 관심 지표의 최근 변화':'주목할 변화 TOP 5')+tog+'</div>';
+    '<button class="'+(mode==='fav'?'on':'')+'" data-m="fav">'+ic('star','sm')+' 내 관심 지표</button></span>';
+  var h='<div class="bhead">'+ic('trending-up','sm')+' '+(mode==='fav'?'내 관심 지표의 최근 변화':'주목할 변화 TOP 5')+tog+'</div>';
   if(mode==='fav'){
     h+='<div class="bsub">⭐ 즐겨찾기한 지표만 모아 <b>가장 최근 두 시점</b>의 변화를 보여줍니다. '+
        '지표 상세의 <b>☆ 즐겨찾기</b>로 추가·삭제하세요. (이 브라우저에 저장됩니다)</div>';
@@ -1254,7 +1289,7 @@ function killBriefCharts(){ briefCharts.forEach(function(c){ try{c.destroy();}ca
 /* 브리프 목록 화면 */
 function renderBriefList(){
   var box=document.getElementById('briefpage'); killBriefCharts();
-  var h='<div class="bptitle">📑 브리프</div>'+
+  var h='<div class="bptitle">'+ic('file-text','lg')+' 브리프</div>'+
     '<div class="bpsub">주제별로 관련 지표를 모아 한 화면에 놓았습니다. '+
     '해석이나 주장 없이 <b>원자료 값과 그래프</b>만 표시하며, 각 항목의 근거 쪽수를 함께 둡니다.</div>'+
     '<div class="bplist">';
@@ -1281,7 +1316,7 @@ function renderBriefPage(B){
   BRIEFS.forEach(function(x){
     chips+='<span class="'+(x.id===B.id?'on':'')+'" data-b="'+esc(x.id)+'">'+x.icon+' '+esc(x.short||x.name)+'</span>';
   });
-  chips+='<span data-b="__list__">📑 전체 목록</span></div>';
+  chips+='<span data-b="__list__">'+ic('file-text','sm')+' 전체 목록</span></div>';
 
   var h=chips+'<div class="bptitle">'+B.icon+' '+esc(B.name)+'</div>'+
     '<div class="bpsub">'+esc(B.desc||'')+' 해석이나 주장 없이 원자료 값과 그래프만 표시합니다.</div>';
@@ -1299,8 +1334,8 @@ function renderBriefPage(B){
   (B.charts||[]).forEach(function(c,i){
     h+='<div class="bpsec"><h3>'+esc(c.title)+'</h3><div class="cap">'+esc(c.cap||'')+'</div>'+
        '<div class="bpbox"><canvas id="bpc'+i+'"></canvas></div>'+
-       '<div class="lnk">'+(c.page?'<span data-pg="'+c.page+'">📄 원문 p.'+c.page+'</span>':'')+
-       (c.ind?'<span data-ind="'+esc(c.ind)+'">📊 지표 자세히 보기</span>':'')+'</div></div>';
+       '<div class="lnk">'+(c.page?'<span data-pg="'+c.page+'">'+ic('file-text','sm')+' 원문 p.'+c.page+'</span>':'')+
+       (c.ind?'<span data-ind="'+esc(c.ind)+'">'+ic('bar-chart','sm')+' 지표 자세히 보기</span>':'')+'</div></div>';
   });
   h+='<div class="bpsub" style="margin-top:6px">출처: 농림축산식품부 『농림축산식품 주요통계 2025』 · '+
      '표시되지 않은 값은 원자료에 결측이며, 최근 연도는 잠정치일 수 있습니다.</div>';
@@ -1352,7 +1387,7 @@ function hexA(h,a){
 function renderBriefShortcuts(){
   var el=document.getElementById('bfhome'); if(!el) return;
   if(query.trim() || curGroup!=='전체' || compareMode || !BRIEFS.length){ el.style.display='none'; return; }
-  var h='<span class="lb">📑 주제별로 모아보기</span>';
+  var h='<span class="lb">'+ic('file-text','sm')+' 주제별로 모아보기</span>';
   BRIEFS.forEach(function(B){ h+='<button data-b="'+esc(B.id)+'">'+B.icon+' '+esc(B.name)+'</button>'; });
   el.innerHTML=h; el.style.display='flex';
   el.querySelectorAll('button').forEach(function(b){
@@ -1625,7 +1660,7 @@ async function sendChat(q){
         const uniq=[...new Set(d.sources)].slice(0,8);
         const sc=document.createElement('div');
         sc.style.cssText='margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted)';
-        sc.innerHTML='📄 근거 원문: '+uniq.map(p=>'<span class="pglink" data-p="'+p+'">p.'+p+'</span>').join('');
+        sc.innerHTML=ic('file-text','sm')+' 근거 원문: '+uniq.map(p=>'<span class="pglink" data-p="'+p+'">p.'+p+'</span>').join('');
         bubble.appendChild(sc);
         sc.querySelectorAll('.pglink').forEach(el=>el.onclick=()=>openPage(+el.getAttribute('data-p')));
       }
