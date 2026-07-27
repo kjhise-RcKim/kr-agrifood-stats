@@ -12,5 +12,5 @@ python3 -c "import cairosvg;[cairosvg.svg2png(url='../web/favicon.svg',write_to=
 python3 build_og.py   # /tmp/og_new.png → ../web/og.png 로 복사
 ```
 한글 렌더에는 Noto Serif/Sans CJK KR 폰트 필요.
-포함 수치(2024): 식량자급률 47.9% · 1인당 쌀 소비 55.8kg · 밀 자급률 15.9%→1.5% · 지표 56.
+포함 수치(2024): 식량자급률 47.9% · 경지면적 1,505천ha · 밀 자급률 15.9%→1.5% · 지표 56.
 ※ 푸터 서명 심볼(web/brand/rk-symbol.png = RichardKim ㄹㅊㄷㅋ)은 앱 파비콘과 별개로 유지.
