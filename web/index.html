@@ -58,6 +58,37 @@
   .dlrow button.on svg.ic{fill:var(--star);stroke:var(--star);}
   .favbar button,.bpsec .lnk span,.orig-item,.pglink,.bpg,.allhint .alink,.bpchips span,.btog button{display:inline-flex;align-items:center;gap:5px;}
   .card .fav svg.ic{fill:var(--star);stroke:var(--star);}
+  /* ═══ 리뉴얼 3단계: 카드·배지·숫자·검색 정교화 ═══ */
+  /* 큰 숫자는 모노폰트 + tnum */
+  .card .val,.hnums .v,.bpnum .v,.bpcard .vv,.bchg,.bdet,.dtbl td,.stat-num{font-family:var(--mono);}
+  /* 카드 — radius 16, hover 4px 부상 + 그린 보더 */
+  .card{border-radius:16px;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+  .card:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 8px 22px rgba(20,31,26,.06);}
+  body[data-theme="dark"] .card:hover{box-shadow:0 8px 22px rgba(0,0,0,.35);}
+  .card .val{font-weight:700;letter-spacing:-.5px;}
+  /* 카테고리 태그(그룹) — 작게, 옅게, 라인 pill */
+  .gtag{font-size:10px;color:var(--muted);background:transparent;border:1px solid var(--line);}
+  /* 브리프 KPI/카드도 카드와 동일 라운드·호버 */
+  .bpnum,.bpcard{border-radius:16px;}
+  .bpcard{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+  .bpcard:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 8px 22px rgba(20,31,26,.06);}
+  /* 연도/잠정 배지 — 모노 pill */
+  .card .yr{font-family:var(--mono);background:var(--paper);border:1px solid var(--line);}
+  body[data-theme="dark"] .card .yr,body[data-theme="dark"] .gtag{background:transparent;}
+  /* 출처 p.XX 배지 — 모노 라인 pill (TOP5·브리프·원문검색 공통) */
+  .bpg,.pglink,.orig-item b{font-family:var(--mono);}
+  .bpg{border:1px solid var(--line);border-radius:6px;padding:2px 7px;background:var(--paper);
+    color:var(--muted);text-decoration:none;}
+  .bpg:hover{border-color:var(--green);color:var(--green);}
+  body[data-theme="dark"] .bpg{background:transparent;}
+  /* 역대최고/잠정치 배지 — 모노 소문자 pill */
+  .bbadge{font-family:var(--mono);font-size:9.5px;letter-spacing:.02em;}
+  /* 검색 — 중앙 정렬 최대폭 + 그린 링(이미 적용) */
+  .searchbar{max-width:760px;margin-left:auto;margin-right:auto;}
+  .searchbar input{border-radius:12px;}
+  /* 스파크라인 (카드 미니 추세선) */
+  .spark{display:block;width:100%;height:26px;margin-top:10px;overflow:visible;}
+  .spark path{fill:none;stroke:var(--wheat);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.85;}
   .hbtn,.dlrow button,.hcta button,.chatform button,.chead{display:inline-flex;align-items:center;gap:6px;}
   .chead{display:flex;}
   header{padding:24px 32px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
@@ -513,6 +544,7 @@
 <script>
 const D = window.INDICATORS;
 const INDS = D.indicators;
+try{ if(window.Chart){ Chart.defaults.font.family = "'IBM Plex Mono','Pretendard Variable',monospace"; Chart.defaults.font.size = 11; } }catch(e){}
 /* ── Lucide 라인 아이콘 (인라인 SVG) ── ic('name') → 문자열 반환, innerHTML에 사용 */
 const ICO = {
   'file-text':'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
@@ -536,6 +568,18 @@ function ic(name, cls){ return '<svg class="ic'+(cls?' '+cls:'')+'" viewBox="0 0
 const fmt = n => n===null||n===undefined ? '–' :
   (Math.abs(n)>=1000 ? n.toLocaleString('ko-KR') : (Number.isInteger(n)?n:n.toFixed(1)));
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+/* 카드용 미니 스파크라인 — 계 시계열을 100x26 정규화한 SVG */
+function sparkline(ind){
+  var pts=seriesPts(ind); if(pts.length<3) return '';
+  var vs=pts.map(function(p){return p.value;});
+  var mn=Math.min.apply(null,vs), mx=Math.max.apply(null,vs), rng=(mx-mn)||1;
+  var n=pts.length, d='';
+  pts.forEach(function(p,i){
+    var x=(i/(n-1))*100, y=24-((p.value-mn)/rng)*22;
+    d+=(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1)+' ';
+  });
+  return '<svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path d="'+d.trim()+'"/></svg>';
+}
 function seriesPts(ind){
   if(ind.series) return ind.series.filter(p=>p.value!==null);
   if(ind.breakdown){
@@ -784,7 +828,7 @@ function renderCards(){
       const corner = searching ? gtag
         : '<div class="yr">'+(last?last.year:'')+(last&&last.flag==='p'?' p':'')+'</div>';
       card.innerHTML=corner+'<div class="nm">'+star+ind.name+'</div>'+
-        '<div class="val">'+val+'<small>'+ind.unit+'</small></div>'+delta;
+        '<div class="val">'+val+'<small>'+ind.unit+'</small></div>'+delta+sparkline(ind);
     }
     card.onclick=()=>go('?i='+encodeURIComponent(ind.id));
     c.appendChild(card);
@@ -1002,14 +1046,16 @@ function renderDetail(ind){
   const datasets=[];
   if(ind.series){
     datasets.push({label: ind.series_label || (ind.breakdown?'계(전체)':ind.name), data:pick(ind.series),
-      borderColor:TOTAL, backgroundColor: ind.breakdown?'transparent':'rgba(63,167,255,.14)',
+      borderColor:TOTAL, backgroundColor: ind.breakdown?'transparent':'rgba(201,150,46,.13)',
       fill:!ind.breakdown, tension:.25, pointRadius: ind.breakdown?0:2,
-      borderWidth: ind.breakdown?3:2, spanGaps:true});
+      borderWidth: ind.breakdown?2.5:2.5, spanGaps:true});
   }
   if(ind.breakdown){
+    /* 계(전체)=wheat 이므로 품목 선은 팔레트 2번째(green)부터 써서 색 충돌 방지 */
+    const off = ind.series ? 1 : 0;
     ind.breakdown.forEach((b,i)=>datasets.push({label:b.label, data:pick(b.series),
-      borderColor:PALETTE[i%PALETTE.length], backgroundColor:'transparent',
-      tension:.25, pointRadius:1, borderWidth:2, spanGaps:true}));
+      borderColor:PALETTE[(i+off)%PALETTE.length], backgroundColor:'transparent',
+      tension:.25, pointRadius:1, borderWidth:1.5, spanGaps:true}));
   }
   const multi = datasets.length>1;
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
