@@ -343,7 +343,7 @@
   .story-sky{position:absolute;inset:0;background:
     radial-gradient(ellipse 90% 55% at 50% 110%, rgba(201,150,46,.14), transparent 60%),
     radial-gradient(ellipse 70% 45% at 80% -10%, rgba(27,107,74,.22), transparent 65%), var(--ink);}
-  .story-head{position:relative;z-index:3;padding:clamp(72px,11vh,120px) 28px 0;text-align:center;}
+  .story-head{position:relative;z-index:3;display:block;padding:clamp(72px,11vh,120px) 28px 0;text-align:center;border:0;}
   .story-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--wheat);text-transform:uppercase;margin-bottom:16px;}
   .story-title{font-family:var(--serif);font-weight:600;font-size:clamp(26px,4.2vw,50px);line-height:1.32;color:#F4F1E8;letter-spacing:-.01em;margin:0;}
   .story-title em{font-style:normal;color:var(--wheat);}
@@ -385,11 +385,11 @@
   <div class="story story-track" id="storyTrack">
     <div class="story-sticky">
       <div class="story-sky"></div>
-      <header class="story-head">
+      <div class="story-head">
         <div class="story-eyebrow">1970 — 2024 · 55년의 기록</div>
         <h1 class="story-title">우리 밀은,<br>어디까지 내려갔다 <em>돌아오고</em> 있을까요</h1>
         <p class="story-sub">스크롤을 내리면 밀 자급률 55년이 그려집니다 — 숫자는 원자료 그대로.</p>
-      </header>
+      </div>
       <div class="story-stage" id="storyStage">
         <svg id="storyChart" preserveAspectRatio="none">
           <defs><linearGradient id="wfill" x1="0" y1="0" x2="0" y2="1">
