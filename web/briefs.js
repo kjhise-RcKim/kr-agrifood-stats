@@ -26,20 +26,20 @@ window.BRIEFS = [
     { title: '1인당 밀 소비량과 밀 자급률', cap: '왼쪽 축 kg · 오른쪽 축 %',
       page: 332, ind: 'rice_consumption_pc', y1: 'kg', y2: '%',
       series: [
-        { label: '1인당 밀 소비량 (kg)', src: ['rice_consumption_pc', '밀'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '밀 자급률 (%)',       src: ['food_self_suff', '밀'],      color: '#3fa7ff', axis: 'y2' }
+        { label: '1인당 밀 소비량 (kg)', src: ['rice_consumption_pc', '밀'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '밀 자급률 (%)',       src: ['food_self_suff', '밀'],      color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '밀 재배면적과 생산량', cap: '왼쪽 축 천ha · 오른쪽 축 천t',
       page: 296, ind: 'food_crop_production', y1: '천ha', y2: '천t',
       series: [
-        { label: '재배면적 (천ha)', src: ['food_crop_area', '밀'],       color: '#38d39f', fill: true, axis: 'y' },
-        { label: '생산량 (천t)',    src: ['food_crop_production', '밀'], color: '#ff6b6b', axis: 'y2' }
+        { label: '재배면적 (천ha)', src: ['food_crop_area', '밀'],       color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '생산량 (천t)',    src: ['food_crop_production', '밀'], color: '#B4552D', axis: 'y2' }
       ] },
     { title: '1인당 소비량: 쌀과 밀', cap: 'kg',
       page: 332, ind: 'rice_consumption_pc', y1: 'kg',
       series: [
         { label: '쌀 (kg)', src: ['rice_consumption_pc', '쌀'], color: '__TOTAL__', axis: 'y' },
-        { label: '밀 (kg)', src: ['rice_consumption_pc', '밀'], color: '#ffb84d', fill: true, axis: 'y' }
+        { label: '밀 (kg)', src: ['rice_consumption_pc', '밀'], color: '#B08968', fill: true, axis: 'y' }
       ] }
   ]
 },
@@ -56,26 +56,26 @@ window.BRIEFS = [
     { title: '식량자급률과 곡물자급률', cap: '% · 두 선의 차이는 사료용 곡물의 포함 여부에서 생깁니다',
       page: 331, ind: 'food_self_suff', y1: '%',
       series: [
-        { label: '식량자급률 (사료용 제외, %)', src: ['food_self_suff'],  color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '곡물자급률 (사료용 포함, %)', src: ['grain_self_suff'], color: '#ffb84d', axis: 'y' }
+        { label: '식량자급률 (사료용 제외, %)', src: ['food_self_suff'],  color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '곡물자급률 (사료용 포함, %)', src: ['grain_self_suff'], color: '#B08968', axis: 'y' }
       ] },
     { title: '1인당 양곡 소비량과 식량자급률', cap: '왼쪽 축 kg · 오른쪽 축 %',
       page: 332, ind: 'rice_consumption_pc', y1: 'kg', y2: '%',
       series: [
-        { label: '1인당 양곡 소비량 (kg)', src: ['rice_consumption_pc'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '식량자급률 (%)',        src: ['food_self_suff'],      color: '#3fa7ff', axis: 'y2' }
+        { label: '1인당 양곡 소비량 (kg)', src: ['rice_consumption_pc'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '식량자급률 (%)',        src: ['food_self_suff'],      color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '경지면적과 농림업 생산액', cap: '왼쪽 축 천ha · 오른쪽 축 십억원',
       page: 24, ind: 'cultivated_area', y1: '천ha', y2: '십억원',
       series: [
-        { label: '경지면적 (천ha)',    src: ['cultivated_area'],   color: '#38d39f', fill: true, axis: 'y' },
-        { label: '농림업 생산액 (십억원)', src: ['agri_output_value'], color: '#ff6b6b', axis: 'y2' }
+        { label: '경지면적 (천ha)',    src: ['cultivated_area'],   color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '농림업 생산액 (십억원)', src: ['agri_output_value'], color: '#B4552D', axis: 'y2' }
       ] },
     { title: '농가 인구와 경영주 고령화율', cap: '왼쪽 축 천명 · 오른쪽 축 %',
       page: 62, ind: 'farm_population', y1: '천명', y2: '%',
       series: [
-        { label: '농가 인구 (천명)',        src: ['farm_population'],   color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '경영주 고령화율 (%)',      src: ['farmer_aging_rate'], color: '#ff6b6b', axis: 'y2' }
+        { label: '농가 인구 (천명)',        src: ['farm_population'],   color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '경영주 고령화율 (%)',      src: ['farmer_aging_rate'], color: '#B4552D', axis: 'y2' }
       ] }
   ]
 },
@@ -92,38 +92,38 @@ window.BRIEFS = [
     { title: '1인당 쌀 소비량과 쌀 자급률', cap: '왼쪽 축 kg · 오른쪽 축 %',
       page: 332, ind: 'rice_consumption_pc', y1: 'kg', y2: '%',
       series: [
-        { label: '1인당 쌀 소비량 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '쌀 자급률 (%)',       src: ['food_self_suff', '쌀'],      color: '#3fa7ff', axis: 'y2' }
+        { label: '1인당 쌀 소비량 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '쌀 자급률 (%)',       src: ['food_self_suff', '쌀'],      color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '쌀 재배면적과 생산량', cap: '왼쪽 축 천ha · 오른쪽 축 천t',
       page: 296, ind: 'food_crop_area', y1: '천ha', y2: '천t',
       series: [
-        { label: '재배면적 (천ha)', src: ['food_crop_area', '쌀'],       color: '#38d39f', fill: true, axis: 'y' },
-        { label: '생산량 (천t)',    src: ['food_crop_production', '쌀'], color: '#ff6b6b', axis: 'y2' }
+        { label: '재배면적 (천ha)', src: ['food_crop_area', '쌀'],       color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '생산량 (천t)',    src: ['food_crop_production', '쌀'], color: '#B4552D', axis: 'y2' }
       ] },
     { title: '식량작물 생산량 중 쌀', cap: '천t · 계는 식량작물 전체(정곡 기준)입니다',
       page: 296, ind: 'food_crop_production', y1: '천t',
       series: [
         { label: '식량작물 계 (천t)', src: ['food_crop_production'],      color: '__TOTAL__', axis: 'y' },
-        { label: '쌀 (천t)',         src: ['food_crop_production', '쌀'], color: '#ffb84d', fill: true, axis: 'y' }
+        { label: '쌀 (천t)',         src: ['food_crop_production', '쌀'], color: '#B08968', fill: true, axis: 'y' }
       ] },
     { title: '쌀 생산량과 소비량', cap: '천t · 양곡년도(전년 11.1~당년 10.31) 기준',
       page: 307, ind: 'rice_supply_demand', y1: '천t',
       series: [
-        { label: '생산 (천t)', src: ['rice_supply_demand', '생산'], color: '#38d39f', fill: true, axis: 'y' },
-        { label: '소비 (천t)', src: ['rice_supply_demand', '소비'], color: '#ff6b6b', axis: 'y' }
+        { label: '생산 (천t)', src: ['rice_supply_demand', '생산'], color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '소비 (천t)', src: ['rice_supply_demand', '소비'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '연말재고와 쌀 자급률', cap: '왼쪽 축 천t · 오른쪽 축 % · 양곡년도 기준',
       page: 307, ind: 'rice_supply_demand', y1: '천t', y2: '%',
       series: [
-        { label: '연말재고 (천t)', src: ['rice_supply_demand', '연말재고'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '자급률 (%)',     src: ['rice_self_suff_grainyear'],       color: '#ffb84d', axis: 'y2' }
+        { label: '연말재고 (천t)', src: ['rice_supply_demand', '연말재고'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '자급률 (%)',     src: ['rice_self_suff_grainyear'],       color: '#B08968', axis: 'y2' }
       ] },
     { title: '쌀 도입(수입)량과 이월량', cap: '천t · 도입은 수입량, 이월은 전년도에서 넘어온 재고',
       page: 307, ind: 'rice_supply_demand', y1: '천t',
       series: [
-        { label: '도입 (천t)', src: ['rice_supply_demand', '도입'], color: '#ff6b6b', fill: true, axis: 'y' },
-        { label: '이월 (천t)', src: ['rice_supply_demand', '이월'], color: '#3fa7ff', axis: 'y' }
+        { label: '도입 (천t)', src: ['rice_supply_demand', '도입'], color: '#B4552D', fill: true, axis: 'y' },
+        { label: '이월 (천t)', src: ['rice_supply_demand', '이월'], color: '#4A7FB5', axis: 'y' }
       ] }
   ]
 },
@@ -140,44 +140,44 @@ window.BRIEFS = [
     { title: '육류 생산량과 자급률', cap: '왼쪽 축 천t · 오른쪽 축 % · 2020년부터 쇠고기·돼지고기 생산량 산출 기준이 바뀌었습니다',
       page: 378, ind: 'meat_production', y1: '천t', y2: '%',
       series: [
-        { label: '육류 생산량 (천t)', src: ['meat_production'],     color: '#ff6b6b', fill: true, axis: 'y' },
-        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#3fa7ff', axis: 'y2' }
+        { label: '육류 생산량 (천t)', src: ['meat_production'],     color: '#B4552D', fill: true, axis: 'y' },
+        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '가축 사육마릿수', cap: '왼쪽 축 천마리(한·육우·젖소·돼지) · 오른쪽 축 천마리(닭)',
       page: 372, ind: 'livestock_heads', y1: '천마리', y2: '천마리 (닭)',
       series: [
-        { label: '한·육우', src: ['livestock_heads', '한·육우'], color: '#ff6b6b', axis: 'y' },
-        { label: '젖소',   src: ['livestock_heads', '젖소'],   color: '#38d39f', axis: 'y' },
-        { label: '돼지',   src: ['livestock_heads', '돼지'],   color: '#ffb84d', axis: 'y' },
-        { label: '닭',     src: ['livestock_heads', '닭'],     color: '#3fa7ff', axis: 'y2' }
+        { label: '한·육우', src: ['livestock_heads', '한·육우'], color: '#B4552D', axis: 'y' },
+        { label: '젖소',   src: ['livestock_heads', '젖소'],   color: '#1B6B4A', axis: 'y' },
+        { label: '돼지',   src: ['livestock_heads', '돼지'],   color: '#B08968', axis: 'y' },
+        { label: '닭',     src: ['livestock_heads', '닭'],     color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '육류 자급률과 곡물자급률', cap: '% · 곡물자급률에는 가축이 먹는 사료용 곡물이 포함됩니다',
       page: 378, ind: 'livestock_self_suff', y1: '%',
       series: [
-        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#ff6b6b', fill: true, axis: 'y' },
-        { label: '곡물자급률 (%)',    src: ['grain_self_suff'],     color: '#3fa7ff', axis: 'y' }
+        { label: '육류 자급률 (%)',   src: ['livestock_self_suff'], color: '#B4552D', fill: true, axis: 'y' },
+        { label: '곡물자급률 (%)',    src: ['grain_self_suff'],     color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '1인당 육류 소비량', cap: 'kg · 계 = 쇠고기+돼지고기+닭고기',
       page: 379, ind: 'meat_consumption_pc', y1: 'kg',
       series: [
         { label: '육류 계', src: ['meat_consumption_pc'],           color: '__TOTAL__', axis: 'y' },
-        { label: '돼지고기', src: ['meat_consumption_pc', '돼지고기'], color: '#ff6b6b', fill: true, axis: 'y' },
-        { label: '쇠고기',   src: ['meat_consumption_pc', '쇠고기'],   color: '#ffb84d', axis: 'y' },
-        { label: '닭고기',   src: ['meat_consumption_pc', '닭고기'],   color: '#38d39f', axis: 'y' }
+        { label: '돼지고기', src: ['meat_consumption_pc', '돼지고기'], color: '#B4552D', fill: true, axis: 'y' },
+        { label: '쇠고기',   src: ['meat_consumption_pc', '쇠고기'],   color: '#B08968', axis: 'y' },
+        { label: '닭고기',   src: ['meat_consumption_pc', '닭고기'],   color: '#1B6B4A', axis: 'y' }
       ] },
     { title: '육류 생산량과 수입량 (축종별)', cap: '천t · 쇠고기는 수입이 생산보다 많습니다',
       page: 378, ind: 'meat_import', y1: '천t',
       series: [
-        { label: '돼지 생산', src: ['meat_production', '돼지고기'], color: '#ff6b6b', axis: 'y' },
-        { label: '돼지 수입', src: ['meat_import', '돼지고기'],     color: '#ffb84d', axis: 'y' },
-        { label: '쇠고기 생산', src: ['meat_production', '쇠고기'], color: '#3fa7ff', axis: 'y' },
-        { label: '쇠고기 수입', src: ['meat_import', '쇠고기'],     color: '#c78bff', axis: 'y' }
+        { label: '돼지 생산', src: ['meat_production', '돼지고기'], color: '#B4552D', axis: 'y' },
+        { label: '돼지 수입', src: ['meat_import', '돼지고기'],     color: '#B08968', axis: 'y' },
+        { label: '쇠고기 생산', src: ['meat_production', '쇠고기'], color: '#4A7FB5', axis: 'y' },
+        { label: '쇠고기 수입', src: ['meat_import', '쇠고기'],     color: '#7A6AA8', axis: 'y' }
       ] },
     { title: '1인당 우유·계란 소비량', cap: '왼쪽 축 우유 kg · 오른쪽 축 계란 개',
       page: 379, ind: 'milk_consumption_pc', y1: '우유 kg', y2: '계란 개',
       series: [
-        { label: '우유 (kg)', src: ['milk_consumption_pc'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '계란 (개)', src: ['egg_consumption_pc'],  color: '#ffb84d', axis: 'y2' }
+        { label: '우유 (kg)', src: ['milk_consumption_pc'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '계란 (개)', src: ['egg_consumption_pc'],  color: '#B08968', axis: 'y2' }
       ] }
   ]
 },
@@ -193,13 +193,13 @@ window.BRIEFS = [
     { title: '농림축산물 수출액과 수입액', cap: '백만$ · 관세청 통관기준, 면세점 수출액 제외',
       page: 136, ind: 'agri_export', y1: '백만$', type: 'bar',
       series: [
-        { label: '수출액 (백만$)', src: ['agri_export'], color: '#38d39f', axis: 'y' },
-        { label: '수입액 (백만$)', src: ['agri_import'], color: '#ff6b6b', axis: 'y' }
+        { label: '수출액 (백만$)', src: ['agri_export'], color: '#1B6B4A', axis: 'y' },
+        { label: '수입액 (백만$)', src: ['agri_import'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '농림축산물 무역수지', cap: '백만$ · 수출액에서 수입액을 뺀 값입니다',
       page: 136, ind: 'agri_trade_balance', y1: '백만$', type: 'bar',
       series: [
-        { label: '무역수지 (백만$)', src: ['agri_trade_balance'], color: '#3fa7ff', axis: 'y' }
+        { label: '무역수지 (백만$)', src: ['agri_trade_balance'], color: '#4A7FB5', axis: 'y' }
       ] }
   ]
 },
@@ -216,26 +216,26 @@ window.BRIEFS = [
     { title: '품목별 자급률', cap: '% · 식량자급률(사료용 제외) 기준',
       page: 331, ind: 'food_self_suff', y1: '%',
       series: [
-        { label: '보리쌀', src: ['food_self_suff', '보리쌀'], color: '#ffb84d', axis: 'y' },
-        { label: '콩',     src: ['food_self_suff', '콩'],     color: '#38d39f', axis: 'y' },
-        { label: '옥수수', src: ['food_self_suff', '옥수수'], color: '#3fa7ff', axis: 'y' },
-        { label: '서류',   src: ['food_self_suff', '서류'],   color: '#ff6b6b', axis: 'y' }
+        { label: '보리쌀', src: ['food_self_suff', '보리쌀'], color: '#B08968', axis: 'y' },
+        { label: '콩',     src: ['food_self_suff', '콩'],     color: '#1B6B4A', axis: 'y' },
+        { label: '옥수수', src: ['food_self_suff', '옥수수'], color: '#4A7FB5', axis: 'y' },
+        { label: '서류',   src: ['food_self_suff', '서류'],   color: '#B4552D', axis: 'y' }
       ] },
     { title: '품목별 재배면적', cap: '천ha',
       page: 296, ind: 'food_crop_area', y1: '천ha',
       series: [
-        { label: '보리쌀', src: ['food_crop_area', '보리쌀'], color: '#ffb84d', axis: 'y' },
-        { label: '콩',     src: ['food_crop_area', '콩'],     color: '#38d39f', axis: 'y' },
-        { label: '옥수수', src: ['food_crop_area', '옥수수'], color: '#3fa7ff', axis: 'y' },
-        { label: '서류',   src: ['food_crop_area', '서류'],   color: '#ff6b6b', axis: 'y' }
+        { label: '보리쌀', src: ['food_crop_area', '보리쌀'], color: '#B08968', axis: 'y' },
+        { label: '콩',     src: ['food_crop_area', '콩'],     color: '#1B6B4A', axis: 'y' },
+        { label: '옥수수', src: ['food_crop_area', '옥수수'], color: '#4A7FB5', axis: 'y' },
+        { label: '서류',   src: ['food_crop_area', '서류'],   color: '#B4552D', axis: 'y' }
       ] },
     { title: '품목별 1인당 소비량', cap: 'kg · 양곡년도 기준',
       page: 332, ind: 'rice_consumption_pc', y1: 'kg',
       series: [
-        { label: '보리쌀', src: ['rice_consumption_pc', '보리쌀'], color: '#ffb84d', axis: 'y' },
-        { label: '콩',     src: ['rice_consumption_pc', '콩'],     color: '#38d39f', axis: 'y' },
-        { label: '옥수수', src: ['rice_consumption_pc', '옥수수'], color: '#3fa7ff', axis: 'y' },
-        { label: '서류',   src: ['rice_consumption_pc', '서류'],   color: '#ff6b6b', axis: 'y' }
+        { label: '보리쌀', src: ['rice_consumption_pc', '보리쌀'], color: '#B08968', axis: 'y' },
+        { label: '콩',     src: ['rice_consumption_pc', '콩'],     color: '#1B6B4A', axis: 'y' },
+        { label: '옥수수', src: ['rice_consumption_pc', '옥수수'], color: '#4A7FB5', axis: 'y' },
+        { label: '서류',   src: ['rice_consumption_pc', '서류'],   color: '#B4552D', axis: 'y' }
       ] }
   ]
 },
@@ -252,20 +252,20 @@ window.BRIEFS = [
     { title: '농가소득과 농가 교역조건지수', cap: '왼쪽 축 천원 · 오른쪽 축 지수(2020=100) · 교역조건은 2005년부터',
       page: 152, ind: 'farm_income', y1: '천원', y2: '지수',
       series: [
-        { label: '농가소득 (천원)',   src: ['farm_income'],      color: '#38d39f', fill: true, axis: 'y' },
-        { label: '농가 교역조건지수', src: ['farm_terms_trade'], color: '#ff6b6b', axis: 'y2' }
+        { label: '농가소득 (천원)',   src: ['farm_income'],      color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '농가 교역조건지수', src: ['farm_terms_trade'], color: '#B4552D', axis: 'y2' }
       ] },
     { title: '생산자물가와 소비자물가', cap: '지수(2020=100) · 생산자물가는 농어민이 파는 단계, 소비자물가는 사는 단계',
       page: 112, ind: 'ppi_agri', y1: '지수',
       series: [
-        { label: '농림수산품 생산자물가지수', src: ['ppi_agri'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '식료품 소비자물가지수',    src: ['cpi_food'], color: '#ffb84d', axis: 'y' }
+        { label: '농림수산품 생산자물가지수', src: ['ppi_agri'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '식료품 소비자물가지수',    src: ['cpi_food'], color: '#B08968', axis: 'y' }
       ] },
     { title: '농가소득과 어가소득', cap: '천원 · 호당 · 어가소득은 2003년부터',
       page: 152, ind: 'farm_income', y1: '천원',
       series: [
-        { label: '농가소득 (천원)', src: ['farm_income'],    color: '#38d39f', fill: true, axis: 'y' },
-        { label: '어가소득 (천원)', src: ['fishery_income'], color: '#3fa7ff', axis: 'y' }
+        { label: '농가소득 (천원)', src: ['farm_income'],    color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '어가소득 (천원)', src: ['fishery_income'], color: '#4A7FB5', axis: 'y' }
       ] }
   ]
 },
@@ -282,20 +282,20 @@ window.BRIEFS = [
     { title: '농가 호수와 농가 인구', cap: '왼쪽 축 천호 · 오른쪽 축 천명',
       page: 62, ind: 'farm_population', y1: '천호', y2: '천명',
       series: [
-        { label: '농가 호수 (천호)', src: ['farm_households'], color: '#38d39f', fill: true, axis: 'y' },
-        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#3fa7ff', axis: 'y2' }
+        { label: '농가 호수 (천호)', src: ['farm_households'], color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#4A7FB5', axis: 'y2' }
       ] },
     { title: '경영주 고령화율과 농림어업 GDP 비중', cap: '% · 고령화율은 농가 경영주(대표자) 기준',
       page: 52, ind: 'farmer_aging_rate', y1: '%',
       series: [
-        { label: '경영주 고령화율 (%)',   src: ['farmer_aging_rate'], color: '#ff6b6b', fill: true, axis: 'y' },
-        { label: '농림어업 GDP 비중 (%)', src: ['agri_gdp_share'],    color: '#3fa7ff', axis: 'y' }
+        { label: '경영주 고령화율 (%)',   src: ['farmer_aging_rate'], color: '#B4552D', fill: true, axis: 'y' },
+        { label: '농림어업 GDP 비중 (%)', src: ['agri_gdp_share'],    color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '농가 인구와 경지면적', cap: '왼쪽 축 천명 · 오른쪽 축 천ha',
       page: 24, ind: 'cultivated_area', y1: '천명', y2: '천ha',
       series: [
-        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '경지면적 (천ha)',  src: ['cultivated_area'], color: '#38d39f', axis: 'y2' }
+        { label: '농가 인구 (천명)', src: ['farm_population'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '경지면적 (천ha)',  src: ['cultivated_area'], color: '#1B6B4A', axis: 'y2' }
       ] }
   ]
 },
@@ -312,33 +312,33 @@ window.BRIEFS = [
     { title: '주요국 밀 생산량', cap: '백만t · FAO통계 기준',
       page: 320, ind: 'world_wheat_production', y1: '백만t',
       series: [
-        { label: '캐나다',     src: ['world_wheat_production', '캐나다'],     color: '#ff6b6b', axis: 'y' },
-        { label: '미국',       src: ['world_wheat_production', '미국'],       color: '#3fa7ff', axis: 'y' },
-        { label: '프랑스',     src: ['world_wheat_production', '프랑스'],     color: '#38d39f', axis: 'y' },
-        { label: '아르헨티나', src: ['world_wheat_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
-        { label: '호주',       src: ['world_wheat_production', '호주'],       color: '#c78bff', axis: 'y' }
+        { label: '캐나다',     src: ['world_wheat_production', '캐나다'],     color: '#B4552D', axis: 'y' },
+        { label: '미국',       src: ['world_wheat_production', '미국'],       color: '#4A7FB5', axis: 'y' },
+        { label: '프랑스',     src: ['world_wheat_production', '프랑스'],     color: '#1B6B4A', axis: 'y' },
+        { label: '아르헨티나', src: ['world_wheat_production', '아르헨티나'], color: '#B08968', axis: 'y' },
+        { label: '호주',       src: ['world_wheat_production', '호주'],       color: '#7A6AA8', axis: 'y' }
       ] },
     { title: '주요국 옥수수 생산량', cap: '백만t · FAO통계 기준',
       page: 326, ind: 'world_maize_production', y1: '백만t',
       series: [
-        { label: '미국',       src: ['world_maize_production', '미국'],       color: '#3fa7ff', axis: 'y' },
-        { label: '브라질',     src: ['world_maize_production', '브라질'],     color: '#38d39f', axis: 'y' },
-        { label: '아르헨티나', src: ['world_maize_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
-        { label: '인도',       src: ['world_maize_production', '인도'],       color: '#ff6b6b', axis: 'y' },
-        { label: '프랑스',     src: ['world_maize_production', '프랑스'],     color: '#c78bff', axis: 'y' }
+        { label: '미국',       src: ['world_maize_production', '미국'],       color: '#4A7FB5', axis: 'y' },
+        { label: '브라질',     src: ['world_maize_production', '브라질'],     color: '#1B6B4A', axis: 'y' },
+        { label: '아르헨티나', src: ['world_maize_production', '아르헨티나'], color: '#B08968', axis: 'y' },
+        { label: '인도',       src: ['world_maize_production', '인도'],       color: '#B4552D', axis: 'y' },
+        { label: '프랑스',     src: ['world_maize_production', '프랑스'],     color: '#7A6AA8', axis: 'y' }
       ] },
     { title: '주요국 콩(대두) 생산량', cap: '백만t · FAO통계 기준',
       page: 327, ind: 'world_soybean_production', y1: '백만t',
       series: [
-        { label: '미국',       src: ['world_soybean_production', '미국'],       color: '#3fa7ff', axis: 'y' },
-        { label: '아르헨티나', src: ['world_soybean_production', '아르헨티나'], color: '#ffb84d', axis: 'y' },
-        { label: '인도',       src: ['world_soybean_production', '인도'],       color: '#ff6b6b', axis: 'y' },
-        { label: '인도네시아', src: ['world_soybean_production', '인도네시아'], color: '#38d39f', axis: 'y' }
+        { label: '미국',       src: ['world_soybean_production', '미국'],       color: '#4A7FB5', axis: 'y' },
+        { label: '아르헨티나', src: ['world_soybean_production', '아르헨티나'], color: '#B08968', axis: 'y' },
+        { label: '인도',       src: ['world_soybean_production', '인도'],       color: '#B4552D', axis: 'y' },
+        { label: '인도네시아', src: ['world_soybean_production', '인도네시아'], color: '#1B6B4A', axis: 'y' }
       ] },
     { title: '한국의 밀 생산량', cap: '천t · 위 그래프들과 단위가 다릅니다(백만t 아님)',
       page: 296, ind: 'food_crop_production', y1: '천t',
       series: [
-        { label: '한국 밀 생산량 (천t)', src: ['food_crop_production', '밀'], color: '#ffb84d', fill: true, axis: 'y' }
+        { label: '한국 밀 생산량 (천t)', src: ['food_crop_production', '밀'], color: '#B08968', fill: true, axis: 'y' }
       ] }
   ]
 },
@@ -356,27 +356,27 @@ window.BRIEFS = [
       page: 494, ind: 'energy_supply_pc', y1: 'kcal',
       series: [
         { label: '계 (kcal)',  src: ['energy_supply_pc'],         color: '__TOTAL__', axis: 'y' },
-        { label: '곡류 (kcal)', src: ['energy_supply_pc', '곡류'], color: '#ffb84d', fill: true, axis: 'y' }
+        { label: '곡류 (kcal)', src: ['energy_supply_pc', '곡류'], color: '#B08968', fill: true, axis: 'y' }
       ] },
     { title: '곡류 안에서: 쌀과 밀가루', cap: 'kcal · 곡류에는 쌀·밀가루·보리·기타가 포함됩니다',
       page: 494, ind: 'energy_supply_pc', y1: 'kcal',
       series: [
         { label: '쌀 (kcal)',   src: ['energy_supply_pc', '쌀'],    color: '__TOTAL__', axis: 'y' },
-        { label: '밀가루 (kcal)', src: ['energy_supply_pc', '밀가루'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '보리 (kcal)',  src: ['energy_supply_pc', '보리'],  color: '#38d39f', axis: 'y' }
+        { label: '밀가루 (kcal)', src: ['energy_supply_pc', '밀가루'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '보리 (kcal)',  src: ['energy_supply_pc', '보리'],  color: '#1B6B4A', axis: 'y' }
       ] },
     { title: '단백질과 지방질 공급량', cap: 'g · 1인 1일당 · 2015년부터 식품성분표 개정으로 기준이 바뀌었습니다',
       page: 493, ind: 'nutrient_supply_pc', y1: 'g',
       series: [
-        { label: '단백질 (g)', src: ['nutrient_supply_pc'],         color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '지방질 (g)', src: ['nutrient_supply_pc', '지방질'], color: '#ff6b6b', axis: 'y' }
+        { label: '단백질 (g)', src: ['nutrient_supply_pc'],         color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '지방질 (g)', src: ['nutrient_supply_pc', '지방질'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '설탕류·두류·서류에서 오는 열량', cap: 'kcal · 1인 1일당',
       page: 494, ind: 'energy_supply_pc', y1: 'kcal',
       series: [
-        { label: '설탕류 (kcal)', src: ['energy_supply_pc', '설탕류'], color: '#ffb84d', axis: 'y' },
-        { label: '두류 (kcal)',   src: ['energy_supply_pc', '두류'],   color: '#38d39f', axis: 'y' },
-        { label: '서류 (kcal)',   src: ['energy_supply_pc', '서류'],   color: '#ff6b6b', axis: 'y' }
+        { label: '설탕류 (kcal)', src: ['energy_supply_pc', '설탕류'], color: '#B08968', axis: 'y' },
+        { label: '두류 (kcal)',   src: ['energy_supply_pc', '두류'],   color: '#1B6B4A', axis: 'y' },
+        { label: '서류 (kcal)',   src: ['energy_supply_pc', '서류'],   color: '#B4552D', axis: 'y' }
       ] }
   ]
 },
@@ -394,29 +394,29 @@ window.BRIEFS = [
       page: 180, ind: 'crop_income_10a', y1: '원/10a',
       series: [
         { label: '논벼',   src: ['crop_income_10a', '논벼'],   color: '__TOTAL__', axis: 'y' },
-        { label: '콩',     src: ['crop_income_10a', '콩'],     color: '#38d39f', axis: 'y' },
-        { label: '겉보리', src: ['crop_income_10a', '겉보리'], color: '#ffb84d', axis: 'y' },
-        { label: '쌀보리', src: ['crop_income_10a', '쌀보리'], color: '#ff6b6b', axis: 'y' }
+        { label: '콩',     src: ['crop_income_10a', '콩'],     color: '#1B6B4A', axis: 'y' },
+        { label: '겉보리', src: ['crop_income_10a', '겉보리'], color: '#B08968', axis: 'y' },
+        { label: '쌀보리', src: ['crop_income_10a', '쌀보리'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '작물별 10a당 순수익', cap: '원/10a · 순수익 = 총수입 − 생산비 · 자기 노동비와 토지용역비까지 뺀 값이라 음수가 될 수 있습니다',
       page: 180, ind: 'crop_netprofit_10a', y1: '원/10a',
       series: [
         { label: '논벼',   src: ['crop_netprofit_10a', '논벼'],   color: '__TOTAL__', axis: 'y' },
-        { label: '콩',     src: ['crop_netprofit_10a', '콩'],     color: '#38d39f', axis: 'y' },
-        { label: '겉보리', src: ['crop_netprofit_10a', '겉보리'], color: '#ffb84d', axis: 'y' },
-        { label: '쌀보리', src: ['crop_netprofit_10a', '쌀보리'], color: '#ff6b6b', axis: 'y' }
+        { label: '콩',     src: ['crop_netprofit_10a', '콩'],     color: '#1B6B4A', axis: 'y' },
+        { label: '겉보리', src: ['crop_netprofit_10a', '겉보리'], color: '#B08968', axis: 'y' },
+        { label: '쌀보리', src: ['crop_netprofit_10a', '쌀보리'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '논벼: 총수입과 생산비', cap: '원/10a',
       page: 180, ind: 'crop_revenue_10a', y1: '원/10a',
       series: [
-        { label: '총수입', src: ['crop_revenue_10a', '논벼'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '생산비', src: ['crop_cost_10a', '논벼'],    color: '#ff6b6b', axis: 'y' }
+        { label: '총수입', src: ['crop_revenue_10a', '논벼'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '생산비', src: ['crop_cost_10a', '논벼'],    color: '#B4552D', axis: 'y' }
       ] },
     { title: '겉보리: 총수입과 생산비', cap: '원/10a',
       page: 181, ind: 'crop_revenue_10a', y1: '원/10a',
       series: [
-        { label: '총수입', src: ['crop_revenue_10a', '겉보리'], color: '#3fa7ff', fill: true, axis: 'y' },
-        { label: '생산비', src: ['crop_cost_10a', '겉보리'],    color: '#ff6b6b', axis: 'y' }
+        { label: '총수입', src: ['crop_revenue_10a', '겉보리'], color: '#4A7FB5', fill: true, axis: 'y' },
+        { label: '생산비', src: ['crop_cost_10a', '겉보리'],    color: '#B4552D', axis: 'y' }
       ] }
   ]
 },
@@ -433,32 +433,32 @@ window.BRIEFS = [
     { title: '밀 자급률: 한국과 일본', cap: '% · 한국은 식량자급률 기준, 일본은 농림수산성 기준',
       page: 535, ind: 'japan_agri', y1: '%',
       series: [
-        { label: '한국 (%)', src: ['food_self_suff', '밀'],  color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '일본 (%)', src: ['japan_agri', '밀(소맥)'], color: '#3fa7ff', axis: 'y' }
+        { label: '한국 (%)', src: ['food_self_suff', '밀'],  color: '#B08968', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri', '밀(소맥)'], color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '곡물자급률: 한국과 일본', cap: '% · 둘 다 사료용을 포함한 기준',
       page: 535, ind: 'japan_agri', y1: '%',
       series: [
-        { label: '한국 (%)', src: ['grain_self_suff'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '일본 (%)', src: ['japan_agri'],      color: '#3fa7ff', axis: 'y' }
+        { label: '한국 (%)', src: ['grain_self_suff'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri'],      color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '쌀 자급률: 한국과 일본', cap: '%',
       page: 535, ind: 'japan_agri', y1: '%',
       series: [
-        { label: '한국 (%)', src: ['food_self_suff', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '일본 (%)', src: ['japan_agri', '쌀'],     color: '#3fa7ff', axis: 'y' }
+        { label: '한국 (%)', src: ['food_self_suff', '쌀'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '일본 (%)', src: ['japan_agri', '쌀'],     color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '1인당 쌀 소비량: 한국과 일본', cap: 'kg · 한국은 양곡년도 기준, 일본은 연간 기준',
       page: 534, ind: 'japan_consumption_pc', y1: 'kg',
       series: [
-        { label: '한국 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '일본 (kg)', src: ['japan_consumption_pc'],      color: '#3fa7ff', axis: 'y' }
+        { label: '한국 (kg)', src: ['rice_consumption_pc', '쌀'], color: '#B08968', fill: true, axis: 'y' },
+        { label: '일본 (kg)', src: ['japan_consumption_pc'],      color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '1인당 밀 소비량: 한국과 일본', cap: 'kg',
       page: 534, ind: 'japan_consumption_pc', y1: 'kg',
       series: [
-        { label: '한국 (kg)', src: ['rice_consumption_pc', '밀'],   color: '#ffb84d', fill: true, axis: 'y' },
-        { label: '일본 (kg)', src: ['japan_consumption_pc', '밀'],  color: '#3fa7ff', axis: 'y' }
+        { label: '한국 (kg)', src: ['rice_consumption_pc', '밀'],   color: '#B08968', fill: true, axis: 'y' },
+        { label: '일본 (kg)', src: ['japan_consumption_pc', '밀'],  color: '#4A7FB5', axis: 'y' }
       ] }
   ]
 },
@@ -475,43 +475,43 @@ window.BRIEFS = [
     { title: '1인당 소비량: 채소류와 과실류', cap: 'kg · 계 기준',
       page: 343, ind: 'vegetable_consumption_pc', y1: 'kg',
       series: [
-        { label: '채소류 (kg)', src: ['vegetable_consumption_pc'], color: '#38d39f', fill: true, axis: 'y' },
-        { label: '과실류 (kg)', src: ['fruit_consumption_pc'],     color: '#ffb84d', axis: 'y' }
+        { label: '채소류 (kg)', src: ['vegetable_consumption_pc'], color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '과실류 (kg)', src: ['fruit_consumption_pc'],     color: '#B08968', axis: 'y' }
       ] },
     { title: '주요 채소 1인당 소비량', cap: 'kg · 고추는 고추(신선) 기준',
       page: 343, ind: 'vegetable_consumption_pc', y1: 'kg',
       series: [
-        { label: '배추', src: ['vegetable_consumption_pc', '배추'], color: '#38d39f', axis: 'y' },
-        { label: '양파', src: ['vegetable_consumption_pc', '양파'], color: '#3fa7ff', axis: 'y' },
-        { label: '무',   src: ['vegetable_consumption_pc', '무'],   color: '#ffb84d', axis: 'y' },
-        { label: '마늘', src: ['vegetable_consumption_pc', '마늘'], color: '#ff6b6b', axis: 'y' }
+        { label: '배추', src: ['vegetable_consumption_pc', '배추'], color: '#1B6B4A', axis: 'y' },
+        { label: '양파', src: ['vegetable_consumption_pc', '양파'], color: '#4A7FB5', axis: 'y' },
+        { label: '무',   src: ['vegetable_consumption_pc', '무'],   color: '#B08968', axis: 'y' },
+        { label: '마늘', src: ['vegetable_consumption_pc', '마늘'], color: '#B4552D', axis: 'y' }
       ] },
     { title: '주요 과실 1인당 소비량', cap: 'kg',
       page: 350, ind: 'fruit_consumption_pc', y1: 'kg',
       series: [
-        { label: '감귤',   src: ['fruit_consumption_pc', '감귤'],   color: '#ffb84d', axis: 'y' },
-        { label: '사과',   src: ['fruit_consumption_pc', '사과'],   color: '#ff6b6b', axis: 'y' },
-        { label: '포도',   src: ['fruit_consumption_pc', '포도'],   color: '#c78bff', axis: 'y' },
-        { label: '복숭아', src: ['fruit_consumption_pc', '복숭아'], color: '#38d39f', axis: 'y' },
-        { label: '배',     src: ['fruit_consumption_pc', '배'],     color: '#3fa7ff', axis: 'y' }
+        { label: '감귤',   src: ['fruit_consumption_pc', '감귤'],   color: '#B08968', axis: 'y' },
+        { label: '사과',   src: ['fruit_consumption_pc', '사과'],   color: '#B4552D', axis: 'y' },
+        { label: '포도',   src: ['fruit_consumption_pc', '포도'],   color: '#7A6AA8', axis: 'y' },
+        { label: '복숭아', src: ['fruit_consumption_pc', '복숭아'], color: '#1B6B4A', axis: 'y' },
+        { label: '배',     src: ['fruit_consumption_pc', '배'],     color: '#4A7FB5', axis: 'y' }
       ] },
     { title: '주요 채소 재배면적', cap: '천ha · 고추는 건고추 기준',
       page: 340, ind: 'vegetable_area', y1: '천ha',
       series: [
-        { label: '배추',   src: ['vegetable_area', '배추'],   color: '#38d39f', axis: 'y' },
-        { label: '건고추', src: ['vegetable_area', '건고추'], color: '#ff6b6b', axis: 'y' },
-        { label: '마늘',   src: ['vegetable_area', '마늘'],   color: '#ffb84d', axis: 'y' },
-        { label: '양파',   src: ['vegetable_area', '양파'],   color: '#3fa7ff', axis: 'y' },
-        { label: '무',     src: ['vegetable_area', '무'],     color: '#c78bff', axis: 'y' }
+        { label: '배추',   src: ['vegetable_area', '배추'],   color: '#1B6B4A', axis: 'y' },
+        { label: '건고추', src: ['vegetable_area', '건고추'], color: '#B4552D', axis: 'y' },
+        { label: '마늘',   src: ['vegetable_area', '마늘'],   color: '#B08968', axis: 'y' },
+        { label: '양파',   src: ['vegetable_area', '양파'],   color: '#4A7FB5', axis: 'y' },
+        { label: '무',     src: ['vegetable_area', '무'],     color: '#7A6AA8', axis: 'y' }
       ] },
     { title: '주요 과실 재배면적', cap: '천ha',
       page: 348, ind: 'fruit_area', y1: '천ha',
       series: [
-        { label: '사과',   src: ['fruit_area', '사과'],   color: '#ff6b6b', axis: 'y' },
-        { label: '감귤',   src: ['fruit_area', '감귤'],   color: '#ffb84d', axis: 'y' },
-        { label: '포도',   src: ['fruit_area', '포도'],   color: '#c78bff', axis: 'y' },
-        { label: '복숭아', src: ['fruit_area', '복숭아'], color: '#38d39f', axis: 'y' },
-        { label: '배',     src: ['fruit_area', '배'],     color: '#3fa7ff', axis: 'y' }
+        { label: '사과',   src: ['fruit_area', '사과'],   color: '#B4552D', axis: 'y' },
+        { label: '감귤',   src: ['fruit_area', '감귤'],   color: '#B08968', axis: 'y' },
+        { label: '포도',   src: ['fruit_area', '포도'],   color: '#7A6AA8', axis: 'y' },
+        { label: '복숭아', src: ['fruit_area', '복숭아'], color: '#1B6B4A', axis: 'y' },
+        { label: '배',     src: ['fruit_area', '배'],     color: '#4A7FB5', axis: 'y' }
       ] }
   ]
 },
@@ -529,32 +529,32 @@ window.BRIEFS = [
       page: 152, ind: 'farm_income_source', y1: '천원',
       series: [
         { label: '농가소득(계)', src: ['farm_income_source'],              color: '__TOTAL__', axis: 'y' },
-        { label: '농업소득',     src: ['farm_income_source', '농업소득'],   color: '#38d39f', axis: 'y' },
-        { label: '농외소득',     src: ['farm_income_source', '농외소득'],   color: '#3fa7ff', axis: 'y' },
-        { label: '이전소득',     src: ['farm_income_source', '이전소득'],   color: '#ffb84d', axis: 'y' }
+        { label: '농업소득',     src: ['farm_income_source', '농업소득'],   color: '#1B6B4A', axis: 'y' },
+        { label: '농외소득',     src: ['farm_income_source', '농외소득'],   color: '#4A7FB5', axis: 'y' },
+        { label: '이전소득',     src: ['farm_income_source', '이전소득'],   color: '#B08968', axis: 'y' }
       ] },
     { title: '농업소득과 이전소득', cap: '천원 · 농사로 번 돈과 보조금·연금 등',
       page: 152, ind: 'farm_income_source', y1: '천원',
       series: [
-        { label: '농업소득', src: ['farm_income_source', '농업소득'], color: '#38d39f', fill: true, axis: 'y' },
-        { label: '이전소득', src: ['farm_income_source', '이전소득'], color: '#ffb84d', axis: 'y' }
+        { label: '농업소득', src: ['farm_income_source', '농업소득'], color: '#1B6B4A', fill: true, axis: 'y' },
+        { label: '이전소득', src: ['farm_income_source', '이전소득'], color: '#B08968', axis: 'y' }
       ] },
     { title: '영농형태별 농가소득', cap: '천원 · 호당 · 1995년부터',
       page: 160, ind: 'farm_income_by_type', y1: '천원',
       series: [
-        { label: '과수', src: ['farm_income_by_type', '과수'], color: '#ff6b6b', axis: 'y' },
-        { label: '축산', src: ['farm_income_by_type', '축산'], color: '#ffb84d', axis: 'y' },
-        { label: '채소', src: ['farm_income_by_type', '채소'], color: '#38d39f', axis: 'y' },
-        { label: '논벼', src: ['farm_income_by_type', '논벼'], color: '#3fa7ff', axis: 'y' },
+        { label: '과수', src: ['farm_income_by_type', '과수'], color: '#B4552D', axis: 'y' },
+        { label: '축산', src: ['farm_income_by_type', '축산'], color: '#B08968', axis: 'y' },
+        { label: '채소', src: ['farm_income_by_type', '채소'], color: '#1B6B4A', axis: 'y' },
+        { label: '논벼', src: ['farm_income_by_type', '논벼'], color: '#4A7FB5', axis: 'y' },
         { label: '전체 평균', src: ['farm_income_by_type'],    color: '__TOTAL__', axis: 'y' }
       ] },
     { title: '경지규모별 농가소득', cap: '천원 · 호당 · 규모가 큰 농가일수록 소득이 큽니다',
       page: 156, ind: 'farm_income_by_size', y1: '천원',
       series: [
-        { label: '10.0ha 이상', src: ['farm_income_by_size', '10.0ha 이상'], color: '#ff6b6b', axis: 'y' },
-        { label: '3.0~5.0ha',  src: ['farm_income_by_size', '3.0~5.0ha'],  color: '#ffb84d', axis: 'y' },
-        { label: '1.0~1.5ha',  src: ['farm_income_by_size', '1.0~1.5ha'],  color: '#38d39f', axis: 'y' },
-        { label: '0.5ha 미만',  src: ['farm_income_by_size', '0.5ha 미만'],  color: '#3fa7ff', axis: 'y' },
+        { label: '10.0ha 이상', src: ['farm_income_by_size', '10.0ha 이상'], color: '#B4552D', axis: 'y' },
+        { label: '3.0~5.0ha',  src: ['farm_income_by_size', '3.0~5.0ha'],  color: '#B08968', axis: 'y' },
+        { label: '1.0~1.5ha',  src: ['farm_income_by_size', '1.0~1.5ha'],  color: '#1B6B4A', axis: 'y' },
+        { label: '0.5ha 미만',  src: ['farm_income_by_size', '0.5ha 미만'],  color: '#4A7FB5', axis: 'y' },
         { label: '전체 평균',    src: ['farm_income_by_size'],               color: '__TOTAL__', axis: 'y' }
       ] }
   ]
