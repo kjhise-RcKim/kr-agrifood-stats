@@ -1797,7 +1797,7 @@ function buildStory(){
   });
   ag.innerHTML=''; [1970,1985,2000,2010,2024].forEach(function(yr){
     var t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',X(yr)); t.setAttribute('y',h-18); t.setAttribute('text-anchor','middle');
+    t.setAttribute('x',X(yr)); t.setAttribute('y',h-30); t.setAttribute('text-anchor','middle');
     t.setAttribute('class','axl'); t.textContent=yr; ag.appendChild(t);
   });
   if(storyReduce){ area.classList.add('show');
