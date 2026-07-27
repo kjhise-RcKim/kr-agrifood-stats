@@ -336,9 +336,95 @@
     .msg{max-width:94%;}
     .modal{padding:20px 18px;}
   }
+  /* ═══ 리뉴얼 4단계: 랜딩 스토리 히어로 (스크롤 스토리텔링) ═══ */
+  #storyHero{position:relative;background:var(--ink);color:#F4F1E8;display:none;}
+  .story-track{height:420vh;position:relative;}
+  .story-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+  .story-sky{position:absolute;inset:0;background:
+    radial-gradient(ellipse 90% 55% at 50% 110%, rgba(201,150,46,.14), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 80% -10%, rgba(27,107,74,.22), transparent 65%), var(--ink);}
+  .story-head{position:relative;z-index:3;padding:clamp(72px,11vh,120px) 28px 0;text-align:center;}
+  .story-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--wheat);text-transform:uppercase;margin-bottom:16px;}
+  .story-title{font-family:var(--serif);font-weight:600;font-size:clamp(26px,4.2vw,50px);line-height:1.32;color:#F4F1E8;letter-spacing:-.01em;margin:0;}
+  .story-title em{font-style:normal;color:var(--wheat);}
+  .story-sub{margin-top:14px;font-size:clamp(13px,1.5vw,16px);color:rgba(244,241,232,.6);line-height:1.7;}
+  .story-stage{position:relative;flex:1;z-index:2;}
+  .story-stage svg{position:absolute;inset:0;width:100%;height:100%;}
+  .story .axl{font-family:var(--mono);font-size:11px;fill:rgba(244,241,232,.35);}
+  .story .wline{fill:none;stroke:var(--wheat);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 12px rgba(201,150,46,.45));}
+  .story .warea{fill:url(#wfill);opacity:0;transition:opacity .6s ease;}
+  .story .warea.show{opacity:1;}
+  .story .wdot{fill:var(--wheat);opacity:0;transition:opacity .4s ease;}
+  .story .wdot.show{opacity:1;}
+  .scap{position:absolute;z-index:4;max-width:300px;opacity:0;transform:translateY(14px);
+    transition:opacity .55s ease,transform .55s ease;pointer-events:none;}
+  .scap.show{opacity:1;transform:none;}
+  .scap .cy{font-family:var(--mono);font-size:12px;color:var(--wheat);letter-spacing:.1em;margin-bottom:6px;}
+  .scap .cn{font-family:var(--mono);font-weight:600;font-size:clamp(28px,3.6vw,42px);color:#F4F1E8;line-height:1;}
+  .scap .cn small{font-size:.5em;color:rgba(244,241,232,.5);}
+  .scap .ct{margin-top:8px;font-size:13px;line-height:1.65;color:rgba(244,241,232,.68);}
+  .story-foot{position:absolute;bottom:24px;left:0;right:0;z-index:5;display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;}
+  .story-hint{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(244,241,232,.5);}
+  .story-hint .dot{width:5px;height:9px;border:1.5px solid rgba(244,241,232,.5);border-radius:5px;position:relative;}
+  .story-hint .dot::after{content:'';position:absolute;top:2px;left:50%;margin-left:-1px;width:2px;height:2px;
+    background:rgba(244,241,232,.7);border-radius:50%;animation:swheel 1.6s ease-in-out infinite;}
+  @keyframes swheel{0%,100%{transform:translateY(0);opacity:1;}60%{transform:translateY(3px);opacity:0;}}
+  .story-skip{font-size:12.5px;color:rgba(244,241,232,.62);text-decoration:none;border-bottom:1px dotted rgba(244,241,232,.35);padding-bottom:1px;cursor:pointer;}
+  .story-skip:hover{color:var(--wheat);}
+  @media(prefers-reduced-motion:reduce){
+    .story-track{height:auto;} .story-sticky{position:relative;height:auto;min-height:100vh;}
+  }
+  @media(max-width:640px){ .story-track{height:480vh;} .scap{max-width:240px;} }
+
 </style>
 </head>
 <body>
+
+<!-- 랜딩 스토리 히어로 — 홈 첫 진입에서만. 딥링크 진입 시 숨김 -->
+<div id="storyHero">
+  <div class="story story-track" id="storyTrack">
+    <div class="story-sticky">
+      <div class="story-sky"></div>
+      <header class="story-head">
+        <div class="story-eyebrow">1970 — 2024 · 55년의 기록</div>
+        <h1 class="story-title">우리 밀은,<br>어디까지 내려갔다 <em>돌아오고</em> 있을까요</h1>
+        <p class="story-sub">스크롤을 내리면 밀 자급률 55년이 그려집니다 — 숫자는 원자료 그대로.</p>
+      </header>
+      <div class="story-stage" id="storyStage">
+        <svg id="storyChart" preserveAspectRatio="none">
+          <defs><linearGradient id="wfill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9962E" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#C9962E" stop-opacity="0"/>
+          </linearGradient></defs>
+          <path class="warea" id="wArea" d=""/>
+          <path class="wline" id="wLine" d=""/>
+          <g id="wDots"></g><g id="wAxis"></g>
+        </svg>
+        <div class="scap" id="scap0" style="left:6%;top:9%">
+          <div class="cy">1970</div><div class="cn">15.9<small>%</small></div>
+          <div class="ct">밥상에 오른 밀 여섯 그릇 중 한 그릇은 우리 땅에서 났습니다.</div>
+        </div>
+        <div class="scap" id="scap1" style="left:30%;top:40%">
+          <div class="cy">1980년대</div><div class="cn">0.5<small>%</small></div>
+          <div class="ct">1984년 정부의 밀 수매가 끝나고, 값싼 수입 밀이 식탁을 채웁니다. 선은 바닥을 향합니다.</div>
+        </div>
+        <div class="scap" id="scap2" style="left:54%;top:15%">
+          <div class="cy">1990 — 2000년대</div><div class="cn">0.<small>x</small>%</div>
+          <div class="ct">자급률은 20년 넘게 1%를 넘지 못했습니다. 선이 바닥에 붙어 있는 이유입니다.</div>
+        </div>
+        <div class="scap" id="scap3" style="right:5%;top:11%">
+          <div class="cy">2020 → 2023</div><div class="cn">0.8 → 2.0<small>%</small></div>
+          <div class="ct">밀산업 육성법(2020) 이후 3년 만에 약 2.5배. 다만 2024년은 1.5%로 다시 내려갔습니다. 다음 장은 데이터로 지켜봅니다.</div>
+        </div>
+      </div>
+      <div class="story-foot">
+        <span class="story-hint"><span class="dot"></span>스크롤해서 55년 따라가기</span>
+        <a class="story-skip" id="storySkip">건너뛰고 대시보드로 →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <header>
   <div>
     <h1 id="homeTitle" style="cursor:pointer" title="처음으로 (홈)">농식품 주요통계 대시보드 <span class="badge">공개용</span></h1>
@@ -692,6 +778,7 @@ function applyURL(){
   var get=function(k){ return P? (P.get(k)||'') : ''; };
   var qel=document.getElementById('q');
   homeView=false;
+  var isFirst=firstLoad; firstLoad=false; showStory(false);
   var vt=get('t');   /* 링크에 담겨온 테마(밝게/어둡게) 먼저 적용 */
   if((vt==='light'||vt==='dark') && vt!==curTheme()) applyTheme(vt);
   var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
@@ -730,6 +817,7 @@ function applyURL(){
   /* 홈 (또는 알 수 없는 주소) — 여기서만 히어로를 띄운다 */
   query=''; if(qel) qel.value=''; curGroup='전체'; curId=null; compareMode=false;
   homeView=true;
+  showStory(isFirst);   /* 첫 로드로 홈에 들어왔을 때만 스토리 인트로 표시 */
   renderTabs(); renderCards(); renderOrig('');
 }
 window.addEventListener('popstate', applyURL);
@@ -1671,6 +1759,73 @@ document.getElementById('cmpSearch').addEventListener('input', renderCmpList);
 document.getElementById('cmpModeSel').onchange = function(){ cmpMode = this.value; renderCmpChart(); };
 document.getElementById('cmpClear').onclick = function(){ cmpSel = []; renderCmpList(); renderCmpChart(); updateCmpURL(); };
 document.getElementById('cmpLink').onclick = function(){ copyLink(this); };
+
+/* ══════════ 랜딩 스토리 히어로 — 밀 자급률 55년 스크롤 스토리텔링 ══════════ */
+var storyInited=false, firstLoad=true, storyReduce=(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function storyWheat(){
+  var f=INDS.find(function(i){return i.id==='food_self_suff';}); if(!f) return [];
+  var b=(f.breakdown||[]).find(function(x){return x.label==='밀';});
+  return b? b.series.filter(function(p){return p.value!==null&&p.value!==undefined;}).map(function(p){return [p.year,p.value];}) : [];
+}
+var _wLen=0;
+function buildStory(){
+  var W=storyWheat(); if(W.length<2) return;
+  var stage=document.getElementById('storyStage'), svg=document.getElementById('storyChart');
+  var line=document.getElementById('wLine'), area=document.getElementById('wArea');
+  var dg=document.getElementById('wDots'), ag=document.getElementById('wAxis');
+  var w=stage.clientWidth, h=stage.clientHeight, padX=(window.innerWidth<600?24:70), padT=30, padB=46;
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  var y0=1970,y1=2024,vmax=16;
+  function X(yr){ return padX+(yr-y0)/(y1-y0)*(w-padX*2); }
+  function Y(v){ return padT+(1-v/vmax)*(h-padT-padB); }
+  var d=''; W.forEach(function(pt,i){ d+=(i?' L':'M')+X(pt[0])+','+Y(pt[1]); });
+  line.setAttribute('d',d);
+  area.setAttribute('d',d+' L'+X(2024)+','+(h-padB)+' L'+X(1970)+','+(h-padB)+' Z');
+  _wLen=line.getTotalLength(); line.style.strokeDasharray=_wLen;
+  line.style.strokeDashoffset=storyReduce?0:_wLen;
+  dg.innerHTML=''; [[1970,15.9],[1985,0.5],[2000,0.1],[2023,2.0]].forEach(function(a,i){
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',X(a[0])); c.setAttribute('cy',Y(a[1])); c.setAttribute('r',4.5);
+    c.setAttribute('class','wdot'); c.id='wdot'+i; dg.appendChild(c);
+  });
+  ag.innerHTML=''; [1970,1985,2000,2010,2024].forEach(function(yr){
+    var t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',X(yr)); t.setAttribute('y',h-18); t.setAttribute('text-anchor','middle');
+    t.setAttribute('class','axl'); t.textContent=yr; ag.appendChild(t);
+  });
+  if(storyReduce){ area.classList.add('show');
+    document.querySelectorAll('.wdot,.scap').forEach(function(el){el.classList.add('show');}); }
+}
+var _capR=[[0.02,0.30],[0.28,0.55],[0.52,0.78],[0.76,1.01]];
+function storyScroll(){
+  if(storyReduce) return;
+  var tr=document.getElementById('storyTrack'); if(!tr) return;
+  var rect=tr.getBoundingClientRect(), total=tr.offsetHeight-window.innerHeight;
+  var prog=Math.min(1,Math.max(0,-rect.top/total));
+  var dp=Math.min(1,prog*1.08);
+  var line=document.getElementById('wLine'); if(line) line.style.strokeDashoffset=_wLen*(1-dp);
+  var area=document.getElementById('wArea'); if(area) area.classList.toggle('show',prog>0.9);
+  _capR.forEach(function(r,i){
+    var show=prog>=r[0]&&prog<r[1];
+    var cap=document.getElementById('scap'+i); if(cap) cap.classList.toggle('show',show);
+    var dot=document.getElementById('wdot'+i); if(dot) dot.classList.toggle('show',prog>=r[0]);
+  });
+}
+function initStory(){
+  if(storyInited) return; storyInited=true;
+  buildStory();
+  window.addEventListener('scroll',storyScroll,{passive:true});
+  window.addEventListener('resize',function(){ buildStory(); storyScroll(); });
+  storyScroll();
+}
+function showStory(on){
+  var el=document.getElementById('storyHero'); if(!el) return;
+  el.style.display = on?'block':'none';
+  if(on) initStory();
+}
+(function(){ var sk=document.getElementById('storySkip');
+  if(sk) sk.onclick=function(){ var h=document.querySelector('header'); if(h) h.scrollIntoView({behavior:'smooth'}); };
+})();
 
 document.getElementById('q').addEventListener('input', e=>{
   setBriefPage(false);
