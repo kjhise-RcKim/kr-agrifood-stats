@@ -676,7 +676,7 @@ const INDS = D.indicators;
       breakdown:[], related_ids:['food_self_suff','food_crop_production','food_crop_area','rice_consumption_pc'],
       brief_weight:0, tip:d.tip, derived_wheat:true });
   });
-  var idx=INDS.findIndex(function(i){return i.id==='food_self_suff';});
+  var idx=INDS.findIndex(function(i){return i.id==='rice_consumption_pc';});
   if(idx<0) idx=INDS.length-1;
   Array.prototype.splice.apply(INDS, [idx+1,0].concat(built));
 })();
