@@ -678,6 +678,49 @@ const INDS = D.indicators;
 })();
 /* 파생(밀) 카드는 '수록 지표 수' 카운트에서 제외 — 기존 지표의 재노출이라 중복 집계 방지 */
 const SRC_N = INDS.filter(function(i){return !i.derived_wheat;}).length;
+
+/* ── 주석(annotation) 레이어 ─────────────────────────────────
+   원자료(통계연보) 밖의 '사건 맥락'. 원칙: ①주석마다 출처 필수 ②회색 점선으로
+   데이터선과 시각적 분리 ③차트 아래에 '원자료 아님' 명시. B안 시범 = 밀 자급률만. */
+const ANNOTATIONS = {
+  wheat_self_suff: [
+    {year:1984, title:'정부 밀 수매제도 폐지', sub:'수입 밀 확대로 국산 생산기반이 급격히 위축', source:'농림축산식품부·한국농정신문'},
+    {year:2020, title:'밀산업 육성법 시행', sub:'2019년 제정·2020년 2월 시행 — 생산기반 확대 정책', source:'국가법령정보센터'}
+  ]
+};
+function roundRectA(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+const annoPlugin = {
+  id:'wheatAnno',
+  afterDatasetsDraw:function(chart,args,opts){
+    var items=opts&&opts.items; if(!items||!items.length) return;
+    var ctx=chart.ctx, area=chart.chartArea, labels=chart.data.labels;
+    var meta=chart.getDatasetMeta(0), pts=meta&&meta.data; if(!pts||!pts.length) return;
+    function xFor(Y){
+      if(Y<=labels[0]) return pts[0].x;
+      if(Y>=labels[labels.length-1]) return pts[pts.length-1].x;
+      for(var k=0;k<labels.length-1;k++){ if(labels[k]<=Y&&Y<=labels[k+1]){ var f=(Y-labels[k])/(labels[k+1]-labels[k]); return pts[k].x+f*(pts[k+1].x-pts[k].x);} }
+      return pts[pts.length-1].x;
+    }
+    ctx.save();
+    items.forEach(function(a,idx){
+      var x=xFor(a.year);
+      ctx.setLineDash([3,4]); ctx.lineWidth=1.2; ctx.strokeStyle='rgba(150,163,155,.85)';
+      ctx.beginPath(); ctx.moveTo(x,area.top); ctx.lineTo(x,area.bottom); ctx.stroke();
+      ctx.setLineDash([]);
+      var label=a.year+' '+a.title, h=22;
+      ctx.font='600 11px "Pretendard Variable",sans-serif';
+      var w=ctx.measureText(label).width+16;
+      var ly=area.top+6+(idx%2)*(h+6);
+      var bx=x+6; if(bx+w>area.right) bx=x-6-w; if(bx<area.left) bx=area.left+2;
+      ctx.fillStyle='rgba(255,255,255,.94)'; ctx.strokeStyle='rgba(201,150,46,.55)'; ctx.lineWidth=1;
+      roundRectA(ctx,bx,ly,w,h,6); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#C9962E'; ctx.fillRect(bx,ly,3,h);
+      ctx.fillStyle='#141F1A'; ctx.textBaseline='middle'; ctx.textAlign='left';
+      ctx.fillText(label,bx+10,ly+h/2+0.5);
+    });
+    ctx.restore();
+  }
+};
 try{ if(window.Chart){ Chart.defaults.font.family = "'IBM Plex Mono','Pretendard Variable',monospace"; Chart.defaults.font.size = 11; } }catch(e){}
 /* ── Lucide 라인 아이콘 (인라인 SVG) ── ic('name') → 문자열 반환, innerHTML에 사용 */
 const ICO = {
@@ -1111,6 +1154,11 @@ function fillInsight(ind){
   let html='<div class="ihead">'+ic('bar-chart','sm')+' 자동 분석 <span class="ismall">규칙기반 · 원자료 수치만 사용, 출처 아래</span></div>';
   html+='<ul>'+ins.map(s=>'<li>'+s+'</li>').join('')+'</ul>';
   if(rel.length) html+='<div class="irel">관련 지표 추이 — '+rel.join(' · ')+'</div>';
+  if(ANNOTATIONS[ind.id]){
+    html+='<div class="ianno" style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)"><div class="ihead">'+ic('info','sm')+' 사건 맥락 <span class="ismall">원자료(통계연보) 아님 · 차트의 회색 점선 표식</span></div><ul>'+
+      ANNOTATIONS[ind.id].map(a=>'<li><b>'+a.year+' '+esc(a.title)+'</b> — '+esc(a.sub)+
+        ' <span style="color:var(--muted);font-size:11px">· 출처: '+esc(a.source)+'</span></li>').join('')+'</ul></div>';
+  }
   document.getElementById('d-insight').innerHTML=html;
 }
 function chartColors(){ return {AX:css('--axis'),GRID:css('--grid'),TOTAL:css('--total'),LEG:css('--total')}; }
@@ -1195,10 +1243,12 @@ function renderDetail(ind){
   }
   const multi = datasets.length>1;
   chart=new Chart(document.getElementById('chart'),{type:'line',data:{labels,datasets},
+    plugins:[annoPlugin],
     options:{responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:multi,labels:{color:LEG,boxWidth:12}},
-        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}}},
+        tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.parsed.y)+' '+ind.unit}},
+        wheatAnno:{items: ANNOTATIONS[ind.id]||[]}},
       scales:{x:{ticks:{color:AX,maxTicksLimit:12},grid:{color:GRID}},
         y:{ticks:{color:AX},grid:{color:GRID}}}}});
 }
