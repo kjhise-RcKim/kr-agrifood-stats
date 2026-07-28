@@ -328,6 +328,10 @@
   .modal a:hover{color:var(--accent2);}
   .modal-close{margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:10px;
     padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  /* 지표비교·연도비교 — 모달이 아니라 브리프처럼 전체 페이지로 표시(런타임에 .wrap 안으로 이동) */
+  .modal-overlay.aspage{position:static;inset:auto;background:transparent;display:none;padding:0;z-index:auto;}
+  .modal-overlay.aspage .modal{max-width:none!important;width:auto;margin:0;background:transparent;border:0;border-radius:0;max-height:none;overflow:visible;padding:4px 0 0;}
+  .modal-overlay.aspage .modal-close{margin-top:26px;background:var(--btn);color:var(--btntext);}
   .ptbl{border-collapse:collapse;font-size:12px;font-family:'Consolas','Menlo','Courier New',monospace;min-width:100%;}
   .ptbl td{border:1px solid var(--line);padding:3px 8px;white-space:nowrap;text-align:right;color:var(--text);}
   .ptbl td.hdr{text-align:left;color:var(--muted);background:var(--panel2);white-space:normal;}
@@ -608,7 +612,7 @@
       <span id="cmpClear" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px">선택 초기화</span>
       <span id="cmpLink" style="font-size:12px;color:var(--accent);cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 11px"><svg class="ic sm" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 링크 복사</span>
     </div>
-    <button class="modal-close" id="cmpClose">닫기</button>
+    <button class="modal-close" id="cmpClose">← 돌아가기</button>
   </div>
 </div>
 <div class="modal-overlay" id="diffModal" style="display:none">
@@ -623,7 +627,7 @@
       <button class="hbtn" id="dlink"><svg class="ic" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 링크 복사</button>
     </div>
     <div id="dbody"></div>
-    <button class="modal-close" id="diffClose">닫기</button>
+    <button class="modal-close" id="diffClose">← 돌아가기</button>
   </div>
 </div>
 <div class="modal-overlay" id="pageModal" style="display:none">
@@ -678,6 +682,30 @@ const INDS = D.indicators;
 })();
 /* 파생(밀) 카드는 '수록 지표 수' 카운트에서 제외 — 기존 지표의 재노출이라 중복 집계 방지 */
 const SRC_N = INDS.filter(function(i){return !i.derived_wheat;}).length;
+
+/* ── 지표비교·연도비교: 모달 → 브리프형 전체 페이지 ─────────────
+   오버레이 모달을 .wrap 안(AI 챗박스 앞)으로 옮기고 in-flow 페이지로 표시. */
+(function relocateTools(){
+  var chat=document.querySelector('.chat');
+  ['cmpModal','diffModal'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    el.classList.add('aspage');
+    if(chat&&chat.parentNode) chat.parentNode.insertBefore(el, chat);
+  });
+})();
+function toolOff(){
+  var c=document.getElementById('cmpModal'), d=document.getElementById('diffModal');
+  if(c) c.style.display='none'; if(d) d.style.display='none';
+}
+function setToolPage(kind){
+  ['hero','tabs','favbar','brief','bfhome','cards','allhint','orig','detail','briefpage'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  var c=document.getElementById('cmpModal'), d=document.getElementById('diffModal');
+  if(c) c.style.display=(kind==='cmp')?'block':'none';
+  if(d) d.style.display=(kind==='diff')?'block':'none';
+  try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); }
+}
 
 /* ── 주석(annotation) 레이어 ─────────────────────────────────
    원자료(통계연보) 밖의 '사건 맥락'. 원칙: ①주석마다 출처 필수 ②회색 점선으로
@@ -869,7 +897,7 @@ function applyURL(){
   var get=function(k){ return P? (P.get(k)||'') : ''; };
   var qel=document.getElementById('q');
   homeView=false;
-  var isFirst=firstLoad; firstLoad=false; showStory(false);
+  var isFirst=firstLoad; firstLoad=false; showStory(false); toolOff();
   var vt=get('t');   /* 링크에 담겨온 테마(밝게/어둡게) 먼저 적용 */
   if((vt==='light'||vt==='dark') && vt!==curTheme()) applyTheme(vt);
   var vi=get('i'), vg=get('g'), vq=get('q'), vv=get('view');
@@ -895,12 +923,10 @@ function applyURL(){
     renderTabs(); renderCards(); renderOrig(query); return;
   } else if(vv==='cmp'){
     query=''; if(qel) qel.value=''; compareMode=false;
-    renderTabs(); renderCards(); renderOrig('');
-    var idsRaw=get('ids'); _beforeCmp=_beforeCmp||''; openCmp(idsRaw?idsRaw.split(','):[]); return;
+    var idsRaw=get('ids'); _beforeCmp=_beforeCmp||''; setToolPage('cmp'); openCmp(idsRaw?idsRaw.split(','):[]); return;
   } else if(vv==='diff'){
     query=''; if(qel) qel.value=''; compareMode=false;
-    renderTabs(); renderCards(); renderOrig('');
-    _beforeDiff=''; openDiff(+get('y1'), +get('y2')); return;
+    _beforeDiff=_beforeDiff||''; setToolPage('diff'); openDiff(+get('y1'), +get('y2')); return;
   } else if(vv==='compare'){
     query=''; if(qel) qel.value=''; curGroup=FAV; compareMode=true;
     renderTabs(); renderCards(); renderCompare(); return;
@@ -1491,16 +1517,11 @@ function openDiff(y1,y2){
   var def1=ys.indexOf(last-10)>=0?last-10:ys[Math.max(0,ys.length-11)];
   s1.value=String(ys.indexOf(y1)>=0?y1:def1);
   s2.value=String(ys.indexOf(y2)>=0?y2:last);
-  document.getElementById('diffModal').style.display='flex';
   renderDiff();
 }
-function closeDiff(){
-  document.getElementById('diffModal').style.display='none';
-  replaceURL(_beforeDiff);
-}
-document.getElementById('diffBtn').onclick=function(){ _beforeDiff=baseQS(); openDiff(); };
+function closeDiff(){ go(_beforeDiff||''); }
+document.getElementById('diffBtn').onclick=function(){ _beforeDiff=baseQS(); go('?view=diff'); };
 document.getElementById('diffClose').onclick=closeDiff;
-document.getElementById('diffModal').onclick=function(e){ if(e.target.id==='diffModal') closeDiff(); };
 document.getElementById('dcsv').onclick=diffCSV;
 document.getElementById('dlink').onclick=function(){ copyLink(this); };
 
@@ -1846,13 +1867,11 @@ function openCmp(ids){
   cmpSel = (ids||[]).filter(function(k){ return cmpResolve(k); });
   document.getElementById('cmpSearch').value = '';
   document.getElementById('cmpModeSel').value = cmpMode;
-  document.getElementById('cmpModal').style.display = 'flex';
   renderCmpList(); renderCmpChart();
 }
-function closeCmp(){ document.getElementById('cmpModal').style.display='none'; replaceURL(_beforeCmp); }
+function closeCmp(){ go(_beforeCmp||''); }
 document.getElementById('cmpBtn').onclick = function(){ _beforeCmp = baseQS(); go('?view=cmp'); };
 document.getElementById('cmpClose').onclick = closeCmp;
-document.getElementById('cmpModal').onclick = function(e){ if(e.target.id==='cmpModal') closeCmp(); };
 document.getElementById('cmpSearch').addEventListener('input', renderCmpList);
 document.getElementById('cmpModeSel').onchange = function(){ cmpMode = this.value; renderCmpChart(); };
 document.getElementById('cmpClear').onclick = function(){ cmpSel = []; renderCmpList(); renderCmpChart(); updateCmpURL(); };
