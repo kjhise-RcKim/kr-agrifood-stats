@@ -195,7 +195,7 @@
     background:var(--panel2);border-radius:8px;padding:5px 10px;}
   .bpsec .lnk span:hover{border-color:var(--accent);}
   .bpbox{height:300px;position:relative;}
-  .bpchips{display:flex;gap:7px;overflow-x:auto;padding-bottom:10px;margin-bottom:6px;}
+  .bpchips{display:flex;flex-wrap:wrap;gap:7px;padding-bottom:2px;margin-bottom:10px;}
   .bpchips span{white-space:nowrap;font-size:12px;color:var(--muted);background:var(--panel);
     border:1px solid var(--line);border-radius:16px;padding:6px 13px;cursor:pointer;transition:.13s;}
   .bpchips span:hover{color:var(--text);border-color:var(--accent);}
@@ -637,6 +637,47 @@
 <script>
 const D = window.INDICATORS;
 const INDS = D.indicators;
+/* 우리밀 카드 — 배포처(우리밀운동본부) 특성상 밀 항목을 식량·자급률 카테고리에 단독 카드로 노출.
+   부모 지표의 '밀' breakdown에서 값을 그대로 파생(없는 숫자 만들지 않음). 출처=부모 원문 쪽수. */
+(function addWheatCards(){
+  function derive(parentId){
+    var p=INDS.find(function(i){return i.id===parentId;}); if(!p) return null;
+    var b=(p.breakdown||[]).find(function(x){return x.label==='밀';});
+    if(!b) return null;
+    return { series:b.series.map(function(pt){return {year:pt.year,value:pt.value,flag:pt.flag};}), source:p.source };
+  }
+  var defs=[
+    {id:'wheat_self_suff', name:'밀 자급률', unit:'%', parent:'food_self_suff',
+     desc:'식량자급률(사료용 제외) 기준 밀 항목 — 국내 밀 소비 중 국산이 차지하는 비율.',
+     tip:'「식량자급률」 지표의 밀 품목과 같은 값입니다(사료용 제외). 우리밀 소비·생산과 함께 보세요. (p.331)',
+     kw:['밀','우리밀','밀 자급률','자급률','wheat']},
+    {id:'wheat_production', name:'밀 생산량', unit:'천t', parent:'food_crop_production',
+     desc:'국내 밀 생산량. 「식량작물 생산량」의 밀 품목과 같은 값.',
+     tip:'국내에서 생산된 밀의 양(천t)입니다. 「식량작물 생산량」의 밀 품목과 같은 값입니다. (p.296)',
+     kw:['밀','우리밀','밀 생산량','생산','wheat']},
+    {id:'wheat_area', name:'밀 재배면적', unit:'천ha', parent:'food_crop_area',
+     desc:'국내 밀 재배면적. 「식량작물 재배면적」의 밀 품목과 같은 값.',
+     tip:'국내에서 밀을 재배한 면적(천ha)입니다. 「식량작물 재배면적」의 밀 품목과 같은 값입니다. (p.296)',
+     kw:['밀','우리밀','밀 재배면적','면적','wheat']},
+    {id:'wheat_consumption_pc', name:'1인당 밀 소비량', unit:'kg', parent:'rice_consumption_pc',
+     desc:'국민 1인당 연간 밀 소비량. 「1인당 양곡 소비량」의 밀 품목과 같은 값.',
+     tip:'국민 한 사람이 1년 동안 먹는 밀의 양(kg)입니다. 「1인당 양곡 소비량」의 밀 품목과 같은 값입니다. (p.332)',
+     kw:['밀','우리밀','밀 소비량','소비','wheat']}
+  ];
+  var built=[];
+  defs.forEach(function(d){
+    var w=derive(d.parent); if(!w||!w.series.filter(function(p){return p.value!=null;}).length) return;
+    built.push({ id:d.id, name:d.name, group:'식량·자급률', unit:d.unit, frequency:'연간',
+      is_headline:false, description:d.desc, keywords:d.kw, source:w.source, series:w.series,
+      breakdown:[], related_ids:['food_self_suff','food_crop_production','food_crop_area','rice_consumption_pc'],
+      brief_weight:0, tip:d.tip, derived_wheat:true });
+  });
+  var idx=INDS.findIndex(function(i){return i.id==='food_self_suff';});
+  if(idx<0) idx=INDS.length-1;
+  Array.prototype.splice.apply(INDS, [idx+1,0].concat(built));
+})();
+/* 파생(밀) 카드는 '수록 지표 수' 카운트에서 제외 — 기존 지표의 재노출이라 중복 집계 방지 */
+const SRC_N = INDS.filter(function(i){return !i.derived_wheat;}).length;
 try{ if(window.Chart){ Chart.defaults.font.family = "'IBM Plex Mono','Pretendard Variable',monospace"; Chart.defaults.font.size = 11; } }catch(e){}
 /* ── Lucide 라인 아이콘 (인라인 SVG) ── ic('name') → 문자열 반환, innerHTML에 사용 */
 const ICO = {
@@ -879,7 +920,7 @@ function renderCards(){
   if(hint){
     if(!searching && curGroup==='전체'){
       hint.innerHTML='분야별 대표 지표 '+list.length+'개를 보여주고 있어요. '+
-        '<span class="alink">'+ic('list','sm')+' 전체 '+INDS.length+'개 지표 보기 →</span>';
+        '<span class="alink">'+ic('list','sm')+' 전체 '+SRC_N+'개 지표 보기 →</span>';
       hint.style.display='block';
       var lk=hint.querySelector('.alink'); if(lk) lk.onclick=function(){ go('?g=all'); };
     } else hint.style.display='none';
@@ -1623,7 +1664,7 @@ function renderHero(){
   }
   if(!heroDone){
     heroDone=true;
-    var N=[['hn1',INDS.length],['hn2',(window.BRIEFS||[]).length],['hn3',581]];
+    var N=[['hn1',SRC_N],['hn2',(window.BRIEFS||[]).length],['hn3',581]];
     N.forEach(function(x,i){
       setTimeout(function(){ heroCount(document.getElementById(x[0]),x[1],2700); },450+i*300);
     });
@@ -1640,7 +1681,7 @@ function renderHero(){
 
 /* 이용안내의 개수는 데이터에서 자동으로 채운다 — 지표가 늘어도 문서가 어긋나지 않게 */
 (function fillHelpCounts(){
-  var C={ind:INDS.length, head:INDS.filter(function(i){return i.is_headline;}).length,
+  var C={ind:SRC_N, head:INDS.filter(function(i){return i.is_headline;}).length,
           tip:INDS.filter(function(i){return i.tip;}).length, brief:(window.BRIEFS||[]).length};
   document.querySelectorAll('.hcnt').forEach(function(el){
     var k=el.getAttribute('data-c'); if(C[k]!==undefined) el.textContent=C[k];
